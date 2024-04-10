@@ -36,7 +36,7 @@ const ChatRoomWrapper = styled.div`
   flex-direction: column;
 `;
 
-const ChatRoomHeader = styled.header`
+const ChatRoomHeader = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
