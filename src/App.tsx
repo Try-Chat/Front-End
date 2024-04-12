@@ -1,7 +1,11 @@
-import { ChatRoom } from './pages';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
-  return <ChatRoom />;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default App;
