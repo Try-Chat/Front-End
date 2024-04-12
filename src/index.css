@@ -160,7 +160,6 @@ input:focus {
   width: 100%;
   min-height: 100vh;
   background-color: #f8fafc;
-  color: #444;
 }
 
 .slide-pane__overlay {

@@ -1,19 +1,24 @@
 import styled from 'styled-components';
 import { SideBar } from '../components';
 import Header from '../components/common/Header';
+import User from '../components/common/User';
 
 const Home = () => {
   return (
     <HomeWrapper>
       <SideBar />
-      <div>
+      <HomeBox>
         <Header>친구</Header>
-        <FriendList>
-          <ul>
-            <li>친구</li>
-          </ul>
-        </FriendList>
-      </div>
+        <MyProfile>
+          <User userName="어준혁" />
+        </MyProfile>
+        <ul>
+          <li>
+            <User userName="문병훈" />
+            <User userName="문희조" />
+          </li>
+        </ul>
+      </HomeBox>
     </HomeWrapper>
   );
 };
@@ -26,10 +31,10 @@ const HomeWrapper = styled.div`
   display: flex;
 `;
 
-const HomeBox = styled.div``;
+const HomeBox = styled.div`
+  width: 17.5rem;
+`;
 
-const FriendList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+const MyProfile = styled.div`
+  border-bottom: 1px solid #dee2e6;
 `;

@@ -1,17 +1,31 @@
 import styled from 'styled-components';
-import { GoHome } from 'react-icons/go';
+import { RiHome5Fill } from 'react-icons/ri';
+import { RiHome5Line } from 'react-icons/ri';
 import { IoChatboxEllipsesOutline } from 'react-icons/io5';
+import { IoChatboxEllipses } from 'react-icons/io5';
+import { useLocation } from 'react-router-dom';
 
 const SideBar = () => {
+  const location = useLocation();
+  const currentPage = location.pathname;
+
   return (
     <SideBarWrapper>
       <LogoBox>TC</LogoBox>
       <SideBarIconBox>
         <li>
-          <HomeIcon />
+          {currentPage === '/' ? (
+            <RiHome5Fill color="#4629f2" />
+          ) : (
+            <RiHome5Line />
+          )}
         </li>
         <li>
-          <IoChatboxEllipsesOutline />
+          {currentPage === '/list' ? (
+            <IoChatboxEllipses color="#4629f2" />
+          ) : (
+            <IoChatboxEllipsesOutline />
+          )}
         </li>
       </SideBarIconBox>
     </SideBarWrapper>
@@ -25,8 +39,9 @@ const SideBarWrapper = styled.aside`
   height: 100%;
 
   padding: 1rem;
+  z-index: 1;
 
-  box-shadow: 2.5px 0px 5px -5px gray;
+  box-shadow: 3px 0px 5px -5px gray;
 `;
 
 const LogoBox = styled.div`
@@ -60,8 +75,4 @@ const SideBarIconBox = styled.ul`
     cursor: pointer;
     font-size: 1.5rem;
   }
-`;
-
-const HomeIcon = styled(GoHome)`
-  color: #4629f2;
 `;
