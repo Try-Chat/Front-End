@@ -14,13 +14,20 @@ export default User;
 
 const UserWrapper = styled.div`
   width: 100%;
-  height: 4rem;
+  height: 3.5rem;
 
   display: flex;
   align-items: center;
   gap: 1rem;
 
   padding: 0 0.7rem;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f6fe;
+    transition: 0.2s;
+  }
 `;
 
 const UserPhoto = styled.img`
@@ -31,6 +38,6 @@ const UserPhoto = styled.img`
 `;
 
 const UserName = styled.p`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
 `;

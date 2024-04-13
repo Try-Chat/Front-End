@@ -3,7 +3,7 @@ import { RiHome5Fill } from 'react-icons/ri';
 import { RiHome5Line } from 'react-icons/ri';
 import { IoChatboxEllipsesOutline } from 'react-icons/io5';
 import { IoChatboxEllipses } from 'react-icons/io5';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SideBar = () => {
   const location = useLocation();
@@ -14,18 +14,22 @@ const SideBar = () => {
       <LogoBox>TC</LogoBox>
       <SideBarIconBox>
         <li>
-          {currentPage === '/' ? (
-            <RiHome5Fill color="#4629f2" />
-          ) : (
-            <RiHome5Line />
-          )}
+          <Link to="/">
+            {currentPage === '/' ? (
+              <RiHome5Fill color="#4629f2" />
+            ) : (
+              <RiHome5Line />
+            )}
+          </Link>
         </li>
         <li>
-          {currentPage === '/list' ? (
-            <IoChatboxEllipses color="#4629f2" />
-          ) : (
-            <IoChatboxEllipsesOutline />
-          )}
+          <Link to="/chatroomlist">
+            {currentPage === '/chatroomlist' ? (
+              <IoChatboxEllipses color="#4629f2" />
+            ) : (
+              <IoChatboxEllipsesOutline />
+            )}
+          </Link>
         </li>
       </SideBarIconBox>
     </SideBarWrapper>

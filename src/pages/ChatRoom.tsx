@@ -2,12 +2,14 @@ import styled from 'styled-components';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { IoIosMore } from 'react-icons/io';
 import { MessageContent, MessageContentInput } from '../components';
+import { useNavigate } from 'react-router-dom';
 
 const ChatRoom = () => {
+  const navigate = useNavigate();
   return (
     <ChatRoomWrapper>
       <ChatRoomHeader>
-        <IoArrowBackOutline />
+        <IoArrowBackOutline onClick={() => navigate(-1)} />
         <p>채팅방 이름</p>
         <IoIosMore />
       </ChatRoomHeader>
@@ -34,6 +36,8 @@ const ChatRoomWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  background-color: #ffff;
 `;
 
 const ChatRoomHeader = styled.nav`
