@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { PATH } from './constants';
 import App from '../App';
-import { ChatRoom, HOME } from '../pages';
+import { ChatRoom, ChatRoomList, Home } from '../pages';
 
 const router = createBrowserRouter([
   {
@@ -10,11 +10,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HOME />,
+        element: <Home />,
       },
       {
         path: PATH.CHAT_ROOM,
         element: <ChatRoom />,
+      },
+      {
+        path: PATH.CHAT_ROOM_LIST,
+        element: <ChatRoomList />,
       },
     ],
   },
