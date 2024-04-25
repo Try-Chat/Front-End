@@ -15,8 +15,8 @@ export default Notice;
 const NoticeWrapper = styled.div`
   height: 2.2rem;
 
-  padding: 0.8rem;
-
+  margin: 0 1rem;
+  padding: 0 0.5rem;
   border-radius: 1.25rem;
 
   display: flex;
@@ -25,6 +25,8 @@ const NoticeWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xs};
 
   background-color: #f1f3f5;
+
+  cursor: pointer;
 `;
 
 const NoticeCategory = styled.div`

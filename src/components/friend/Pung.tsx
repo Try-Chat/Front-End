@@ -19,6 +19,8 @@ const Pung = () => {
 export default Pung;
 
 const PungWrapper = styled.div`
+  margin: 0 1rem;
+
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 

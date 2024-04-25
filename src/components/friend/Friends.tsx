@@ -13,9 +13,9 @@ const FriendItem = ({ name }: { name: string }) => {
 
 const Friends = () => {
   return (
-    <div>
+    <FriendsWrapper>
       <Toggle title="친구 10" />
-      <FriendsWrapper>
+      <FriendsBox>
         <FriendItem name="고미선" />
         <FriendItem name="정충일" />
         <FriendItem name="김혜미" />
@@ -26,23 +26,31 @@ const Friends = () => {
         <FriendItem name="이준엽" />
         <FriendItem name="문병훈" />
         <FriendItem name="서지수" />
-      </FriendsWrapper>
-    </div>
+      </FriendsBox>
+    </FriendsWrapper>
   );
 };
 
 export default Friends;
 
 const FriendsWrapper = styled.div`
+  padding: 0 1rem;
+`;
+
+const FriendsBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  margin-bottom: 1rem;
 `;
 
 const FriendItemWrapper = styled.div`
   display: flex;
   gap: 0.6rem;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 const FriendName = styled.p`

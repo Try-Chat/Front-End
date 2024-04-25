@@ -21,7 +21,9 @@ const MineWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.7rem 0;
+  margin: 0.7rem 1rem;
+
+  cursor: pointer;
 `;
 
 const MyName = styled.div`

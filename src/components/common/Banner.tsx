@@ -12,7 +12,7 @@ const Banner = () => {
 export default Banner;
 
 const BannerWrapper = styled.div`
-  padding: 1rem 0;
+  padding: 1rem;
   height: 7rem;
 
   img {

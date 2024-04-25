@@ -3,6 +3,7 @@ import Header from '../components/common/Header';
 import {
   Banner,
   Channel,
+  Footer,
   Friends,
   Mine,
   Notice,
@@ -23,6 +24,7 @@ const Friend = () => {
       <RecommendFriend />
       <Channel />
       <Friends />
+      <Footer />
     </FriendWrapper>
   );
 };
@@ -34,7 +36,4 @@ const FriendWrapper = styled.div`
 
   background-color: #ffff;
   min-height: 100vh;
-
-  padding: 0 1rem;
-  margin-bottom: 1rem;
 `;

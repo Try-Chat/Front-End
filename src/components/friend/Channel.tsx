@@ -23,27 +23,31 @@ const ChannelItem = () => {
 
 const Channel = () => {
   return (
-    <div>
+    <ChannelWrapper>
       <Toggle title="채널" />
-      <ChannelWrapper>
+      <ChannelBox>
         <ProfileImageBox imageUrl={channel} size="2.5rem" />
         <Title>채널</Title>
         <span>15</span>
         <StyledArrowRightIcon />
-      </ChannelWrapper>
+      </ChannelBox>
       <SwiperBox slidesPerView={3.2} spaceBetween={2.3}>
         <ChannelItem />
         <ChannelItem />
         <ChannelItem />
       </SwiperBox>
       <ChannleNotice>카카오톡에서 제공하는 채널 광고입니다.</ChannleNotice>
-    </div>
+    </ChannelWrapper>
   );
 };
 
 export default Channel;
 
 const ChannelWrapper = styled.div`
+  padding: 0 1rem;
+`;
+
+const ChannelBox = styled.div`
   display: flex;
   align-items: center;
 

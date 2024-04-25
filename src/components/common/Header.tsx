@@ -4,17 +4,17 @@ import { FiSearch } from 'react-icons/fi';
 import { FiUserPlus } from 'react-icons/fi';
 import { PiMusicNotes } from 'react-icons/pi';
 // 채팅 페이지
-import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2';
-// 오픈 채팅
-import { IoChatbubblesOutline } from 'react-icons/io5';
-// 쇼핑
-import { HiOutlineShoppingBag } from 'react-icons/hi';
+// import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2';
+// // 오픈 채팅
+// import { IoChatbubblesOutline } from 'react-icons/io5';
+// // 쇼핑
+// import { HiOutlineShoppingBag } from 'react-icons/hi';
 // 공통
 import { BsGear } from 'react-icons/bs';
 
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import { MdKeyboardArrowUp } from 'react-icons/md';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+// import { MdKeyboardArrowRight } from 'react-icons/md';
+// import { MdKeyboardArrowUp } from 'react-icons/md';
+// import { MdKeyboardArrowDown } from 'react-icons/md';
 
 const Header = () => {
   return (
@@ -52,6 +52,8 @@ const HeaderWrapper = styled.div`
   z-index: 100;
   top: 0;
   position: sticky;
+
+  padding: 0 1rem;
 `;
 
 const HeaderLeftBox = styled.div`
@@ -74,5 +76,7 @@ const HeaderIcon = styled.li`
   align-items: center;
   svg {
     font-size: ${({ theme }) => theme.fontSize.lg};
+
+    cursor: pointer;
   }
 `;

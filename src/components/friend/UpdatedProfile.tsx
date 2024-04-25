@@ -17,18 +17,22 @@ const ProfileItem = ({ friendName }: { friendName: string }) => {
 
 const UpdatedProfile = () => {
   return (
-    <div>
+    <UpdatedProfileWrapper>
       <Toggle title="업데이트한 프로필" num={6} />
       <SwiperBox slidesPerView={6} spaceBetween={2.15}>
         <ProfileItem friendName="정충일" />
         <ProfileItem friendName="김혜미" />
         <ProfileItem friendName="고미선" />
       </SwiperBox>
-    </div>
+    </UpdatedProfileWrapper>
   );
 };
 
 export default UpdatedProfile;
+
+const UpdatedProfileWrapper = styled.div`
+  padding: 0 1rem;
+`;
 
 const UpdatedProfiles = styled(SwiperSlide)`
   position: relative;
@@ -42,6 +46,8 @@ const UpdatedProfiles = styled(SwiperSlide)`
   margin-right: 0.7rem;
 
   font-size: ${({ theme }) => theme.fontSize.xs};
+
+  cursor: pointer;
 `;
 
 const StyledDot = styled(LuDot)`

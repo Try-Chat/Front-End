@@ -7,6 +7,7 @@ const fontSize = {
 };
 
 const colors = {
+  gray50: '#f8f9fa',
   gray100: '#f1f3f5',
   gray200: '#dee2e6',
   gray250: '#ced4da',

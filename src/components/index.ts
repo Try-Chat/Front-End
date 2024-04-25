@@ -7,6 +7,7 @@ export { default as RecommendFriend } from './friend/RecommendFriend';
 export { default as Channel } from './friend/Channel';
 export { default as Friends } from './friend/Friends';
 export { default as ProfileImageBox } from './common/ProfileImageBox';
+export { default as Footer } from './common/Footer';
 export { default as Toggle } from './common/Toggle';
 export { default as Banner } from './common/Banner';
 export { default as UpdatedProfile } from './friend/UpdatedProfile';
