@@ -10,8 +10,12 @@ const MessageContentInput = () => {
   return (
     <MessageContentInputWrapper>
       <FaRegSmile />
-      <MessageInput value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Reply..." />
-      <StyeldPhoto />
+      <MessageInput
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Reply..."
+      />
+      <StyledPhoto />
       <SendButton type="button">
         <StyledArrowForward />
       </SendButton>
@@ -39,7 +43,7 @@ const MessageContentInputWrapper = styled.div`
   }
 `;
 
-const StyeldPhoto = styled(HiOutlinePhotograph)`
+const StyledPhoto = styled(HiOutlinePhotograph)`
   color: #a6a6a6;
 `;
 
