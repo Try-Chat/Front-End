@@ -1,12 +1,10 @@
-import { ChatRoomListItem, Layout } from '../components';
-import Header from '../components/common/Header';
+import { ChatRoomListItem } from '../components';
 import defaultImg from '../assets/images/defaultImg.jpg';
 import { Link } from 'react-router-dom';
 
 const ChatRoomList = () => {
   return (
-    <Layout>
-      <Header>메세지</Header>
+    <>
       <ul>
         <li>
           <Link to="/chatroom">
@@ -19,7 +17,7 @@ const ChatRoomList = () => {
           </Link>
         </li>
       </ul>
-    </Layout>
+    </>
   );
 };
 
