@@ -30,7 +30,7 @@ const ToggleWrapper = styled.div`
 
   height: 2.2rem;
 
-  border-top: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray100};
   span {
     margin-right: 0.3rem;
   }
