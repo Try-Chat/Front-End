@@ -34,7 +34,7 @@ const Friends = () => {
 export default Friends;
 
 const FriendsWrapper = styled.div`
-  padding: 0 1rem;
+  margin: 0 1rem;
 `;
 
 const FriendsBox = styled.div`
@@ -54,5 +54,5 @@ const FriendItemWrapper = styled.div`
 `;
 
 const FriendName = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.base};
 `;

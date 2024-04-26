@@ -65,7 +65,6 @@ const ChatRoomPhoto = styled.img`
 
 const ChatRoomName = styled.p`
   font-size: 0.85rem;
-  font-weight: bold;
 `;
 
 const LastMessage = styled.p`

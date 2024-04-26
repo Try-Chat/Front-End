@@ -22,7 +22,7 @@ const NoticeWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
   background-color: #f1f3f5;
 
@@ -42,8 +42,6 @@ const NoticeCategory = styled.div`
 
 const NoticeTitle = styled.div`
   flex: 1;
-
-  font-weight: 700;
 
   padding: 0 0.7rem;
   color: #868e96;

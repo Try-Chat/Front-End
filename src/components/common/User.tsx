@@ -39,5 +39,4 @@ const UserPhoto = styled.img`
 
 const UserName = styled.p`
   font-size: 0.9rem;
-  font-weight: bold;
 `;

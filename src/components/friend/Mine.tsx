@@ -29,7 +29,7 @@ const MineWrapper = styled.div`
 const MyName = styled.div`
   flex: 1;
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.base};
 
   padding: 0 0.6rem;
 `;

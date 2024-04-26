@@ -37,7 +37,7 @@ const Footer = () => {
 export default Footer;
 
 const FooterWrapper = styled.nav`
-  height: 3.8rem;
+  height: 3.2rem;
 
   display: flex;
   align-items: flex-start;

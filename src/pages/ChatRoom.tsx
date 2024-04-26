@@ -55,7 +55,6 @@ const ChatRoomHeader = styled.nav`
 
   p {
     font-size: 0.875rem;
-    font-weight: bold;
   }
 
   svg {
