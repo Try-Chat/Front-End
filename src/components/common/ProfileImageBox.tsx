@@ -17,4 +17,6 @@ const ProfileImage = styled.img<ProfileImageBoxProps>`
   height: ${(props) => props.size};
 
   border-radius: 41%;
+
+  cursor: pointer;
 `;

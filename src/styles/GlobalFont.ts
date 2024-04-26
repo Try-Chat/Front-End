@@ -4,7 +4,7 @@ import PretendardRegular from '../assets/fonts/Pretendard-Regular.woff2';
 const GlobalFont = createGlobalStyle`
      @font-face {
         font-family: "pretendard";
-        src: local("Ppretendard"), url(${PretendardRegular}) format('woff'); 
+        src: local("Pretendard"), url(${PretendardRegular}) format('woff'); 
     }
 `;
 
