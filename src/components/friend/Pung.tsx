@@ -49,7 +49,7 @@ const PungBox = styled.div`
   margin-bottom: 0.7rem;
 
   p {
-    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-size: ${({ theme }) => theme.fontSize.base};
   }
 `;
 

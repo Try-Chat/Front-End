@@ -41,7 +41,6 @@ const Header = () => {
 export default Header;
 
 const HeaderWrapper = styled.div`
-  width: 100%;
   height: 3rem;
 
   display: flex;
@@ -53,7 +52,7 @@ const HeaderWrapper = styled.div`
   top: 0;
   position: sticky;
 
-  padding: 0 1rem;
+  margin: 0 1rem;
 `;
 
 const HeaderLeftBox = styled.div`

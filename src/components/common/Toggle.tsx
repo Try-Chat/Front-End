@@ -25,7 +25,7 @@ const ToggleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.colors.gray300};
 
   height: 2.2rem;

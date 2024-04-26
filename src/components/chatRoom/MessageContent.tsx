@@ -75,7 +75,6 @@ const MessageTime = styled.div<{ messageType?: 'received' }>`
 
 const ChatPartner = styled.p`
   font-size: 0.9rem;
-  font-weight: 600;
 `;
 
 const ChatPartnerPhoto = styled.img`

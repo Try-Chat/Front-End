@@ -44,7 +44,7 @@ const Channel = () => {
 export default Channel;
 
 const ChannelWrapper = styled.div`
-  padding: 0 1rem;
+  margin: 0 1rem;
 `;
 
 const ChannelBox = styled.div`
@@ -63,7 +63,7 @@ const ChannelBox = styled.div`
 const Title = styled.div`
   flex: 1;
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.base};
 
   padding: 0 0.6rem;
 `;
@@ -99,12 +99,11 @@ const ChannelItemTopBox = styled.div`
 
   p {
     font-size: ${({ theme }) => theme.fontSize.sm};
-    font-weight: 600;
   }
 `;
 
 const ChannelDesc = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
   color: ${({ theme }) => theme.colors.gray300};
   letter-spacing: -1px;
@@ -113,8 +112,8 @@ const ChannelDesc = styled.p`
 const ChannelInquiryButton = styled.button`
   padding: 0.2rem 0.5rem;
 
-  font-weight: bold;
   font-size: ${({ theme }) => theme.fontSize.xs};
+  color: #000;
 
   border-radius: 0.3rem;
 

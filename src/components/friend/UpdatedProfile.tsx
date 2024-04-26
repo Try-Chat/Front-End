@@ -31,7 +31,7 @@ const UpdatedProfile = () => {
 export default UpdatedProfile;
 
 const UpdatedProfileWrapper = styled.div`
-  padding: 0 1rem;
+  margin: 0 1rem;
 `;
 
 const UpdatedProfiles = styled(SwiperSlide)`
@@ -45,7 +45,7 @@ const UpdatedProfiles = styled(SwiperSlide)`
 
   margin-right: 0.7rem;
 
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
   cursor: pointer;
 `;
