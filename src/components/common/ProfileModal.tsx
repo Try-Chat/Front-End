@@ -60,7 +60,7 @@ const ProfileModal = ({
                   size="6rem"
                 />
                 <ProfileName>{selectedFriend.name}</ProfileName>
-                <BiSolidPencil />
+                {!isMine && <BiSolidPencil />}
               </ProfileImageNameBox>
               <ProfileModalBottomNav>
                 {navIcons.map((item) => (

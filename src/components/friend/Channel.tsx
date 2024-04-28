@@ -24,19 +24,20 @@ const ChannelItem = () => {
 const Channel = () => {
   return (
     <ChannelWrapper>
-      <Toggle title="채널" />
-      <ChannelBox>
-        <ProfileImageBox imageUrl={channel} size="2.5rem" />
-        <Title>채널</Title>
-        <span>15</span>
-        <StyledArrowRightIcon />
-      </ChannelBox>
-      <SwiperBox slidesPerView={3.2} spaceBetween={2.3}>
-        <ChannelItem />
-        <ChannelItem />
-        <ChannelItem />
-      </SwiperBox>
-      <ChannleNotice>카카오톡에서 제공하는 채널 광고입니다.</ChannleNotice>
+      <Toggle title="채널">
+        <ChannelBox>
+          <ProfileImageBox imageUrl={channel} size="2.5rem" />
+          <Title>채널</Title>
+          <span>15</span>
+          <StyledArrowRightIcon />
+        </ChannelBox>
+        <SwiperBox slidesPerView={3.2} spaceBetween={2.3}>
+          <ChannelItem />
+          <ChannelItem />
+          <ChannelItem />
+        </SwiperBox>
+        <ChannleNotice>카카오톡에서 제공하는 채널 광고입니다.</ChannleNotice>
+      </Toggle>
     </ChannelWrapper>
   );
 };
@@ -95,7 +96,6 @@ const ChannelItemTopBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  letter-spacing: -1px;
 
   p {
     font-size: ${({ theme }) => theme.fontSize.sm};
@@ -103,7 +103,7 @@ const ChannelItemTopBox = styled.div`
 `;
 
 const ChannelDesc = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  font-size: 0.7rem;
 
   color: ${({ theme }) => theme.colors.gray300};
   letter-spacing: -1px;

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import defaultImg from '../../assets/images/defaultImg.jpg';
+import ProfileImageBox from '../common/ProfileImageBox';
 
 interface MessageContentProps {
-  messageType?: 'received';
+  messageType: boolean;
   content: string;
   time: string;
 }
@@ -15,11 +15,22 @@ const MessageContent = ({
   return (
     <MessageContentWrapper messageType={messageType}>
       <MessageBox>
-        {messageType && <ChatPartnerPhoto src={defaultImg} />}
+        {messageType && <ProfileImageBox size="2.3rem" />}
         <MessageContentBox>
-          {messageType && <ChatPartner>어준혁</ChatPartner>}
-          <Content messageType={messageType}>{content}</Content>
-          <MessageTime messageType={messageType}>{time}</MessageTime>
+          {messageType ? (
+            <>
+              <ChatPartner>어준혁</ChatPartner>
+              <ContentTime>
+                <Content messageType={messageType}>{content}</Content>
+                <MessageTime messageType={messageType}>{time}</MessageTime>
+              </ContentTime>
+            </>
+          ) : (
+            <ContentTime>
+              <MessageTime messageType={messageType}>{time}</MessageTime>
+              <Content messageType={messageType}>{content}</Content>
+            </ContentTime>
+          )}
         </MessageContentBox>
       </MessageBox>
     </MessageContentWrapper>
@@ -28,12 +39,12 @@ const MessageContent = ({
 
 export default MessageContent;
 
-const MessageContentWrapper = styled.div<{ messageType?: 'received' }>`
+const MessageContentWrapper = styled.div<{ messageType: boolean }>`
   width: 100%;
 
   display: flex;
   justify-content: ${(props) =>
-    props.messageType === 'received' ? 'flex-start' : 'flex-end'};
+    props.messageType ? 'flex-start' : 'flex-end'};
 `;
 
 const MessageBox = styled.div`
@@ -42,44 +53,43 @@ const MessageBox = styled.div`
 `;
 
 const MessageContentBox = styled.div`
-  width: 15rem;
-
   display: flex;
   flex-direction: column;
 
   gap: 0.3rem;
 `;
 
-const Content = styled.div<{ messageType?: 'received' }>`
-  padding: 0.65rem 0.93rem;
+const Content = styled.div<{ messageType: boolean }>`
+  max-width: 14rem;
+  padding: 0.6rem 0.7rem;
 
-  border-radius: ${(props) =>
-    props.messageType === 'received'
-      ? '0 0.625rem 0.625rem 0.625rem'
-      : '0.625rem 0 0.625rem 0.625rem'};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
-  background-color: ${(props) =>
-    props.messageType === 'received' ? '#F1F7FF' : '#4629f2'};
-  color: ${(props) => (props.messageType === 'received' ? '#000' : '#fff')};
+  border-radius: 1rem;
+  background-color: ${(props) => (props.messageType ? '#ffff' : '#EEDB11')};
 `;
 
-const MessageTime = styled.div<{ messageType?: 'received' }>`
-  width: 100%;
+const MessageTime = styled.div<{ messageType: boolean }>`
   font-size: 0.875rem;
-  color: #dee2e6;
+
+  color: ${({ theme }) => theme.colors.gray400};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 
   display: flex;
   justify-content: ${(props) =>
-    props.messageType === 'received' ? 'flex-end' : 'flex-start'};
+    props.messageType ? 'flex-end' : 'flex-start'};
 `;
 
 const ChatPartner = styled.p`
-  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.gray400};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 `;
 
-const ChatPartnerPhoto = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+const ContentTime = styled.div`
+  width: fit-content;
 
-  border-radius: 0.5rem;
+  display: flex;
+  align-items: flex-end;
+
+  gap: 0.3rem;
 `;

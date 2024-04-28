@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyle, GlobalFont } from './styles';
+import { ThemeProvider } from 'styled-components';
 
 const App = () => {
   return (

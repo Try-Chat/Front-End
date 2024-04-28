@@ -1,53 +1,46 @@
 import styled from 'styled-components';
+import ProfileImageBox from '../common/ProfileImageBox';
 
 interface ChatRoomListItemProps {
   chatRoomName: string;
-  chatRoomImage: string;
   lastMessage: string;
   lastMessageTime: string;
 }
 
 const ChatRoomListItem = ({
   chatRoomName,
-  chatRoomImage,
   lastMessage,
   lastMessageTime,
 }: ChatRoomListItemProps) => {
   return (
     <ChatRoomListItemWrapper>
       <ChatRoomItemLeftBox>
-        <ChatRoomPhoto src={chatRoomImage} alt="user_photo" />
-        <div>
+        <ProfileImageBox size="2.7rem" />
+        <ChatRoomItemMidBox>
           <ChatRoomName>{chatRoomName}</ChatRoomName>
           <LastMessage>{lastMessage}</LastMessage>
-        </div>
+        </ChatRoomItemMidBox>
       </ChatRoomItemLeftBox>
-      <div>
+      <ChatRoomItemRightBox>
         <LastMessageTime>{lastMessageTime}</LastMessageTime>
-      </div>
+      </ChatRoomItemRightBox>
     </ChatRoomListItemWrapper>
   );
 };
 
 export default ChatRoomListItem;
 
-const ChatRoomListItemWrapper = styled.div`
-  width: 100%;
-  height: 4rem;
+const ChatRoomListItemWrapper = styled.li`
+  height: 3rem;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 
-  padding: 0 0.7rem;
+  margin: 0 1rem;
 
   cursor: pointer;
-
-  &:hover {
-    background-color: #f5f6fe;
-    transition: 0.2s;
-  }
 `;
 
 const ChatRoomItemLeftBox = styled.div`
@@ -56,15 +49,24 @@ const ChatRoomItemLeftBox = styled.div`
   gap: 0.5rem;
 `;
 
-const ChatRoomPhoto = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+const ChatRoomItemMidBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`;
 
-  border-radius: 0.5rem;
+const ChatRoomItemRightBox = styled.div`
+  height: 100%;
+
+  margin-top: 1.2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 `;
 
 const ChatRoomName = styled.p`
-  font-size: 0.85rem;
+  font-size: ${({ theme }) => theme.fontSize.base};
 `;
 
 const LastMessage = styled.p`

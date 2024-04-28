@@ -1,30 +1,53 @@
 import styled from 'styled-components';
-import { IoArrowBackOutline } from 'react-icons/io5';
-import { IoIosMore } from 'react-icons/io';
 import { MessageContent, MessageContentInput } from '../components';
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
+import { FiSearch } from 'react-icons/fi';
+import { SlMenu } from 'react-icons/sl';
+import { useState } from 'react';
+
+interface messagesTpye {
+  messageType: boolean;
+  content: string;
+  time: string;
+}
+const MESSAGES = [
+  { messageType: true, content: '너무 졸려요', time: '오전 9:50' },
+  { messageType: false, content: '면접 공부해야하는데', time: '오전 9:50' },
+  { messageType: false, content: '졸려서 자야겠다', time: '오전 9:50' },
+  { messageType: false, content: '수고요^^', time: '오전 9:50' },
+];
 
 const ChatRoom = () => {
   const navigate = useNavigate();
+  const [allMessage, setAllMessage] = useState(MESSAGES);
+  const handleSetAllMessage = (newMessages: messagesTpye[]) => {
+    setAllMessage(newMessages);
+  };
   return (
     <ChatRoomWrapper>
       <ChatRoomHeader>
-        <IoArrowBackOutline onClick={() => navigate(-1)} />
+        <IoIosArrowBack onClick={() => navigate(-1)} />
         <p>채팅방 이름</p>
-        <IoIosMore />
+        <ChatRoomHeaderRightBox>
+          <FiSearch />
+          <SlMenu />
+        </ChatRoomHeaderRightBox>
       </ChatRoomHeader>
       <MessageBox>
-        <MessageContent
-          messageType="received"
-          content="I have a question about the return policy for a product I purchased."
-          time="08:17 AM"
-        />
-        <MessageContent
-          content="I have a question about the return policy for a product I purchased."
-          time="08:17 AM"
-        />
+        {allMessage.map((message, index) => (
+          <MessageContent
+            key={index}
+            messageType={message.messageType}
+            content={message.content}
+            time={message.time}
+          />
+        ))}
       </MessageBox>
-      <MessageContentInput />
+      <MessageContentInput
+        allMessage={allMessage}
+        setAllMessage={handleSetAllMessage}
+      />
     </ChatRoomWrapper>
   );
 };
@@ -32,12 +55,12 @@ const ChatRoom = () => {
 export default ChatRoom;
 
 const ChatRoomWrapper = styled.div`
-  width: 360px;
+  width: 390px;
 
   display: flex;
   flex-direction: column;
 
-  background-color: #ffff;
+  background-color: #abc1d1;
 `;
 
 const ChatRoomHeader = styled.nav`
@@ -45,22 +68,33 @@ const ChatRoomHeader = styled.nav`
   justify-content: space-between;
   align-items: center;
 
-  height: 4.25rem;
+  height: 2.5rem;
 
-  padding: 0 1.2rem;
+  padding: 0 1rem;
 
-  font-size: 1.2rem;
+  position: sticky;
 
-  border-bottom: 1px solid #dee2e6;
+  font-size: ${({ theme }) => theme.fontSize.base};
 
   p {
-    font-size: 0.875rem;
+    font-size: ${({ theme }) => theme.fontSize.base};
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding-left: 2.5rem;
   }
 
   svg {
+    width: 1.5rem;
     cursor: pointer;
-    color: #666668;
+    font-size: ${({ theme }) => theme.fontSize.md};
   }
+`;
+
+const ChatRoomHeaderRightBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const MessageBox = styled.div`
@@ -70,7 +104,7 @@ const MessageBox = styled.div`
   align-items: flex-end;
   gap: 1.3rem;
 
-  padding: 1rem 1.2rem;
+  padding: 1rem 0.8rem;
 
   overflow-y: auto;
 `;

@@ -1,42 +1,55 @@
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { ReactNode } from 'react';
+import { styled } from '@mui/system';
 
 interface ToggleProps {
   title: string;
   num?: number;
+  children: ReactNode;
 }
 
-const Toggle = (props: ToggleProps) => {
+const Toggle = ({ children, title, num }: ToggleProps) => {
   return (
-    <ToggleWrapper>
-      <div>
-        <span>{props.title}</span>
-        <span>{props?.num}</span>
-      </div>
-      <StyledArrowDown />
-    </ToggleWrapper>
+    <MuiAccodion>
+      <MuiMuiAccordionSummary expandIcon={<MdKeyboardArrowDown />}>
+        <AccordionDetails>
+          <span>
+            {title} {num}
+          </span>
+        </AccordionDetails>
+      </MuiMuiAccordionSummary>
+      <AccordionDetails>{children}</AccordionDetails>
+    </MuiAccodion>
   );
 };
 
 export default Toggle;
 
-const ToggleWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const MuiAccodion = styled(Accordion)({
+  boxShadow: 'none',
+  border: 'none',
+  borderTop: '1px solid #f1f3f5',
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  color: ${({ theme }) => theme.colors.gray300};
+  '& .MuiAccordionDetails-root': {
+    margin: '0',
+    padding: '0',
+  },
+  '& span': {
+    color: '#868e96',
+    marginRight: '0.2rem',
+  },
 
-  height: 2.2rem;
+  '& svg': {
+    color: '#ced4da',
+    fontSize: '1.4rem',
+  },
 
-  border-top: 1px solid ${({ theme }) => theme.colors.gray100};
-  span {
-    margin-right: 0.3rem;
-  }
-`;
+  fontSize: '0.8rem',
+});
 
-const StyledArrowDown = styled(MdKeyboardArrowDown)`
-  font-size: ${({ theme }) => theme.fontSize.lg};
-  color: ${({ theme }) => theme.colors.gray200};
-`;
+const MuiMuiAccordionSummary = styled(AccordionSummary)({
+  margin: '0',
+  padding: '0',
+});

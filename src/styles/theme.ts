@@ -12,6 +12,7 @@ const colors = {
   gray200: '#dee2e6',
   gray250: '#ced4da',
   gray300: '#868e96',
+  gray400: '#495057',
 };
 
 const theme = {
