@@ -48,22 +48,23 @@ const Friends = () => {
 
   return (
     <FriendsWrapper>
-      <Toggle title="친구 10" />
-      <FriendsBox>
-        {FRIEND_INFORMATIONS.map((friend) => (
-          <li
-            key={friend.name}
-            onClick={() =>
-              handleFriendClick(
-                friend.name,
-                friend.profileImage,
-                friend.backgroundImage,
-              )
-            }>
-            <FriendItem name={friend.name} imageUrl={friend.profileImage} />
-          </li>
-        ))}
-      </FriendsBox>
+      <Toggle title="친구 10">
+        <FriendsBox>
+          {FRIEND_INFORMATIONS.map((friend) => (
+            <li
+              key={friend.name}
+              onClick={() =>
+                handleFriendClick(
+                  friend.name,
+                  friend.profileImage,
+                  friend.backgroundImage,
+                )
+              }>
+              <FriendItem name={friend.name} imageUrl={friend.profileImage} />
+            </li>
+          ))}
+        </FriendsBox>
+      </Toggle>
       <ProfileModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -92,6 +93,7 @@ export default Friends;
 
 const FriendsWrapper = styled.div`
   margin: 0 1rem;
+  padding-bottom: 4rem;
 `;
 
 const FriendsBox = styled.ul`

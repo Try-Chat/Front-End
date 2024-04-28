@@ -27,6 +27,7 @@ export default SwiperBox;
 
 const SwiperWrapper = styled(Swiper)`
   margin-bottom: 0.7rem;
+  padding: 0 0.2rem;
 
   display: flex;
 `;

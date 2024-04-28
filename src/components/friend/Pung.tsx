@@ -5,13 +5,14 @@ import styled from 'styled-components';
 const Pung = () => {
   return (
     <PungWrapper>
-      <Toggle title="펑" />
-      <PungBox>
-        <PungIconBox>
-          <PlusIcon />
-        </PungIconBox>
-        <p>나의 펑을 만들어보세요!</p>
-      </PungBox>
+      <Toggle title="펑">
+        <PungBox>
+          <PungIconBox>
+            <PlusIcon />
+          </PungIconBox>
+          <p>나의 펑을 만들어보세요!</p>
+        </PungBox>
+      </Toggle>
     </PungWrapper>
   );
 };

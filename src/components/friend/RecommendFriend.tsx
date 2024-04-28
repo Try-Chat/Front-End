@@ -7,13 +7,14 @@ import recommend from '../../assets/images/recommend.png';
 const RecommendFriend = () => {
   return (
     <RecommendFriendWrapper>
-      <Toggle title="추천친구" />
-      <RecommendFriendBox>
-        <ProfileImageBox imageUrl={recommend} size="2.5rem" />
-        <Title>새로운 친구를 만나보세요!</Title>
-        <span>17</span>
-        <StyledArrowRightIcon />
-      </RecommendFriendBox>
+      <Toggle title="추천친구">
+        <RecommendFriendBox>
+          <ProfileImageBox imageUrl={recommend} size="2.5rem" />
+          <Title>새로운 친구를 만나보세요!</Title>
+          <span>17</span>
+          <StyledArrowRightIcon />
+        </RecommendFriendBox>
+      </Toggle>
     </RecommendFriendWrapper>
   );
 };
