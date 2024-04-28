@@ -102,7 +102,7 @@ const MessageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 1.3rem;
+  gap: 0.4rem;
 
   padding: 1rem 0.8rem;
 
