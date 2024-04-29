@@ -43,7 +43,7 @@ const ChatRoomListWrapper = styled('div')({
 const ChatRoomListBox = styled('ul')({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.4rem',
+  gap: '0.8rem',
 
   paddingBottom: '4rem',
 });

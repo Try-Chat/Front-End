@@ -12,7 +12,7 @@ interface ToggleProps {
 
 const Toggle = ({ children, title, num }: ToggleProps) => {
   return (
-    <MuiAccodion>
+    <MuiAccodion defaultExpanded>
       <MuiMuiAccordionSummary expandIcon={<MdKeyboardArrowDown />}>
         <AccordionDetails>
           <span>
