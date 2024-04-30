@@ -4,7 +4,7 @@ import banner from '../../assets/images/banner.png';
 const Banner = () => {
   return (
     <BannerWrapper>
-      <img src={banner} />
+      <img src={banner} alt="banner" />
     </BannerWrapper>
   );
 };

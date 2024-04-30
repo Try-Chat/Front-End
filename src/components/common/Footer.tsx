@@ -1,40 +1,24 @@
 import styled from 'styled-components';
 import { FaUser } from 'react-icons/fa6';
 import { IoChatbubbleSharp } from 'react-icons/io5';
-import { IoChatbubblesSharp } from 'react-icons/io5';
-import { AiFillShopping } from 'react-icons/ai';
-import { MdOutlineMoreHoriz } from 'react-icons/md';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-interface FooterIconBoxProps {
-  page: string;
-  currentPage: string;
-}
+import { Link, useLocation } from 'react-router-dom';
 
 const FOOTER_ICONS = [
   { page: '/', icon: <FaUser />, title: '친구' },
   { page: '/chatroomlist', icon: <IoChatbubbleSharp />, title: '채팅' },
-  { page: '/openchat', icon: <IoChatbubblesSharp />, title: '오픈채팅' },
-  { page: '/shopping', icon: <AiFillShopping />, title: '쇼핑' },
-  { page: '/more', icon: <MdOutlineMoreHoriz />, title: '더보기' },
 ];
 
 const Footer = () => {
   const location = useLocation();
   const currentPage = location.pathname;
-  const navigate = useNavigate();
-  const handleIconClick = (page: string) => {
-    navigate(page);
-  };
 
   return (
     <FooterWrapper>
-      {FOOTER_ICONS.map((item, index) => (
+      {FOOTER_ICONS.map((item) => (
         <FooterIconBox
-          key={index}
-          page={item.page}
-          currentPage={currentPage}
-          onClick={() => handleIconClick(item.page)}>
+          key={item.page}
+          to={item.page}
+          $currentPage={currentPage === item.page}>
           {item.icon}
           <p>{item.title}</p>
         </FooterIconBox>
@@ -51,8 +35,8 @@ const FooterWrapper = styled.nav`
 
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  padding-top: 0.5rem;
+  justify-content: flex-start;
+  padding: 0.5rem;
 
   position: fixed;
   bottom: 0;
@@ -62,16 +46,17 @@ const FooterWrapper = styled.nav`
   background-color: ${({ theme }) => theme.colors.gray50};
 `;
 
-const FooterIconBox = styled.div<FooterIconBoxProps>`
-  width: 100%;
+const FooterIconBox = styled(Link)<{ $currentPage: boolean }>`
+  width: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
 
-  color: ${(props) => (props.currentPage === props.page ? '#000' : '#868e96')};
+  background-color: ${({ theme }) => theme.colors.gray50};
+  color: ${(props) => (props.$currentPage ? '#000' : '#868e96')};
 
-  cursor: pointer;
+  text-decoration: none;
 
   svg {
     font-size: ${({ theme }) => theme.fontSize.md};

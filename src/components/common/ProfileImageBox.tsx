@@ -7,7 +7,13 @@ interface ProfileImageBoxProps {
 }
 
 const ProfileImageBox = (props: ProfileImageBoxProps) => {
-  return <ProfileImage src={props.imageUrl || defaultImg} size={props.size} />;
+  return (
+    <ProfileImage
+      src={props.imageUrl || defaultImg}
+      alt="profile image"
+      size={props.size}
+    />
+  );
 };
 
 export default ProfileImageBox;
@@ -17,6 +23,4 @@ const ProfileImage = styled.img<ProfileImageBoxProps>`
   height: ${(props) => props.size};
 
   border-radius: 41%;
-
-  cursor: pointer;
 `;

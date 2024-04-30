@@ -47,8 +47,6 @@ const UpdatedProfiles = styled(SwiperSlide)`
   margin-right: 0.7rem;
 
   font-size: ${({ theme }) => theme.fontSize.sm};
-
-  cursor: pointer;
 `;
 
 const StyledDot = styled(LuDot)`

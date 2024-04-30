@@ -108,8 +108,6 @@ const FriendItemWrapper = styled.div`
   display: flex;
   gap: 0.6rem;
   align-items: center;
-
-  cursor: pointer;
 `;
 
 const FriendName = styled.p`

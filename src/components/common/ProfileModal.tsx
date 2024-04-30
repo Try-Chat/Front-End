@@ -5,26 +5,14 @@ import { TfiClose } from 'react-icons/tfi';
 
 import { BsFillChatFill } from 'react-icons/bs';
 
-// 친구 프로필
-// import { PiPhoneCallFill } from 'react-icons/pi';
-import { BsCameraVideoFill } from 'react-icons/bs';
-import { FaPhoneAlt } from 'react-icons/fa';
-
-// 내 프로필
 import { BiSolidPencil } from 'react-icons/bi';
-import { BsPlusSquare } from 'react-icons/bs';
 import ProfileImageBox from './ProfileImageBox';
 
 const PROFILE_MODAL_NAV_ICONS = {
-  friend: [
-    { title: '1:1 채팅', icon: <BsFillChatFill /> },
-    { title: '통화하기', icon: <FaPhoneAlt /> },
-    { title: '페이스톡', icon: <BsCameraVideoFill /> },
-  ],
+  friend: [{ title: '1:1 채팅', icon: <BsFillChatFill /> }],
   my: [
     { title: '나와의 채팅', icon: <BsFillChatFill /> },
     { title: '프로필 편집', icon: <BiSolidPencil /> },
-    { title: '펑 만들기', icon: <BsPlusSquare /> },
   ],
 };
 
@@ -47,7 +35,7 @@ const ProfileModal = ({
 
   return (
     <MuiModal onClose={() => setIsOpen(false)} open={isOpen}>
-      <DrawerWrapper isOpen={isOpen}>
+      <DrawerWrapper $isOpen={isOpen}>
         <ModalBox background={selectedFriend.backgroundImage}>
           <ProfileModalContent>
             <ProfileModalHeader>
@@ -64,7 +52,7 @@ const ProfileModal = ({
               </ProfileImageNameBox>
               <ProfileModalBottomNav>
                 {navIcons.map((item) => (
-                  <NavIconBox>
+                  <NavIconBox key={item.title}>
                     {item.icon}
                     <p>{item.title}</p>
                   </NavIconBox>
@@ -98,17 +86,17 @@ const slideOut = keyframes`
   }
 `;
 
-const DrawerWrapper = styled.div<{ isOpen: boolean }>`
+const DrawerWrapper = styled.div<{ $isOpen: boolean }>`
   display: flex;
   justify-content: center;
 
-  animation: ${({ isOpen }: { isOpen: boolean }) =>
-      isOpen ? slideIn : slideOut}
-    0.17s ease-in-out;
+  animation: ${({ $isOpen }: { $isOpen: boolean }) =>
+      $isOpen ? slideIn : slideOut}
+    0.1s ease-in-out;
 `;
 
 const ModalBox = styled.div<{ background?: string }>`
-  width: 390px;
+  width: 500px;
   height: 100vh;
 
   background-image: ${({ background }) =>
@@ -127,7 +115,7 @@ const ProfileModalContent = styled.div`
   justify-content: space-between;
 `;
 
-const ProfileModalHeader = styled.div`
+const ProfileModalHeader = styled.header`
   display: flex;
   justify-content: space-between;
 
@@ -168,8 +156,6 @@ const ProfileImageNameBox = styled.div`
 
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.colors.gray300};
-
-    cursor: pointer;
   }
 `;
 
@@ -183,14 +169,13 @@ const ProfileName = styled.p`
 
 const ProfileModalBottomNav = styled.nav`
   width: 100%;
+  height: 5rem;
 
-  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-top: 1px solid rgba(250, 250, 250, 0.2);
 
   display: flex;
-  justify-content: space-around;
-
-  padding-top: 1.5rem;
-  padding-bottom: 3.5rem;
+  justify-content: center;
+  gap: 5.2rem;
 `;
 
 const NavIconBox = styled.div`
@@ -201,8 +186,9 @@ const NavIconBox = styled.div`
 
   gap: 0.8rem;
 
-  cursor: pointer;
   color: ${({ theme }) => theme.colors.gray50};
+
+  cursor: pointer;
 
   svg {
     font-size: ${({ theme }) => theme.fontSize.md};

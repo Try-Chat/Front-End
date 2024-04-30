@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ProfileImageBox from '../common/ProfileImageBox';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatRoomListItemProps {
   chatRoomName: string;
@@ -12,8 +13,12 @@ const ChatRoomListItem = ({
   lastMessage,
   lastMessageTime,
 }: ChatRoomListItemProps) => {
+  const navigate = useNavigate();
+  const handleChatRoomClick = () => {
+    navigate('/chatroom');
+  };
   return (
-    <ChatRoomListItemWrapper>
+    <ChatRoomListItemWrapper onClick={handleChatRoomClick}>
       <ChatRoomItemLeftBox>
         <ProfileImageBox size="2.7rem" />
         <ChatRoomItemMidBox>
@@ -39,8 +44,6 @@ const ChatRoomListItemWrapper = styled.li`
   gap: 1rem;
 
   margin: 0 1rem;
-
-  cursor: pointer;
 `;
 
 const ChatRoomItemLeftBox = styled.div`

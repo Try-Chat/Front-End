@@ -25,8 +25,6 @@ const NoticeWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSize.sm};
 
   background-color: #f1f3f5;
-
-  cursor: pointer;
 `;
 
 const NoticeCategory = styled.div`
