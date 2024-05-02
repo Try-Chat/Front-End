@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import { FaUser } from 'react-icons/fa6';
 import { IoChatbubbleSharp } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
@@ -14,13 +14,10 @@ const Footer = () => {
 
   return (
     <FooterWrapper>
-      {FOOTER_ICONS.map((item) => (
-        <FooterIconBox
-          key={item.page}
-          to={item.page}
-          $currentPage={currentPage === item.page}>
-          {item.icon}
-          <p>{item.title}</p>
+      {FOOTER_ICONS.map(({ page, title, icon }) => (
+        <FooterIconBox key={page} to={page} $currentPage={currentPage === page}>
+          {icon}
+          <p>{title}</p>
         </FooterIconBox>
       ))}
     </FooterWrapper>
@@ -29,40 +26,41 @@ const Footer = () => {
 
 export default Footer;
 
-const FooterWrapper = styled.nav`
-  width: inherit;
-  height: 4rem;
+const FooterWrapper = styled('nav')(({ theme }) => ({
+  width: 'inherit',
+  height: '4rem',
 
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0.5rem;
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  padding: '0.5rem',
 
-  position: fixed;
-  bottom: 0;
+  position: 'fixed',
+  bottom: '0',
 
-  border-top: 0.1px solid ${({ theme }) => theme.colors.gray250};
+  borderTop: `0.1px solid ${theme.palette.grey[200]}`,
+  backgroundColor: theme.palette.grey[50],
+}));
 
-  background-color: ${({ theme }) => theme.colors.gray50};
-`;
+const FooterIconBox = styled(Link)<{ $currentPage: boolean }>(
+  ({ theme, $currentPage }) => ({
+    width: '4rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '0.4rem',
 
-const FooterIconBox = styled(Link)<{ $currentPage: boolean }>`
-  width: 4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
+    backgroundColor: theme.palette.grey[50],
+    color: $currentPage ? '#000' : '#868e96',
 
-  background-color: ${({ theme }) => theme.colors.gray50};
-  color: ${(props) => (props.$currentPage ? '#000' : '#868e96')};
+    textDecoration: 'none',
 
-  text-decoration: none;
+    svg: {
+      fontSize: theme.typography.body1,
+    },
 
-  svg {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
-
-  p {
-    font-size: ${({ theme }) => theme.fontSize.xs};
-  }
-`;
+    p: {
+      fontSize: theme.typography.body2,
+    },
+  }),
+);

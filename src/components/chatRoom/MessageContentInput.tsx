@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import React, { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
 
@@ -46,60 +46,61 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
 
 export default MessageContentInput;
 
-const MessageContentInputWrapper = styled.div`
-  width: 100%;
-  height: 3.5rem;
+const MessageContentInputWrapper = styled('div')(({ theme }) => ({
+  width: '100%',
+  height: '3.5rem',
 
-  padding: 0.4rem 0.5rem;
+  padding: '0.4rem 0.5rem',
 
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.4rem',
 
-  background-color: #fff;
+  backgroundColor: '#fff',
 
-  svg {
-    font-size: ${({ theme }) => theme.fontSize.md};
-    color: ${({ theme }) => theme.colors.gray300};
-  }
-`;
+  svg: {
+    fontSize: theme.typography.body1.fontSize,
+    color: theme.palette.grey[300],
+  },
+}));
 
-const MessageInputBox = styled.div`
-  display: flex;
-  width: 100%;
-  height: 98%;
+const MessageInputBox = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  height: '98%',
 
-  border-radius: 1.5rem;
-  border: 1px solid #dee2e6;
+  borderRadius: '1.5rem',
+  border: '1px solid #dee2e6',
 
-  padding: 0.2rem 0.5rem;
-  background-color: ${({ theme }) => theme.colors.gray50};
-`;
+  padding: '0.2rem 0.5rem',
+  backgroundColor: theme.palette.grey[50],
+}));
 
-const MessageInput = styled.input`
-  flex: 1;
-  font-size: ${({ theme }) => theme.fontSize.base};
+const MessageInput = styled('input')(({ theme }) => ({
+  flex: 1,
 
-  border: none;
-  outline: none;
+  fontSize: theme.typography.subtitle2.fontSize,
 
-  border-radius: 1rem;
+  border: 'none',
+  outline: 'none',
 
-  caret-color: #4c6ef5;
-`;
+  borderRadius: '1rem',
 
-const SendButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  caretColor: '#4c6ef5',
+}));
 
-  border-radius: 50%;
-  background-color: #eedb11;
+const SendButton = styled('button')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-  width: 2.1rem;
-`;
+  borderRadius: '50%',
+  backgroundColor: '#eedb11',
 
-const StyledArrowForward = styled(FaArrowUp)`
-  font-size: ${({ theme }) => theme.fontSize.md} !important;
-  color: #000 !important;
-`;
+  width: '2.1rem',
+});
+
+const StyledArrowForward = styled(FaArrowUp)(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  color: '#000',
+}));

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import ProfileImageBox from '../common/ProfileImageBox';
 
 interface MessageContentProps {
@@ -39,57 +39,58 @@ const MessageContent = ({
 
 export default MessageContent;
 
-const MessageContentWrapper = styled.div<{ messageType: boolean }>`
-  width: 100%;
+const MessageContentWrapper = styled('div')<{ messageType: boolean }>(
+  ({ messageType }) => ({
+    width: '100%',
 
-  display: flex;
-  justify-content: ${(props) =>
-    props.messageType ? 'flex-start' : 'flex-end'};
-`;
+    display: 'flex',
+    justifyContent: messageType ? 'flex-start' : 'flex-end',
+  }),
+);
 
-const MessageBox = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
+const MessageBox = styled('div')({
+  display: 'flex',
+  gap: '0.5rem',
+});
 
-const MessageContentBox = styled.div`
-  display: flex;
-  flex-direction: column;
+const MessageContentBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.3rem',
+});
 
-  gap: 0.3rem;
-`;
+const Content = styled('div')<{ messageType: boolean }>(
+  ({ theme, messageType }) => ({
+    maxWidth: '14rem',
+    padding: '0.6rem 0.7rem',
 
-const Content = styled.div<{ messageType: boolean }>`
-  max-width: 14rem;
-  padding: 0.6rem 0.7rem;
+    fontSize: theme.typography.body2.fontSize,
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
+    borderRadius: '1rem',
+    backgroundColor: messageType ? '#ffff' : '#EEDB11',
+  }),
+);
 
-  border-radius: 1rem;
-  background-color: ${(props) => (props.messageType ? '#ffff' : '#EEDB11')};
-`;
+const MessageTime = styled('div')<{ messageType: boolean }>(
+  ({ theme, messageType }) => ({
+    color: theme.palette.grey[400],
+    fontSize: theme.typography.body2.fontSize,
 
-const MessageTime = styled.div<{ messageType: boolean }>`
-  font-size: 0.875rem;
+    display: 'flex',
+    justifyContent: messageType ? 'flex-end' : 'flex-start',
+  }),
+);
 
-  color: ${({ theme }) => theme.colors.gray400};
-  font-size: ${({ theme }) => theme.fontSize.sm};
+const ChatPartner = styled('p')(({ theme }) => ({
+  color: theme.palette.grey[400],
+  fontSize: theme.typography.body2.fontSize,
+}));
 
-  display: flex;
-  justify-content: ${(props) =>
-    props.messageType ? 'flex-end' : 'flex-start'};
-`;
+const ContentTime = styled('div')({
+  width: 'fit-content',
 
-const ChatPartner = styled.p`
-  color: ${({ theme }) => theme.colors.gray400};
-  font-size: ${({ theme }) => theme.fontSize.sm};
-`;
+  display: 'flex',
+  alignItems: 'flex-end',
 
-const ContentTime = styled.div`
-  width: fit-content;
-
-  display: flex;
-  align-items: flex-end;
-
-  gap: 0.3rem;
-`;
+  gap: '0.3rem',
+});

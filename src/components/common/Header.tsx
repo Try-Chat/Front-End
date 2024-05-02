@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import { ReactNode } from 'react';
 
 const Header = ({ children }: { children?: ReactNode }) => {
@@ -11,22 +11,22 @@ const Header = ({ children }: { children?: ReactNode }) => {
 
 export default Header;
 
-const HeaderWrapper = styled.header`
-  height: 3rem;
+const HeaderWrapper = styled('header')({
+  height: '3rem',
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 
-  background-color: #ffff;
+  backgroundColor: '#ffff',
 
-  z-index: 100;
-  top: 0;
-  position: sticky;
+  zIndex: 100,
+  top: 0,
+  position: 'sticky',
 
-  margin: 0 1rem;
-`;
+  margin: '0 1rem',
+});
 
-const HeaderLeftBox = styled.h2`
-  font-size: ${({ theme }) => theme.fontSize.lg};
-`;
+const HeaderLeftBox = styled('h2')(({ theme }) => ({
+  fontSize: theme.typography.h3.fontSize,
+}));
