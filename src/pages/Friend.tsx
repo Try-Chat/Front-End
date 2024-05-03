@@ -13,11 +13,11 @@ const Friend = () => {
   return (
     <FriendWrapper>
       <Header>친구</Header>
-      {/* <Notice />
+      <Notice />
       <Mine />
       <UpdatedProfile />
       <Banner />
-      <Friends /> */}
+      <Friends />
       <Footer />
     </FriendWrapper>
   );

@@ -1,5 +1,5 @@
+import { styled } from '@mui/material';
 import { Banner, ChatRoomListItem, Footer } from '../components';
-import { styled } from '@mui/system';
 import Header from '../components/common/Header';
 
 const ChatRoomList = () => {
