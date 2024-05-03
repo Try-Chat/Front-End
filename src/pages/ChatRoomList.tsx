@@ -23,7 +23,7 @@ export default ChatRoomList;
 
 const ChatRoomListWrapper = styled('div')({
   width: '500px',
-  minHeight: '100vw',
+  minHeight: '100vh',
 
   backgroundColor: '#Ffff',
 });

@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import React, { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
+import getTime from '../../utils/getTime';
 
 interface messagesType {
   messageType: boolean;
@@ -19,9 +20,9 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
       const newMessage = {
         messageType: false,
         content: message,
-        time: '오전 4:30',
+        time: getTime(),
       };
-
+      console.log(newMessage.time);
       setAllMessage((prev) => [...prev, newMessage]);
       setMessage('');
     }
