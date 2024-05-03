@@ -1,9 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import { theme } from './styles';
 import { GlobalStyles, ThemeProvider } from '@mui/system';
-import globalStyle from './styles/globalStyle';
+import { globalStyle, GlobalFont } from './styles';
 import { CssBaseline } from '@mui/material';
-import GlobalFont from './styles/GlobalFont';
 
 const App = () => {
   return (
