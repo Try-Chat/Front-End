@@ -1,8 +1,8 @@
-import styled from 'styled-components';
 import defaultImg from '../../assets/images/defaultImg.jpg';
 import ProfileImageBox from '../common/ProfileImageBox';
 import { useState } from 'react';
 import ProfileModal from '../common/ProfileModal';
+import { styled } from '@mui/material';
 
 const Mine = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,24 +31,24 @@ const Mine = () => {
 
 export default Mine;
 
-const MineWrapper = styled.div`
-  display: flex;
-  align-items: center;
+const MineWrapper = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
 
-  margin: 0.7rem 1rem;
-`;
+  margin: '0.7rem 1rem',
+});
 
-const MineBox = styled.div`
-  display: flex;
-  align-items: center;
+const MineBox = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
 
-  flex: 1;
-`;
+  flex: 1,
+});
 
-const MyName = styled.div`
-  flex: 1;
+const MyName = styled('div')(({ theme }) => ({
+  flex: 1,
 
-  font-size: ${({ theme }) => theme.fontSize.base};
+  fontSize: theme.typography.subtitle2.fontSize,
 
-  padding: 0 0.6rem;
-`;
+  padding: '0 0.6rem',
+}));

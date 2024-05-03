@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 const Notice = () => {
   return (
@@ -12,41 +12,41 @@ const Notice = () => {
 
 export default Notice;
 
-const NoticeWrapper = styled.div`
-  height: 2.2rem;
+const NoticeWrapper = styled('div')(({ theme }) => ({
+  height: '2.2rem',
 
-  margin: 0 1rem;
-  padding: 0 0.5rem;
-  border-radius: 1.25rem;
+  margin: '0 1rem',
+  padding: '0 0.5rem',
+  borderRadius: '1.25rem',
 
-  display: flex;
-  align-items: center;
+  display: 'flex',
+  alignItems: 'center',
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  fontSize: theme.typography.body1.fontSize,
 
-  background-color: #f1f3f5;
-`;
+  backgroundColor: '#f1f3f5',
+}));
 
-const NoticeCategory = styled.div`
-  width: fit-content;
+const NoticeCategory = styled('div')({
+  width: 'fit-content',
 
-  padding: 0.25rem 0.5rem;
+  padding: '0.25rem 0.5rem',
 
-  border-radius: 1.25rem;
+  borderRadius: '1.25rem',
 
-  color: #dee2e6;
-  background-color: #868e96;
-`;
+  color: '#dee2e6',
+  backgroundColor: '#868e96',
+});
 
-const NoticeTitle = styled.div`
-  flex: 1;
+const NoticeTitle = styled('div')({
+  flex: 1,
 
-  padding: 0 0.7rem;
-  color: #868e96;
-`;
+  padding: '0 0.7rem',
+  color: '#868e96',
+});
 
-const NoticeIcon = styled(MdKeyboardArrowRight)`
-  font-size: ${({ theme }) => theme.fontSize.lg};
+const NoticeIcon = styled(MdKeyboardArrowRight)(({ theme }) => ({
+  fontSize: theme.typography.h3.fontSize,
 
-  color: ${({ theme }) => theme.colors.gray200};
-`;
+  color: theme.palette.grey[200],
+}));
