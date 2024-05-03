@@ -1,6 +1,6 @@
 import ProfileImageBox from '../common/ProfileImageBox';
 import { useNavigate } from 'react-router-dom';
-import { Typography, styled } from '@mui/material';
+import { styled } from '@mui/material';
 
 interface ChatRoomListItemProps {
   chatRoomName: string;

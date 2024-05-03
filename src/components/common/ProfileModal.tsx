@@ -1,5 +1,4 @@
 import { Modal as MuiModal, styled } from '@mui/material';
-import { keyframes } from 'styled-components';
 import { SelectedFriendType } from '../friend/Friends';
 import { TfiClose } from 'react-icons/tfi';
 

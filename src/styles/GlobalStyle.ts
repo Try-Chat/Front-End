@@ -1,5 +1,3 @@
-import { fontSize } from '@mui/system';
-
 const globalStyle = {
   html: {
     minHeight: '100vh',
