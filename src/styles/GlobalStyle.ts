@@ -1,28 +1,34 @@
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+const globalStyle = {
+  html: {
+    minHeight: '100vh',
+  },
+  body: {
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'center',
 
-const GlobalStyle = createGlobalStyle`
-    ${reset}
-    *{
-        box-sizing: border-box;
-    }
-    #root{
-        font-family: "pretendard";
-        
-        display: flex;
-        justify-content: center;
-        
-        width: 100%;
-        min-height: 100vh;
-        
-        background-color: #f8fafc;
+    width: '100%',
 
-        button{
-            cursor: pointer;
-            border: none;
-        }
-    }
+    fontFamily: 'pretendard',
 
-`;
+    backgroundColor: '#f8fafc',
 
-export default GlobalStyle;
+    p: {
+      padding: 0,
+      margin: 0,
+    },
+
+    ul: {
+      padding: 0,
+      margin: 0,
+    },
+
+    button: {
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#ffff',
+    },
+  },
+};
+
+export default globalStyle;

@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import ProfileImageBox from '../common/ProfileImageBox';
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material';
 
 interface ChatRoomListItemProps {
   chatRoomName: string;
@@ -12,8 +13,12 @@ const ChatRoomListItem = ({
   lastMessage,
   lastMessageTime,
 }: ChatRoomListItemProps) => {
+  const navigate = useNavigate();
+  const handleChatRoomClick = () => {
+    navigate('/chatroom');
+  };
   return (
-    <ChatRoomListItemWrapper>
+    <ChatRoomListItemWrapper onClick={handleChatRoomClick}>
       <ChatRoomItemLeftBox>
         <ProfileImageBox size="2.7rem" />
         <ChatRoomItemMidBox>
@@ -30,51 +35,48 @@ const ChatRoomListItem = ({
 
 export default ChatRoomListItem;
 
-const ChatRoomListItemWrapper = styled.li`
-  height: 3rem;
+const ChatRoomListItemWrapper = styled('li')({
+  height: '3rem',
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: '0.4rem',
 
-  margin: 0 1rem;
+  margin: '0 1rem',
+});
 
-  cursor: pointer;
-`;
+const ChatRoomItemLeftBox = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+});
 
-const ChatRoomItemLeftBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
+const ChatRoomItemMidBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+});
 
-const ChatRoomItemMidBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-`;
+const ChatRoomItemRightBox = styled('div')({
+  height: '100%',
 
-const ChatRoomItemRightBox = styled.div`
-  height: 100%;
+  marginTop: '1.2rem',
 
-  margin-top: 1.2rem;
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.2rem',
+});
 
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-`;
+const ChatRoomName = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.subtitle2.fontSize,
+}));
 
-const ChatRoomName = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.base};
-`;
+const LastMessage = styled('p')({
+  fontSize: '0.7rem',
+  color: '#b3b3b3',
+});
 
-const LastMessage = styled.p`
-  font-size: 0.7rem;
-  color: #b3b3b3;
-`;
-
-const LastMessageTime = styled.p`
-  font-size: 0.8rem;
-  color: #b3b3b3;
-`;
+const LastMessageTime = styled('p')({
+  fontSize: '0.8rem',
+  color: '#b3b3b3',
+});

@@ -1,26 +1,26 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import banner from '../../assets/images/banner.png';
 
 const Banner = () => {
   return (
     <BannerWrapper>
-      <img src={banner} />
+      <img src={banner} alt="banner" />
     </BannerWrapper>
   );
 };
 
 export default Banner;
 
-const BannerWrapper = styled.div`
-  margin: 0 1rem;
-  padding: 1rem 0;
+const BannerWrapper = styled('div')({
+  margin: '0 1rem',
+  padding: '1rem 0',
 
-  height: 7rem;
+  height: '7rem',
 
-  img {
-    width: 100%;
-    height: 100%;
+  img: {
+    width: '100%',
+    height: '100%',
 
-    border-radius: 0.3rem;
-  }
-`;
+    borderRadius: '0.3rem',
+  },
+});

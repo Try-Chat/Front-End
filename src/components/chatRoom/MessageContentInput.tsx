@@ -1,53 +1,45 @@
-import styled from 'styled-components';
-import { FaRegSmile } from 'react-icons/fa';
-import { useState } from 'react';
+import { styled } from '@mui/material';
+import React, { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { HiHashtag } from 'react-icons/hi2';
+import getTime from '../../utils/getTime';
 
-interface messagesTpye {
+interface messagesType {
   messageType: boolean;
   content: string;
   time: string;
 }
 interface MessageContentInputProps {
-  allMessage: messagesTpye[];
-  setAllMessage: (newMessage: messagesTpye[]) => void;
+  setAllMessage: React.Dispatch<React.SetStateAction<messagesType[]>>;
 }
 
-const MessageContentInput = ({
-  allMessage,
-  setAllMessage,
-}: MessageContentInputProps) => {
+const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
   const [message, setMessage] = useState('');
 
-  const handleSendButtonClick = () => {
-    const newMessage = {
-      messageType: false,
-      content: message,
-      time: '오전 4:30',
-    };
-
-    setAllMessage([...allMessage, newMessage]);
-    setMessage('');
+  const handleSendButtonClick = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const newMessage = {
+        messageType: false,
+        content: message,
+        time: getTime(),
+      };
+      console.log(newMessage.time);
+      setAllMessage((prev) => [...prev, newMessage]);
+      setMessage('');
+    }
   };
   return (
     <MessageContentInputWrapper>
-      <PlusIcon />
       <MessageInputBox>
         <MessageInput
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleSendButtonClick}
         />
-        <IconBox>
-          <FaRegSmile />
-          <HiHashtag />
-          {message.trim() === '' ? null : (
-            <SendButton type="button" onClick={handleSendButtonClick}>
-              <StyledArrowForward />
-            </SendButton>
-          )}
-        </IconBox>
+        {message.trim() === '' ? null : (
+          <SendButton type="button">
+            <StyledArrowForward />
+          </SendButton>
+        )}
       </MessageInputBox>
     </MessageContentInputWrapper>
   );
@@ -55,77 +47,62 @@ const MessageContentInput = ({
 
 export default MessageContentInput;
 
-const MessageContentInputWrapper = styled.div`
-  width: 100%;
-  height: 3.5rem;
+const MessageContentInputWrapper = styled('div')(({ theme }) => ({
+  width: '100%',
+  height: '3.5rem',
 
-  padding: 0.3rem 0.3rem 0.8rem 0.5rem;
+  padding: '0.4rem 0.5rem',
 
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.4rem',
 
-  background-color: #fff;
+  backgroundColor: '#fff',
 
-  svg {
-    font-size: ${({ theme }) => theme.fontSize.md};
-    color: ${({ theme }) => theme.colors.gray300};
-    cursor: pointer;
-  }
-`;
+  svg: {
+    fontSize: theme.typography.body1.fontSize,
+    color: theme.palette.grey[300],
+  },
+}));
 
-const MessageInputBox = styled.div`
-  display: flex;
-  flex: 1;
-  border-radius: 1rem;
-  padding-left: 0.2rem;
-  height: 98%;
-`;
+const MessageInputBox = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  height: '98%',
 
-const MessageInput = styled.input`
-  flex: 1;
-  font-size: ${({ theme }) => theme.fontSize.base};
+  borderRadius: '1.5rem',
+  border: '1px solid #dee2e6',
 
-  padding: 0 0.5rem;
-  border: 1px solid #dee2e6;
-  border-right: none;
-  outline: none;
+  padding: '0.2rem 0.5rem',
+  backgroundColor: theme.palette.grey[50],
+}));
 
-  background-color: ${({ theme }) => theme.colors.gray50};
-  border-radius: 1rem 0 0 1rem;
+const MessageInput = styled('input')(({ theme }) => ({
+  flex: 1,
 
-  caret-color: #4c6ef5;
-`;
+  fontSize: theme.typography.subtitle2.fontSize,
 
-const SendButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: 'none',
+  outline: 'none',
 
-  border-radius: 50%;
-  background-color: #eedb11;
-  padding: 0.3rem;
-`;
+  borderRadius: '1rem',
 
-const StyledArrowForward = styled(FaArrowUp)`
-  font-size: ${({ theme }) => theme.fontSize.md} !important;
-  color: #000 !important;
-`;
+  caretColor: '#4c6ef5',
+  backgroundColor: theme.palette.grey[50],
+}));
 
-const IconBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+const SendButton = styled('button')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-  background-color: ${({ theme }) => theme.colors.gray50};
+  borderRadius: '50%',
+  backgroundColor: '#eedb11',
 
-  padding-right: 0.3rem;
+  width: '2.1rem',
+});
 
-  border: 1px solid #dee2e6;
-  border-radius: 0 1rem 1rem 0;
-  border-left: none;
-`;
-
-const PlusIcon = styled(AiOutlinePlus)`
-  font-size: 1.6rem !important;
-`;
+const StyledArrowForward = styled(FaArrowUp)(({ theme }) => ({
+  fontSize: `${theme.typography.subtitle1.fontSize} !important`,
+  color: '#000 !important',
+}));

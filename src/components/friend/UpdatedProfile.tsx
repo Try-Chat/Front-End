@@ -1,9 +1,9 @@
 import { LuDot } from 'react-icons/lu';
-import styled from 'styled-components';
 import Toggle from '../common/Toggle';
 import { SwiperSlide } from 'swiper/react';
 import ProfileImageBox from '../common/ProfileImageBox';
 import SwiperBox from '../common/SwiperBox';
+import { styled } from '@mui/material';
 
 const ProfileItem = ({ friendName }: { friendName: string }) => {
   return (
@@ -31,31 +31,29 @@ const UpdatedProfile = () => {
 
 export default UpdatedProfile;
 
-const UpdatedProfileWrapper = styled.div`
-  margin: 0 1rem;
-`;
+const UpdatedProfileWrapper = styled('div')({
+  margin: '0 1rem',
+});
 
-const UpdatedProfiles = styled(SwiperSlide)`
-  position: relative;
+const UpdatedProfiles = styled(SwiperSlide)(({ theme }) => ({
+  position: 'relative',
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 
-  gap: 0.35rem;
+  gap: '0.35rem',
 
-  margin-right: 0.7rem;
+  marginRight: '0.7rem',
 
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  fontSize: theme.typography.body1.fontSize,
+}));
 
-  cursor: pointer;
-`;
+const StyledDot = styled(LuDot)(({ theme }) => ({
+  position: 'absolute',
+  top: '-0.5rem',
+  left: '-0.7rem',
+  color: ' red !important',
 
-const StyledDot = styled(LuDot)`
-  position: absolute;
-  top: -0.5rem;
-  left: -0.7rem;
-  color: red !important;
-
-  font-size: ${({ theme }) => theme.fontSize.md};
-`;
+  fontSsize: theme.typography.subtitle1.fontSize,
+}));

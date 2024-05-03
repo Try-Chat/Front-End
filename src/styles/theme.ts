@@ -1,23 +1,49 @@
-const fontSize = {
-  xs: '0.6rem',
-  sm: '0.8rem',
-  base: '1rem',
-  md: '1.2rem',
-  lg: '1.4rem',
-};
+import { createTheme } from '@mui/material';
 
-const colors = {
-  gray50: '#f8f9fa',
-  gray100: '#f1f3f5',
-  gray200: '#dee2e6',
-  gray250: '#ced4da',
-  gray300: '#868e96',
-  gray400: '#495057',
-};
+const theme = createTheme({
+  palette: {
+    grey: {
+      50: '#f8f9fa',
+      100: '#f1f3f5',
+      200: '#dee2e6',
+      300: '#ced4da',
+      400: '#868e96',
+      500: '#495057',
+    },
+  },
+  typography: {
+    htmlFontSize: 16,
+    fontFamily: 'Pretendard',
 
-const theme = {
-  fontSize,
-  colors,
-};
+    h3: {
+      fontSize: '1.4rem',
+      fontWeight: 'normal',
+    },
+    subtitle1: {
+      fontSize: '1.2rem',
+    },
+    subtitle2: {
+      fontSize: '1rem',
+    },
+    body1: {
+      fontSize: '0.8rem',
+    },
+    body2: {
+      fontSize: '0.6rem',
+    },
+  },
+  components: {
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          minHeight: '2.5rem !important',
+        },
+        content: {
+          margin: '0 !important',
+        },
+      },
+    },
+  },
+});
 
 export default theme;

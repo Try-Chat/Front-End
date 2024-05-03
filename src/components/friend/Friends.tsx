@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import Toggle from '../common/Toggle';
 import ProfileImageBox from '../common/ProfileImageBox';
 import jung from '../../assets/images/jung.jpg';
 import background from '../../assets/images/background.jpg';
 import { useState } from 'react';
 import ProfileModal from '../common/ProfileModal';
+import { styled } from '@mui/material';
 
 const FRIEND_INFORMATIONS = [
   { name: '정충일', profileImage: jung, backgroundImage: background },
@@ -91,27 +91,26 @@ const FriendItem = ({
 
 export default Friends;
 
-const FriendsWrapper = styled.div`
-  margin: 0 1rem;
-  padding-bottom: 4rem;
-`;
+const FriendsWrapper = styled('div')({
+  margin: '0 1rem',
+  paddingBottom: '4rem',
+});
 
-const FriendsBox = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+const FriendsBox = styled('ul')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.75rem',
 
-  margin-bottom: 1rem;
-`;
+  marginBottom: '1rem',
+  listStyleType: 'none',
+});
 
-const FriendItemWrapper = styled.div`
-  display: flex;
-  gap: 0.6rem;
-  align-items: center;
+const FriendItemWrapper = styled('div')({
+  display: 'flex',
+  gap: '0.6rem',
+  alignItems: 'center',
+});
 
-  cursor: pointer;
-`;
-
-const FriendName = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.base};
-`;
+const FriendName = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.subtitle2.fontSize,
+}));

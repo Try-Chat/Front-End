@@ -1,28 +1,22 @@
-import styled from 'styled-components';
 import Header from '../components/common/Header';
 import {
   Banner,
-  Channel,
   Footer,
   Friends,
   Mine,
   Notice,
-  Pung,
-  RecommendFriend,
   UpdatedProfile,
 } from '../components';
+import { styled } from '@mui/material';
 
 const Friend = () => {
   return (
     <FriendWrapper>
-      <Header />
+      <Header>친구</Header>
       <Notice />
       <Mine />
       <UpdatedProfile />
-      <Pung />
       <Banner />
-      <RecommendFriend />
-      <Channel />
       <Friends />
       <Footer />
     </FriendWrapper>
@@ -31,9 +25,9 @@ const Friend = () => {
 
 export default Friend;
 
-const FriendWrapper = styled.div`
-  width: 390px;
+const FriendWrapper = styled('div')({
+  width: '500px',
+  minHeight: '100vh',
 
-  background-color: #ffff;
-  min-height: 100vh;
-`;
+  backgroundColor: '#ffff',
+});

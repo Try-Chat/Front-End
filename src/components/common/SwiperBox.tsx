@@ -1,5 +1,5 @@
+import { styled } from '@mui/material';
 import { ReactNode } from 'react';
-import styled from 'styled-components';
 import { Swiper } from 'swiper/react';
 
 interface SwiperBoxProps {
@@ -25,9 +25,9 @@ const SwiperBox = ({
 
 export default SwiperBox;
 
-const SwiperWrapper = styled(Swiper)`
-  margin-bottom: 0.7rem;
-  padding: 0 0.2rem;
+const SwiperWrapper = styled(Swiper)({
+  marginBottom: '0.7rem',
+  padding: '0 0.2rem',
 
-  display: flex;
-`;
+  display: 'flex',
+});
