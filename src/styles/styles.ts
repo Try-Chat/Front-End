@@ -1,4 +1,4 @@
-export const globalStyle = {
+export const styles = {
   html: {
     minHeight: '100vh',
   },
