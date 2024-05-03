@@ -30,7 +30,7 @@ const NoticeWrapper = styled('div')(({ theme }) => ({
 const NoticeCategory = styled('div')({
   width: 'fit-content',
 
-  padding: '0.25rem 0.5rem',
+  padding: '0.1rem 0.5rem',
 
   borderRadius: '1.25rem',
 

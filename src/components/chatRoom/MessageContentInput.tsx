@@ -87,6 +87,7 @@ const MessageInput = styled('input')(({ theme }) => ({
   borderRadius: '1rem',
 
   caretColor: '#4c6ef5',
+  backgroundColor: theme.palette.grey[50],
 }));
 
 const SendButton = styled('button')({
@@ -101,6 +102,6 @@ const SendButton = styled('button')({
 });
 
 const StyledArrowForward = styled(FaArrowUp)(({ theme }) => ({
-  fontSize: theme.typography.body1.fontSize,
-  color: '#000',
+  fontSize: `${theme.typography.subtitle1.fontSize} !important`,
+  color: '#000 !important',
 }));

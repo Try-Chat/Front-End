@@ -17,6 +17,7 @@ const theme = createTheme({
 
     h3: {
       fontSize: '1.4rem',
+      fontWeight: 'normal',
     },
     subtitle1: {
       fontSize: '1.2rem',
@@ -29,6 +30,18 @@ const theme = createTheme({
     },
     body2: {
       fontSize: '0.6rem',
+    },
+  },
+  components: {
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          minHeight: '2.5rem !important',
+        },
+        content: {
+          margin: '0 !important',
+        },
+      },
     },
   },
 });

@@ -102,6 +102,7 @@ const FriendsBox = styled('ul')({
   gap: '0.75rem',
 
   marginBottom: '1rem',
+  listStyleType: 'none',
 });
 
 const FriendItemWrapper = styled('div')({

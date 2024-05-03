@@ -40,6 +40,7 @@ export default ChatRoom;
 
 const ChatRoomWrapper = styled('div')({
   width: '500px',
+  minHeight: '100vh',
 
   display: 'flex',
   flexDirection: 'column',

@@ -64,7 +64,7 @@ const Content = styled('div')<{ messageType: boolean }>(
     maxWidth: '14rem',
     padding: '0.6rem 0.7rem',
 
-    fontSize: theme.typography.body2.fontSize,
+    fontSize: theme.typography.body1.fontSize,
 
     borderRadius: '1rem',
     backgroundColor: messageType ? '#ffff' : '#EEDB11',
@@ -73,8 +73,8 @@ const Content = styled('div')<{ messageType: boolean }>(
 
 const MessageTime = styled('div')<{ messageType: boolean }>(
   ({ theme, messageType }) => ({
-    color: theme.palette.grey[400],
-    fontSize: theme.typography.body2.fontSize,
+    color: theme.palette.grey[500],
+    fontSize: theme.typography.body1.fontSize,
 
     display: 'flex',
     justifyContent: messageType ? 'flex-end' : 'flex-start',
@@ -82,8 +82,8 @@ const MessageTime = styled('div')<{ messageType: boolean }>(
 );
 
 const ChatPartner = styled('p')(({ theme }) => ({
-  color: theme.palette.grey[400],
-  fontSize: theme.typography.body2.fontSize,
+  color: theme.palette.grey[500],
+  fontSize: theme.typography.body1.fontSize,
 }));
 
 const ContentTime = styled('div')({

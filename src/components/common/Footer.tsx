@@ -56,11 +56,11 @@ const FooterIconBox = styled(Link)<{ $currentPage: boolean }>(
     textDecoration: 'none',
 
     svg: {
-      fontSize: theme.typography.body1,
+      fontSize: theme.typography.subtitle1.fontSize,
     },
 
     p: {
-      fontSize: theme.typography.body2,
+      fontSize: theme.typography.body2.fontSize,
     },
   }),
 );

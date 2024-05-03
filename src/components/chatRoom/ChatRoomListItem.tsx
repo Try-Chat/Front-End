@@ -22,12 +22,12 @@ const ChatRoomListItem = ({
       <ChatRoomItemLeftBox>
         <ProfileImageBox size="2.7rem" />
         <ChatRoomItemMidBox>
-          <Typography variant="h3">{chatRoomName}</Typography>
-          <Typography variant="body1">{lastMessage}</Typography>
+          <ChatRoomName>{chatRoomName}</ChatRoomName>
+          <LastMessage>{lastMessage}</LastMessage>
         </ChatRoomItemMidBox>
       </ChatRoomItemLeftBox>
       <ChatRoomItemRightBox>
-        <Typography variant="body1">{lastMessageTime}</Typography>
+        <LastMessageTime>{lastMessageTime}</LastMessageTime>
       </ChatRoomItemRightBox>
     </ChatRoomListItemWrapper>
   );
@@ -41,7 +41,7 @@ const ChatRoomListItemWrapper = styled('li')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: '1rem',
+  gap: '0.4rem',
 
   margin: '0 1rem',
 });
@@ -55,7 +55,6 @@ const ChatRoomItemLeftBox = styled('div')({
 const ChatRoomItemMidBox = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.3rem',
 });
 
 const ChatRoomItemRightBox = styled('div')({
@@ -66,4 +65,18 @@ const ChatRoomItemRightBox = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.2rem',
+});
+
+const ChatRoomName = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.subtitle2.fontSize,
+}));
+
+const LastMessage = styled('p')({
+  fontSize: '0.7rem',
+  color: '#b3b3b3',
+});
+
+const LastMessageTime = styled('p')({
+  fontSize: '0.8rem',
+  color: '#b3b3b3',
 });

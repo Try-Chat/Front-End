@@ -27,6 +27,6 @@ const HeaderWrapper = styled('header')({
   margin: '0 1rem',
 });
 
-const HeaderLeftBox = styled('h2')(({ theme }) => ({
+const HeaderLeftBox = styled('p')(({ theme }) => ({
   fontSize: theme.typography.h3.fontSize,
 }));

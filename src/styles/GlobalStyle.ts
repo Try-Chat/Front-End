@@ -1,3 +1,5 @@
+import { fontSize } from '@mui/system';
+
 const globalStyle = {
   html: {
     minHeight: '100vh',
@@ -14,6 +16,12 @@ const globalStyle = {
     backgroundColor: '#f8fafc',
 
     p: {
+      padding: 0,
+      margin: 0,
+    },
+
+    ul: {
+      padding: 0,
       margin: 0,
     },
 
