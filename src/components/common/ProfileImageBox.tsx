@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material';
 import defaultImg from '../../assets/images/defaultImg.jpg';
 
 interface ProfileImageBoxProps {
@@ -18,9 +18,9 @@ const ProfileImageBox = (props: ProfileImageBoxProps) => {
 
 export default ProfileImageBox;
 
-const ProfileImage = styled.img<ProfileImageBoxProps>`
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
+const ProfileImage = styled('img')<{ size: string }>(({ size }) => ({
+  width: size,
+  height: size,
 
-  border-radius: 41%;
-`;
+  borderRadius: '41%',
+}));

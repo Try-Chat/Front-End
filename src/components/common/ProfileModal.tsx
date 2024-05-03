@@ -1,5 +1,5 @@
-import { Modal as MuiModal } from '@mui/material';
-import styled, { keyframes } from 'styled-components';
+import { Modal as MuiModal, styled } from '@mui/material';
+import { keyframes } from 'styled-components';
 import { SelectedFriendType } from '../friend/Friends';
 import { TfiClose } from 'react-icons/tfi';
 
@@ -35,7 +35,7 @@ const ProfileModal = ({
 
   return (
     <MuiModal onClose={() => setIsOpen(false)} open={isOpen}>
-      <DrawerWrapper $isOpen={isOpen}>
+      <DrawerWrapper>
         <ModalBox background={selectedFriend.backgroundImage}>
           <ProfileModalContent>
             <ProfileModalHeader>
@@ -68,133 +68,110 @@ const ProfileModal = ({
 
 export default ProfileModal;
 
-const slideIn = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
+const DrawerWrapper = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+});
 
-const slideOut = keyframes`
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(100%);
-  }
-`;
+const ModalBox = styled('div')<{ background?: string }>(({ background }) => ({
+  width: '500px',
+  height: '100vh',
 
-const DrawerWrapper = styled.div<{ $isOpen: boolean }>`
-  display: flex;
-  justify-content: center;
+  backgroundImage: background
+    ? `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${background})`
+    : 'none',
+  backgroundColor: background ? 'none' : '#78848F',
+  backgroundSize: 'cover',
+}));
 
-  animation: ${({ $isOpen }: { $isOpen: boolean }) =>
-      $isOpen ? slideIn : slideOut}
-    0.1s ease-in-out;
-`;
+const ProfileModalContent = styled('div')({
+  height: '100%',
 
-const ModalBox = styled.div<{ background?: string }>`
-  width: 500px;
-  height: 100vh;
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+});
 
-  background-image: ${({ background }) =>
-    background
-      ? `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${background})`
-      : 'none'};
-  background-color: ${({ background }) => (background ? 'none' : '#78848F')};
-  background-size: cover;
-`;
+const ProfileModalHeader = styled('header')({
+  display: 'flex',
+  justifyContent: 'space-between',
 
-const ProfileModalContent = styled.div`
-  height: 100%;
+  padding: '1rem',
+});
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+const StyledCloseIcon = styled(TfiClose)(({ theme }) => ({
+  color: theme.palette.grey[50],
 
-const ProfileModalHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
+  fontSize: theme.typography.subtitle1.fontSize,
 
-  padding: 1rem;
-`;
+  cursor: 'pointer',
+}));
 
-const StyledCloseIcon = styled(TfiClose)`
-  color: ${({ theme }) => theme.colors.gray50};
+const ProfileModalBottomBox = styled('div')({
+  bottom: 0,
 
-  font-size: ${({ theme }) => theme.fontSize.md};
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 
-  cursor: pointer;
-`;
+  gap: '3.5rem',
+});
 
-const ProfileModalBottomBox = styled.div`
-  bottom: 0;
+const ProfileImageNameBox = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '1rem',
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: 'relative',
 
-  gap: 3.5rem;
-`;
+  svg: {
+    position: 'absolute',
+    top: '7rem',
+    left: '4.7rem',
 
-const ProfileImageNameBox = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+    fontSize: theme.typography.subtitle2.fontSize,
+    color: theme.palette.grey[300],
+  },
+}));
 
-  position: relative;
+const ProfileName = styled('p')(({ theme }) => ({
+  position: 'relative',
 
-  svg {
-    position: absolute;
-    top: 7rem;
-    left: 4.7rem;
+  fontSize: theme.typography.subtitle2.fontSize,
 
-    font-size: ${({ theme }) => theme.fontSize.base};
-    color: ${({ theme }) => theme.colors.gray300};
-  }
-`;
+  color: theme.palette.grey[50],
+}));
 
-const ProfileName = styled.p`
-  position: relative;
+const ProfileModalBottomNav = styled('nav')({
+  width: '100%',
+  height: '5rem',
 
-  font-size: ${({ theme }) => theme.fontSize.base};
+  borderTop: '1px solid rgba(250, 250, 250, 0.2)',
 
-  color: ${({ theme }) => theme.colors.gray50};
-`;
+  display: 'flex',
+  justifyContent: 'center',
+  gap: '5.2rem',
+});
 
-const ProfileModalBottomNav = styled.nav`
-  width: 100%;
-  height: 5rem;
+const NavIconBox = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 
-  border-top: 1px solid rgba(250, 250, 250, 0.2);
+  gap: '0.8rem',
 
-  display: flex;
-  justify-content: center;
-  gap: 5.2rem;
-`;
+  color: theme.palette.grey[50],
 
-const NavIconBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  cursor: 'pointer',
 
-  gap: 0.8rem;
+  svg: {
+    fontSize: theme.typography.subtitle2.fontSize,
+  },
 
-  color: ${({ theme }) => theme.colors.gray50};
-
-  cursor: pointer;
-
-  svg {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
-
-  p {
-    font-size: ${({ theme }) => theme.fontSize.sm};
-  }
-`;
+  p: {
+    fontSize: theme.typography.body1.fontSize,
+  },
+}));

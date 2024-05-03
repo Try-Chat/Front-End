@@ -1,8 +1,11 @@
-// import styled from 'styled-components';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  styled,
+} from '@mui/material';
 import { ReactNode } from 'react';
-import { styled } from '@mui/system';
 
 interface ToggleProps {
   title: string;
@@ -36,12 +39,12 @@ const MuiAccodion = styled(Accordion)({
     margin: '0',
     padding: '0',
   },
-  '& span': {
+  span: {
     color: '#868e96',
     marginRight: '0.2rem',
   },
 
-  '& svg': {
+  svg: {
     color: '#ced4da',
     fontSize: '1.4rem',
   },
