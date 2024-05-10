@@ -103,6 +103,10 @@ const FriendsBox = styled('ul')({
 
   marginBottom: '1rem',
   listStyleType: 'none',
+
+  li: {
+    cursor: 'pointer',
+  },
 });
 
 const FriendItemWrapper = styled('div')({

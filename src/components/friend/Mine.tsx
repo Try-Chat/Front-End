@@ -43,6 +43,8 @@ const MineBox = styled('div')({
   alignItems: 'center',
 
   flex: 1,
+
+  cursor: 'pointer',
 });
 
 const MyName = styled('div')(({ theme }) => ({
