@@ -3,8 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useState } from 'react';
 import { styled } from '@mui/material';
+import { display, height, margin, padding, width } from '@mui/system';
+import { BsJustify } from 'react-icons/bs';
+import zIndex from '@mui/material/styles/zIndex';
 
-const MESSAGES = [
+interface MessageType {
+  messageType: boolean;
+  content: string;
+  time: string;
+}
+
+const MESSAGES: MessageType[] = [
   { messageType: true, content: '너무 졸려요', time: '오전 9:50' },
   { messageType: false, content: '면접 공부해야하는데', time: '오전 9:50' },
   { messageType: false, content: '졸려서 자야겠다', time: '오전 9:50' },
@@ -24,10 +33,15 @@ const ChatRoom = () => {
       <MessageBox>
         {allMessage.map((message, index) => (
           <MessageContent
-            key={index} // 수정 사항
+            key={index}
             messageType={message.messageType}
             content={message.content}
-            time={message.time}
+            time={
+              index === allMessage.length - 1 ||
+              allMessage[index + 1].time !== message.time
+                ? message.time
+                : null
+            }
           />
         ))}
       </MessageBox>
@@ -40,7 +54,7 @@ export default ChatRoom;
 
 const ChatRoomWrapper = styled('div')({
   width: '500px',
-  minHeight: '100vh',
+  height: '100vh',
 
   display: 'flex',
   flexDirection: 'column',
@@ -58,6 +72,8 @@ const ChatRoomHeader = styled('nav')(({ theme }) => ({
   padding: '0 1rem',
 
   position: 'sticky',
+  top: 0,
+  backgroundColor: '#abc1d1',
 
   fontSize: theme.typography.subtitle2.fontSize,
 
@@ -82,7 +98,23 @@ const MessageBox = styled('div')({
   alignItems: 'flex-end',
   gap: '0.4rem',
 
-  padding: '1rem 0.8rem',
+  padding: '1rem 0.4rem 1rem 0.8rem',
 
   overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    width: '0.5rem',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    background: '#868e96',
+    borderRadius: '5px',
+    backgroundClip: 'padding-box',
+    border: '3px solid transparent',
+  },
+
+  '&::-webkit-scrollbar-track': {
+    background: '#abc1d1',
+    borderRadius: '5px',
+    margin: '3.5rem 0',
+  },
 });
