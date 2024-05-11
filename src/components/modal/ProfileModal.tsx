@@ -1,11 +1,11 @@
-import { Modal as MuiModal, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { SelectedFriendType } from '../friend/Friends';
 import { TfiClose } from 'react-icons/tfi';
 
 import { BsFillChatFill } from 'react-icons/bs';
 
 import { BiSolidPencil } from 'react-icons/bi';
-import ProfileImageBox from './ProfileImageBox';
+import ProfileImageBox from '../common/ProfileImageBox';
 
 const PROFILE_MODAL_NAV_ICONS = {
   friend: [{ title: '1:1 채팅', icon: <BsFillChatFill /> }],
@@ -16,15 +16,13 @@ const PROFILE_MODAL_NAV_ICONS = {
 };
 
 interface MuiDrawerProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleModalClose: VoidFunction;
   selectedFriend: SelectedFriendType;
   isMine?: boolean;
 }
 
 const ProfileModal = ({
-  setIsOpen,
-  isOpen,
+  handleModalClose,
   selectedFriend,
   isMine,
 }: MuiDrawerProps) => {
@@ -33,55 +31,50 @@ const ProfileModal = ({
     : PROFILE_MODAL_NAV_ICONS.friend;
 
   return (
-    <MuiModal onClose={() => setIsOpen(false)} open={isOpen}>
-      <DrawerWrapper>
-        <ModalBox background={selectedFriend.backgroundImage}>
-          <ProfileModalContent>
-            <ProfileModalHeader>
-              <StyledCloseIcon onClick={() => setIsOpen(false)} />
-            </ProfileModalHeader>
-            <ProfileModalBottomBox>
-              <ProfileImageNameBox>
-                <ProfileImageBox
-                  imageUrl={selectedFriend.profileImage}
-                  size="6rem"
-                />
-                <ProfileName>{selectedFriend.name}</ProfileName>
-                {!isMine && <BiSolidPencil />}
-              </ProfileImageNameBox>
-              <ProfileModalBottomNav>
-                {navIcons.map((item) => (
-                  <NavIconBox key={item.title}>
-                    {item.icon}
-                    <p>{item.title}</p>
-                  </NavIconBox>
-                ))}
-              </ProfileModalBottomNav>
-            </ProfileModalBottomBox>
-          </ProfileModalContent>
-        </ModalBox>
-      </DrawerWrapper>
-    </MuiModal>
+    <ProfileModalBox background={selectedFriend.backgroundImage}>
+      <ProfileModalContent>
+        <ProfileModalHeader>
+          <button type="button" onClick={handleModalClose}>
+            <StyledCloseIcon />
+          </button>
+        </ProfileModalHeader>
+        <ProfileModalBottomBox>
+          <ProfileImageNameBox>
+            <ProfileImageBox
+              imageUrl={selectedFriend.profileImage}
+              size="6rem"
+            />
+            <ProfileName>{selectedFriend.name}</ProfileName>
+            {!isMine && <BiSolidPencil />}
+          </ProfileImageNameBox>
+          <ProfileModalBottomNav>
+            {navIcons.map((item) => (
+              <NavIconBox key={item.title}>
+                {item.icon}
+                <p>{item.title}</p>
+              </NavIconBox>
+            ))}
+          </ProfileModalBottomNav>
+        </ProfileModalBottomBox>
+      </ProfileModalContent>
+    </ProfileModalBox>
   );
 };
 
 export default ProfileModal;
 
-const DrawerWrapper = styled('div')({
-  display: 'flex',
-  justifyContent: 'center',
-});
+const ProfileModalBox = styled('div')<{ background?: string }>(
+  ({ background }) => ({
+    width: '500px',
+    height: '100%',
 
-const ModalBox = styled('div')<{ background?: string }>(({ background }) => ({
-  width: '500px',
-  height: '100vh',
-
-  backgroundImage: background
-    ? `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${background})`
-    : 'none',
-  backgroundColor: background ? 'none' : '#78848F',
-  backgroundSize: 'cover',
-}));
+    backgroundImage: background
+      ? `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${background})`
+      : 'none',
+    backgroundColor: background ? 'none' : '#78848F',
+    backgroundSize: 'cover',
+  }),
+);
 
 const ProfileModalContent = styled('div')({
   height: '100%',
@@ -96,14 +89,16 @@ const ProfileModalHeader = styled('header')({
   justifyContent: 'space-between',
 
   padding: '1rem',
+
+  button: {
+    backgroundColor: 'inherit',
+  },
 });
 
 const StyledCloseIcon = styled(TfiClose)(({ theme }) => ({
   color: theme.palette.grey[50],
 
   fontSize: theme.typography.subtitle1.fontSize,
-
-  cursor: 'pointer',
 }));
 
 const ProfileModalBottomBox = styled('div')({
