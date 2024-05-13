@@ -13,11 +13,13 @@ const Friend = () => {
   return (
     <FriendWrapper>
       <Header>친구</Header>
-      <Notice />
-      <Mine />
-      <UpdatedProfile />
-      <Banner />
-      <Friends />
+      <FriendMainBox>
+        <Notice />
+        <Mine />
+        <UpdatedProfile />
+        <Banner />
+        <Friends />
+      </FriendMainBox>
       <Footer />
     </FriendWrapper>
   );
@@ -27,7 +29,31 @@ export default Friend;
 
 const FriendWrapper = styled('div')({
   width: '500px',
-  minHeight: '100vh',
+  height: '100vh',
+
+  display: 'flex',
+  flexDirection: 'column',
 
   backgroundColor: '#ffff',
+});
+
+const FriendMainBox = styled('main')({
+  overflowY: 'auto',
+  flex: 1,
+
+  '&::-webkit-scrollbar': {
+    width: '0.5rem',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    background: '#adb5bd',
+    borderRadius: '5px',
+    backgroundClip: 'padding-box',
+    border: '3px solid transparent',
+  },
+
+  '&::-webkit-scrollbar-track': {
+    borderRadius: '5px',
+    marginBottom: '4rem',
+  },
 });

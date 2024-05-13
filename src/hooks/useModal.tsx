@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import ModalLayout from '../components/modal/ModalLayout';
 
 const useModal = () => {
@@ -9,20 +9,6 @@ const useModal = () => {
     setIsModal(true);
     setIsClosing(false);
   };
-
-  // useEffect(() => {
-  //   let timer: number;
-
-  //   if (isClosing) {
-  //     timer = setTimeout(() => {
-  //       setIsModal(false);
-  //     }, 100);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [isClosing]);
 
   const handleModalClose = () => {
     setIsClosing(true);

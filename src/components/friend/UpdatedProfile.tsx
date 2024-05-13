@@ -5,16 +5,6 @@ import ProfileImageBox from '../common/ProfileImageBox';
 import SwiperBox from '../common/SwiperBox';
 import { styled } from '@mui/material';
 
-const ProfileItem = ({ friendName }: { friendName: string }) => {
-  return (
-    <UpdatedProfiles>
-      <StyledDot />
-      <ProfileImageBox size="2.5rem" />
-      <p>{friendName}</p>
-    </UpdatedProfiles>
-  );
-};
-
 const UpdatedProfile = () => {
   return (
     <UpdatedProfileWrapper>
@@ -26,6 +16,16 @@ const UpdatedProfile = () => {
         </SwiperBox>
       </Toggle>
     </UpdatedProfileWrapper>
+  );
+};
+
+const ProfileItem = ({ friendName }: { friendName: string }) => {
+  return (
+    <UpdatedProfiles>
+      <StyledDot />
+      <ProfileImageBox size="2.5rem" />
+      <p>{friendName}</p>
+    </UpdatedProfiles>
   );
 };
 

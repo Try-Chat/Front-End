@@ -1,11 +1,8 @@
-import { MessageContent, MessageContentInput } from '../components';
-import { useNavigate } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
-import { useState } from 'react';
 import { styled } from '@mui/material';
-import { display, height, margin, padding, width } from '@mui/system';
-import { BsJustify } from 'react-icons/bs';
-import zIndex from '@mui/material/styles/zIndex';
+import { useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { MessageContent, MessageContentInput } from '../components';
 
 interface MessageType {
   messageType: boolean;
