@@ -1,10 +1,9 @@
 import { styled } from '@mui/material';
 import ProfileImageBox from '../common/ProfileImageBox';
-
 interface MessageContentProps {
   messageType: boolean;
   content: string;
-  time: string;
+  time: string | null;
 }
 
 const MessageContent = ({
@@ -13,7 +12,7 @@ const MessageContent = ({
   time,
 }: MessageContentProps) => {
   return (
-    <MessageContentWrapper messageType={messageType}>
+    <MessageContentWrapper messageType={messageType} time={time}>
       <MessageBox>
         {messageType && <ProfileImageBox size="2.3rem" />}
         <MessageContentBox>
@@ -22,12 +21,16 @@ const MessageContent = ({
               <ChatPartner>어준혁</ChatPartner>
               <ContentTime>
                 <Content messageType={messageType}>{content}</Content>
-                <MessageTime messageType={messageType}>{time}</MessageTime>
+                {time && (
+                  <MessageTime messageType={messageType}>{time}</MessageTime>
+                )}
               </ContentTime>
             </>
           ) : (
             <ContentTime>
-              <MessageTime messageType={messageType}>{time}</MessageTime>
+              {time && (
+                <MessageTime messageType={messageType}>{time}</MessageTime>
+              )}
               <Content messageType={messageType}>{content}</Content>
             </ContentTime>
           )}
@@ -39,14 +42,17 @@ const MessageContent = ({
 
 export default MessageContent;
 
-const MessageContentWrapper = styled('div')<{ messageType: boolean }>(
-  ({ messageType }) => ({
-    width: '100%',
+const MessageContentWrapper = styled('div')<{
+  messageType: boolean;
+  time: string | null;
+}>(({ messageType, time }) => ({
+  width: '100%',
 
-    display: 'flex',
-    justifyContent: messageType ? 'flex-start' : 'flex-end',
-  }),
-);
+  display: 'flex',
+  justifyContent: messageType ? 'flex-start' : 'flex-end',
+
+  marginTop: time === null ? 0 : '0.8rem',
+}));
 
 const MessageBox = styled('div')({
   display: 'flex',

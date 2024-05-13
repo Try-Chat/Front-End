@@ -3,8 +3,9 @@ import ProfileImageBox from '../common/ProfileImageBox';
 import jung from '../../assets/images/jung.jpg';
 import background from '../../assets/images/background.jpg';
 import { useState } from 'react';
-import ProfileModal from '../common/ProfileModal';
+import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
+import useModal from '../../hooks/useModal';
 
 const FRIEND_INFORMATIONS = [
   { name: '정충일', profileImage: jung, backgroundImage: background },
@@ -26,7 +27,7 @@ export interface SelectedFriendType {
 }
 
 const Friends = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isModal, handleModalClose, handleModalOpen, Modal } = useModal();
   const [selectedFriend, setSelectedFriend] = useState<SelectedFriendType>({
     name: '',
     profileImage: '',
@@ -38,7 +39,7 @@ const Friends = () => {
     profileImage: string,
     backgroundImage: string,
   ): void => {
-    setIsOpen(true);
+    handleModalOpen();
     setSelectedFriend({
       name,
       profileImage,
@@ -65,11 +66,14 @@ const Friends = () => {
           ))}
         </FriendsBox>
       </Toggle>
-      <ProfileModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        selectedFriend={selectedFriend}
-      />
+      {isModal && (
+        <Modal>
+          <ProfileModal
+            handleModalClose={handleModalClose}
+            selectedFriend={selectedFriend}
+          />
+        </Modal>
+      )}
     </FriendsWrapper>
   );
 };
@@ -103,6 +107,10 @@ const FriendsBox = styled('ul')({
 
   marginBottom: '1rem',
   listStyleType: 'none',
+
+  li: {
+    cursor: 'pointer',
+  },
 });
 
 const FriendItemWrapper = styled('div')({

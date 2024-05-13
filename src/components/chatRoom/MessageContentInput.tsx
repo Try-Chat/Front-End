@@ -48,7 +48,7 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
 export default MessageContentInput;
 
 const MessageContentInputWrapper = styled('div')(({ theme }) => ({
-  width: '100%',
+  width: '500px',
   height: '3.5rem',
 
   padding: '0.4rem 0.5rem',
@@ -58,6 +58,9 @@ const MessageContentInputWrapper = styled('div')(({ theme }) => ({
   gap: '0.4rem',
 
   backgroundColor: '#fff',
+
+  position: 'fixed',
+  bottom: 0,
 
   svg: {
     fontSize: theme.typography.body1.fontSize,

@@ -27,6 +27,7 @@ export const styles = {
       cursor: 'pointer',
       border: 'none',
       backgroundColor: '#ffff',
+      padding: 0,
     },
   },
 };

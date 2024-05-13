@@ -32,7 +32,7 @@ const FooterWrapper = styled('nav')(({ theme }) => ({
 
   display: 'flex',
   alignItems: 'flex-start',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-evenly',
   padding: '0.5rem',
 
   position: 'fixed',
