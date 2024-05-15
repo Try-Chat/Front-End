@@ -1,12 +1,5 @@
 import Header from '../components/common/Header';
-import {
-  Banner,
-  Footer,
-  Friends,
-  Mine,
-  Notice,
-  UpdatedProfile,
-} from '../components';
+import { Footer, Friends, Mine, UpdatedProfile } from '../components';
 import { styled } from '@mui/material';
 
 const Friend = () => {
@@ -14,10 +7,8 @@ const Friend = () => {
     <FriendWrapper>
       <Header>친구</Header>
       <FriendMainBox>
-        <Notice />
         <Mine />
         <UpdatedProfile />
-        <Banner />
         <Friends />
       </FriendMainBox>
       <Footer />

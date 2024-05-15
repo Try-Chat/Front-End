@@ -6,44 +6,56 @@ import { useState } from 'react';
 import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
 import useModal from '../../hooks/useModal';
+import ModalLayout from '../modal/ModalLayout';
 
 const FRIEND_INFORMATIONS = [
-  { name: '정충일', profileImage: jung, backgroundImage: background },
-  { name: '고미선', profileImage: '', backgroundImage: '' },
-  { name: '김혜미', profileImage: '', backgroundImage: '' },
-  { name: '김해찬', profileImage: '', backgroundImage: '' },
-  { name: '문희조', profileImage: '', backgroundImage: '' },
-  { name: '곽민혁', profileImage: '', backgroundImage: '' },
-  { name: '문병훈', profileImage: '', backgroundImage: '' },
-  { name: '서지수', profileImage: '', backgroundImage: '' },
-  { name: '김태훈', profileImage: '', backgroundImage: '' },
-  { name: '이준엽', profileImage: '', backgroundImage: '' },
+  {
+    name: '정충일',
+    setName: '정충일',
+    profileImage: jung,
+    backgroundImage: background,
+  },
+  { name: '고미선', setName: '고미선', profileImage: '', backgroundImage: '' },
+  { name: '김혜미', setName: '김혜미', profileImage: '', backgroundImage: '' },
+  { name: '김해찬', setName: '김해찬', profileImage: '', backgroundImage: '' },
+  { name: '문희조', setName: '문희조', profileImage: '', backgroundImage: '' },
+  { name: '곽민혁', setName: '곽민혁', profileImage: '', backgroundImage: '' },
+  { name: '문병훈', setName: '문병훈', profileImage: '', backgroundImage: '' },
+  { name: '서지수', setName: '서지수', profileImage: '', backgroundImage: '' },
+  { name: '김태훈', setName: '김태훈', profileImage: '', backgroundImage: '' },
+  { name: '이준엽', setName: '이준엽', profileImage: '', backgroundImage: '' },
 ];
 
-export interface SelectedFriendType {
+export interface profileType {
   name: string;
+  setName?: string;
   profileImage?: string;
   backgroundImage?: string;
+  memo?: string;
+  statusMessage?: string;
 }
 
 const Friends = () => {
-  const { isModal, handleModalClose, handleModalOpen, Modal } = useModal();
-  const [selectedFriend, setSelectedFriend] = useState<SelectedFriendType>({
+  const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
+  const [profile, setprofile] = useState<profileType>({
     name: '',
+    setName: '',
     profileImage: '',
     backgroundImage: '',
   });
 
   const handleFriendClick = (
     name: string,
+    setName: string,
     profileImage: string,
     backgroundImage: string,
   ): void => {
     handleModalOpen();
-    setSelectedFriend({
+    setprofile({
       name,
       profileImage,
       backgroundImage,
+      setName,
     });
   };
 
@@ -57,6 +69,7 @@ const Friends = () => {
               onClick={() =>
                 handleFriendClick(
                   friend.name,
+                  friend.setName,
                   friend.profileImage,
                   friend.backgroundImage,
                 )
@@ -67,12 +80,12 @@ const Friends = () => {
         </FriendsBox>
       </Toggle>
       {isModal && (
-        <Modal>
-          <ProfileModal
-            handleModalClose={handleModalClose}
-            selectedFriend={selectedFriend}
-          />
-        </Modal>
+        <ModalLayout
+          isModal={isModal}
+          isClosing={isClosing}
+          onClose={handleModalClose}>
+          <ProfileModal handleModalClose={handleModalClose} profile={profile} />
+        </ModalLayout>
       )}
     </FriendsWrapper>
   );

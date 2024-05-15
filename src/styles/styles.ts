@@ -28,6 +28,7 @@ export const styles = {
       border: 'none',
       backgroundColor: '#ffff',
       padding: 0,
+      fontFamily: 'pretendard',
     },
   },
 };
