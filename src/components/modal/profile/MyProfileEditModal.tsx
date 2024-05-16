@@ -51,6 +51,7 @@ const MyProfileEditModal = ({
           <EditInputBox>
             <EditInput
               value={editedValue}
+              type="text"
               onChange={(e) => setEditedValue(e.target.value)}
               maxLength={maxLength}
             />

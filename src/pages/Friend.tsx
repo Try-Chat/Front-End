@@ -1,6 +1,6 @@
-import Header from '../components/common/Header';
-import { Footer, Friends, Mine, UpdatedProfile } from '../components';
 import { styled } from '@mui/material';
+import { Footer, Friends, Mine } from '../components';
+import Header from '../components/common/Header';
 
 const Friend = () => {
   return (
@@ -8,7 +8,7 @@ const Friend = () => {
       <Header>친구</Header>
       <FriendMainBox>
         <Mine />
-        <UpdatedProfile />
+        {/* <UpdatedProfile /> */}
         <Friends />
       </FriendMainBox>
       <Footer />

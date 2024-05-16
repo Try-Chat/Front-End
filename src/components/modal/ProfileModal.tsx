@@ -10,14 +10,7 @@ import { useState } from 'react';
 import useModal from '../../hooks/useModal';
 import MyProfileEditModal from './profile/MyProfileEditModal';
 import ModalLayout from './ModalLayout';
-
-const PROFILE_MODAL_NAV_ICONS = {
-  friend: [{ title: '1:1 채팅', icon: <BsFillChatFill /> }],
-  my: [
-    { title: '나와의 채팅', icon: <BsFillChatFill /> },
-    { title: '프로필 편집', icon: <BiSolidPencil /> },
-  ],
-};
+import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
@@ -30,6 +23,32 @@ const ProfileModal = ({
   profile,
   isMine,
 }: ProfileModalProps) => {
+  return (
+    <ProfileModalBox background={profile.backgroundImage}>
+      <ProfileModalContent>
+        {isMine ? (
+          <MyProfileLayout
+            isMine={isMine}
+            profile={profile}
+            handleModalClose={handleModalClose}
+          />
+        ) : (
+          <FriendProfileLayout
+            isMine={isMine}
+            profile={profile}
+            handleModalClose={handleModalClose}
+          />
+        )}
+      </ProfileModalContent>
+    </ProfileModalBox>
+  );
+};
+
+const MyProfileLayout = ({
+  profile,
+  isMine,
+  handleModalClose,
+}: ProfileModalProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleEditClick = () => {
@@ -39,51 +58,58 @@ const ProfileModal = ({
   const handleCancelEdit = () => {
     setIsEdit(false);
   };
+
   return (
-    <ProfileModalBox background={profile.backgroundImage}>
-      <ProfileModalContent>
-        {isEdit ? (
-          <EditProfileLayout
-            isEdit={isEdit}
-            profile={profile}
-            handleCancelEdit={handleCancelEdit}
-          />
-        ) : (
-          <BasicProfileLayout
-            isMine={isMine}
-            isEdit={isEdit}
-            handleModalClose={handleModalClose}
-            profile={profile}
-            handleEditClick={handleEditClick}
-          />
-        )}
-      </ProfileModalContent>
-    </ProfileModalBox>
+    <>
+      {isEdit ? (
+        <EditMyProfileLayout
+          isEdit={isEdit}
+          handleCancelEdit={handleCancelEdit}
+          profile={profile}
+        />
+      ) : (
+        <>
+          <ProfileModalHeader>
+            <button type="button" onClick={handleModalClose}>
+              <StyledCloseIcon />
+            </button>
+          </ProfileModalHeader>
+          <ProfileModalBottomBox>
+            <ProfileImageNameBox>
+              <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+              <FriendNameBox>
+                <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
+              </FriendNameBox>
+              <StatusMessage>{profile.statusMessage}</StatusMessage>
+            </ProfileImageNameBox>
+            <ProfileModalBottomNav $isEdit={isEdit}>
+              <NavIconBox>
+                <BsFillChatFill />
+                <p>나와의 채팅</p>
+              </NavIconBox>
+              <NavIconBox onClick={handleEditClick}>
+                <BiSolidPencil />
+                <p>프로필 편집</p>
+              </NavIconBox>
+            </ProfileModalBottomNav>
+          </ProfileModalBottomBox>
+        </>
+      )}
+    </>
   );
 };
 
-const BasicProfileLayout = ({
+const FriendProfileLayout = ({
   isMine,
-  isEdit,
-  handleModalClose,
   profile,
-  handleEditClick,
-}: {
-  isMine?: boolean;
-  isEdit: boolean;
-  handleModalClose: VoidFunction;
-  profile: profileType;
-  handleEditClick: VoidFunction;
-}) => {
-  const navIcons = isMine
-    ? PROFILE_MODAL_NAV_ICONS.my
-    : PROFILE_MODAL_NAV_ICONS.friend;
-
-  const handleBottomNavIconClick = (title: string) => {
-    if (title === '프로필 편집') {
-      handleEditClick();
-    }
-  };
+  handleModalClose,
+}: ProfileModalProps) => {
+  const {
+    isClosing,
+    handleModalClose: handleFriendModalClose,
+    isModal,
+    handleModalOpen,
+  } = useModal();
 
   return (
     <>
@@ -97,26 +123,31 @@ const BasicProfileLayout = ({
           <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
           <FriendNameBox>
             <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
-            {!isMine && <StyledPencilIcon />}
+            <StyledPencilIcon onClick={handleModalOpen} />
           </FriendNameBox>
           <StatusMessage>{profile.statusMessage}</StatusMessage>
         </ProfileImageNameBox>
-        <ProfileModalBottomNav $isEdit={isEdit}>
-          {navIcons.map((item) => (
-            <NavIconBox
-              key={item.title}
-              onClick={() => handleBottomNavIconClick(item.title)}>
-              {item.icon}
-              <p>{item.title}</p>
-            </NavIconBox>
-          ))}
+        <ProfileModalBottomNav>
+          <NavIconBox>
+            <BsFillChatFill />
+            <p>1:1 채팅</p>
+          </NavIconBox>
         </ProfileModalBottomNav>
       </ProfileModalBottomBox>
+      <ModalLayout
+        isClosing={isClosing}
+        onClose={handleFriendModalClose}
+        isModal={isModal}>
+        <FriendProfileEditModal
+          handleModalClose={handleFriendModalClose}
+          profile={profile}
+        />
+      </ModalLayout>
     </>
   );
 };
 
-const EditProfileLayout = ({
+const EditMyProfileLayout = ({
   profile,
   handleCancelEdit,
   isEdit,
@@ -266,7 +297,7 @@ const ProfileName = styled('p')<{ $isMine?: boolean }>(
   }),
 );
 
-const ProfileModalBottomNav = styled('nav')<{ $isEdit: boolean }>(
+const ProfileModalBottomNav = styled('nav')<{ $isEdit?: boolean }>(
   ({ $isEdit }) => ({
     width: '100%',
     height: '5rem',
