@@ -3,28 +3,38 @@ import ProfileImageBox from '../common/ProfileImageBox';
 import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
 import useModal from '../../hooks/useModal';
+import ModalLayout from '../modal/ModalLayout';
+import background from '../../assets/images/background.jpg';
+
+const myProfile = {
+  name: '어준혁',
+  profileImage: '',
+  statusMessage: '빨리 끝내자!',
+  backgroundImage: background,
+};
 
 const Mine = () => {
-  const { isModal, handleModalClose, handleModalOpen, Modal } = useModal();
-  const myProfile = {
-    name: '어준혁',
-    profileImage: '',
-    backgroundImage: '',
-  };
+  const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
   return (
     <MineWrapper>
       <MineBox onClick={handleModalOpen}>
         <ProfileImageBox imageUrl={defaultImg} size="3.2rem" />
-        <MyName>어준혁</MyName>
+        <TextBox>
+          <MyName>{myProfile.name}</MyName>
+          <MyStatusMessage>{myProfile.statusMessage}</MyStatusMessage>
+        </TextBox>
       </MineBox>
       {isModal && (
-        <Modal>
+        <ModalLayout
+          isClosing={isClosing}
+          isModal={isModal}
+          onClose={handleModalClose}>
           <ProfileModal
             handleModalClose={handleModalClose}
-            selectedFriend={myProfile}
-            isMine={true}
+            profile={myProfile}
+            isMine
           />
-        </Modal>
+        </ModalLayout>
       )}
     </MineWrapper>
   );
@@ -48,10 +58,19 @@ const MineBox = styled('div')({
   cursor: 'pointer',
 });
 
-const MyName = styled('div')(({ theme }) => ({
+const TextBox = styled('div')({
   flex: 1,
-
-  fontSize: theme.typography.subtitle2.fontSize,
+  display: 'flex',
+  flexDirection: 'column',
 
   padding: '0 0.6rem',
+});
+
+const MyName = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.subtitle2.fontSize,
+}));
+
+const MyStatusMessage = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.body2.fontSize,
+  color: theme.palette.grey[400],
 }));

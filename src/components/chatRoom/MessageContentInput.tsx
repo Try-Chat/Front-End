@@ -32,6 +32,7 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
       <MessageInputBox>
         <MessageInput
           value={message}
+          type="text"
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleSendButtonClick}
         />

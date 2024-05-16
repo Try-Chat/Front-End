@@ -1,23 +1,14 @@
-import Header from '../components/common/Header';
-import {
-  Banner,
-  Footer,
-  Friends,
-  Mine,
-  Notice,
-  UpdatedProfile,
-} from '../components';
 import { styled } from '@mui/material';
+import { Footer, Friends, Mine } from '../components';
+import Header from '../components/common/Header';
 
 const Friend = () => {
   return (
     <FriendWrapper>
       <Header>친구</Header>
       <FriendMainBox>
-        <Notice />
         <Mine />
-        <UpdatedProfile />
-        <Banner />
+        {/* <UpdatedProfile /> */}
         <Friends />
       </FriendMainBox>
       <Footer />

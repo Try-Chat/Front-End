@@ -1,5 +1,4 @@
-import { ReactNode, useState } from 'react';
-import ModalLayout from '../components/modal/ModalLayout';
+import { useState } from 'react';
 
 const useModal = () => {
   const [isModal, setIsModal] = useState(false);
@@ -18,17 +17,7 @@ const useModal = () => {
     }, 226);
   };
 
-  const Modal = ({ children }: { children: ReactNode }) => {
-    return (
-      <ModalLayout
-        isModal={isModal}
-        isClosing={isClosing}
-        onClose={handleModalClose}>
-        {children}
-      </ModalLayout>
-    );
-  };
-  return { isModal, handleModalOpen, handleModalClose, isClosing, Modal };
+  return { isModal, handleModalOpen, handleModalClose, isClosing };
 };
 
 export default useModal;

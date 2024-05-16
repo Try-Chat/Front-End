@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import { SelectedFriendType } from '../friend/Friends';
+import { profileType } from '../friend/Friends';
 import { TfiClose } from 'react-icons/tfi';
 import { MdPhotoCamera } from 'react-icons/md';
 import { BsFillChatFill } from 'react-icons/bs';
@@ -7,25 +7,47 @@ import { PiTrash } from 'react-icons/pi';
 import { BiSolidPencil } from 'react-icons/bi';
 import ProfileImageBox from '../common/ProfileImageBox';
 import { useState } from 'react';
-
-const PROFILE_MODAL_NAV_ICONS = {
-  friend: [{ title: '1:1 채팅', icon: <BsFillChatFill /> }],
-  my: [
-    { title: '나와의 채팅', icon: <BsFillChatFill /> },
-    { title: '프로필 편집', icon: <BiSolidPencil /> },
-  ],
-};
+import useModal from '../../hooks/useModal';
+import MyProfileEditModal from './profile/MyProfileEditModal';
+import ModalLayout from './ModalLayout';
+import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
-  selectedFriend: SelectedFriendType;
+  profile: profileType;
   isMine?: boolean;
 }
 
 const ProfileModal = ({
   handleModalClose,
-  selectedFriend,
+  profile,
   isMine,
+}: ProfileModalProps) => {
+  return (
+    <ProfileModalBox background={profile.backgroundImage}>
+      <ProfileModalContent>
+        {isMine ? (
+          <MyProfileLayout
+            isMine={isMine}
+            profile={profile}
+            handleModalClose={handleModalClose}
+          />
+        ) : (
+          <FriendProfileLayout
+            isMine={isMine}
+            profile={profile}
+            handleModalClose={handleModalClose}
+          />
+        )}
+      </ProfileModalContent>
+    </ProfileModalBox>
+  );
+};
+
+const MyProfileLayout = ({
+  profile,
+  isMine,
+  handleModalClose,
 }: ProfileModalProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
@@ -36,51 +58,58 @@ const ProfileModal = ({
   const handleCancelEdit = () => {
     setIsEdit(false);
   };
+
   return (
-    <ProfileModalBox background={selectedFriend.backgroundImage}>
-      <ProfileModalContent>
-        {isEdit ? (
-          <EditProfileLayout
-            isEdit={isEdit}
-            selectedFriend={selectedFriend}
-            handleCancelEdit={handleCancelEdit}
-          />
-        ) : (
-          <BasicProfileLayout
-            isMine={isMine}
-            isEdit={isEdit}
-            handleModalClose={handleModalClose}
-            selectedFriend={selectedFriend}
-            handleEditClick={handleEditClick}
-          />
-        )}
-      </ProfileModalContent>
-    </ProfileModalBox>
+    <>
+      {isEdit ? (
+        <EditMyProfileLayout
+          isEdit={isEdit}
+          handleCancelEdit={handleCancelEdit}
+          profile={profile}
+        />
+      ) : (
+        <>
+          <ProfileModalHeader>
+            <button type="button" onClick={handleModalClose}>
+              <StyledCloseIcon />
+            </button>
+          </ProfileModalHeader>
+          <ProfileModalBottomBox>
+            <ProfileImageNameBox>
+              <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+              <FriendNameBox>
+                <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
+              </FriendNameBox>
+              <StatusMessage>{profile.statusMessage}</StatusMessage>
+            </ProfileImageNameBox>
+            <ProfileModalBottomNav $isEdit={isEdit}>
+              <NavIconBox>
+                <BsFillChatFill />
+                <p>나와의 채팅</p>
+              </NavIconBox>
+              <NavIconBox onClick={handleEditClick}>
+                <BiSolidPencil />
+                <p>프로필 편집</p>
+              </NavIconBox>
+            </ProfileModalBottomNav>
+          </ProfileModalBottomBox>
+        </>
+      )}
+    </>
   );
 };
 
-const BasicProfileLayout = ({
+const FriendProfileLayout = ({
   isMine,
-  isEdit,
+  profile,
   handleModalClose,
-  selectedFriend,
-  handleEditClick,
-}: {
-  isMine?: boolean;
-  isEdit: boolean;
-  handleModalClose: VoidFunction;
-  selectedFriend: SelectedFriendType;
-  handleEditClick: VoidFunction;
-}) => {
-  const navIcons = isMine
-    ? PROFILE_MODAL_NAV_ICONS.my
-    : PROFILE_MODAL_NAV_ICONS.friend;
-
-  const handleBottomNavIconClick = (title: string) => {
-    if (title === '프로필 편집') {
-      handleEditClick();
-    }
-  };
+}: ProfileModalProps) => {
+  const {
+    isClosing,
+    handleModalClose: handleFriendModalClose,
+    isModal,
+    handleModalOpen,
+  } = useModal();
 
   return (
     <>
@@ -89,36 +118,50 @@ const BasicProfileLayout = ({
           <StyledCloseIcon />
         </button>
       </ProfileModalHeader>
-      <ProfileModalBottomBox $isEdit={isEdit}>
+      <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={selectedFriend.profileImage} size="6rem" />
-          <ProfileName>{selectedFriend.name}</ProfileName>
-          {!isMine && <StyledPencilIcon />}
+          <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+          <FriendNameBox>
+            <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
+            <StyledPencilIcon onClick={handleModalOpen} />
+          </FriendNameBox>
+          <StatusMessage>{profile.statusMessage}</StatusMessage>
         </ProfileImageNameBox>
-        <ProfileModalBottomNav $isEdit={isEdit}>
-          {navIcons.map((item) => (
-            <NavIconBox
-              key={item.title}
-              onClick={() => handleBottomNavIconClick(item.title)}>
-              {item.icon}
-              <p>{item.title}</p>
-            </NavIconBox>
-          ))}
+        <ProfileModalBottomNav>
+          <NavIconBox>
+            <BsFillChatFill />
+            <p>1:1 채팅</p>
+          </NavIconBox>
         </ProfileModalBottomNav>
       </ProfileModalBottomBox>
+      <ModalLayout
+        isClosing={isClosing}
+        onClose={handleFriendModalClose}
+        isModal={isModal}>
+        <FriendProfileEditModal
+          handleModalClose={handleFriendModalClose}
+          profile={profile}
+        />
+      </ModalLayout>
     </>
   );
 };
 
-const EditProfileLayout = ({
-  selectedFriend,
+const EditMyProfileLayout = ({
+  profile,
   handleCancelEdit,
   isEdit,
 }: {
-  selectedFriend: SelectedFriendType;
+  profile: profileType;
   handleCancelEdit: VoidFunction;
   isEdit: boolean;
 }) => {
+  const [editTarget, setEditTarget] = useState('');
+  const { isModal, handleModalOpen, handleModalClose, isClosing } = useModal();
+  const handleEditClick = (field: string) => {
+    setEditTarget(field);
+    handleModalOpen();
+  };
   return (
     <>
       <ProfileModalHeader>
@@ -130,22 +173,24 @@ const EditProfileLayout = ({
         </button>
         <button type="button">완료</button>
       </ProfileModalHeader>
-      <ProfileModalBottomBox $isEdit={isEdit}>
+      <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={selectedFriend.profileImage} size="6rem" />
+          <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
           <CameraIconButton>
             <StyledCameraIcon />
           </CameraIconButton>
         </ProfileImageNameBox>
         <EditBox>
-          <span>{selectedFriend.name}</span>
-          <button type="button">
+          <span>{profile.name}</span>
+          <button type="button" onClick={() => handleEditClick('name')}>
             <BiSolidPencil />
           </button>
         </EditBox>
         <EditBox>
-          <p>상태메시지를 입력해 주세요.</p>
-          <button type="button">
+          <p>{profile.statusMessage || '상태메시지를 입력해 주세요.'}</p>
+          <button
+            type="button"
+            onClick={() => handleEditClick('statusMessage')}>
             <BiSolidPencil />
           </button>
         </EditBox>
@@ -155,6 +200,17 @@ const EditProfileLayout = ({
           </CameraIconButton>
         </ProfileModalBottomNav>
       </ProfileModalBottomBox>
+      <ModalLayout
+        isModal={isModal}
+        onClose={handleModalClose}
+        isClosing={isClosing}
+        animation>
+        <MyProfileEditModal
+          profile={profile}
+          editTarget={editTarget}
+          handleModalClose={handleModalClose}
+        />
+      </ModalLayout>
     </>
   );
 };
@@ -190,7 +246,7 @@ const ProfileModalHeader = styled('header')(({ theme }) => ({
   padding: '1rem',
 
   button: {
-    fontSize: theme.typography.body1.fontSize,
+    fontSize: theme.typography.subtitle2.fontSize,
     color: '#ffff',
     backgroundColor: 'inherit',
   },
@@ -201,22 +257,16 @@ const ProfileModalHeader = styled('header')(({ theme }) => ({
 }));
 
 const StyledCloseIcon = styled(TfiClose)(({ theme }) => ({
-  color: theme.palette.grey[50],
+  color: '#ffff',
 
   fontSize: theme.typography.subtitle1.fontSize,
 }));
 
-const ProfileModalBottomBox = styled('div')<{ $isEdit: boolean }>(
-  ({ $isEdit }) => ({
-    bottom: 0,
-
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    gap: $isEdit ? 0 : '3.07125rem',
-  }),
-);
+const ProfileModalBottomBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});
 
 const ProfileImageNameBox = styled('div')({
   display: 'flex',
@@ -234,15 +284,20 @@ const ProfileImageNameBox = styled('div')({
   },
 });
 
-const ProfileName = styled('p')(({ theme }) => ({
-  position: 'relative',
+const ProfileName = styled('p')<{ $isMine?: boolean }>(
+  ({ theme, $isMine }) => ({
+    flex: 1,
 
-  fontSize: theme.typography.subtitle2.fontSize,
+    paddingLeft: $isMine ? 'none' : '1rem',
+    textAlign: 'center',
 
-  color: theme.palette.grey[50],
-}));
+    fontSize: theme.typography.subtitle2.fontSize,
 
-const ProfileModalBottomNav = styled('nav')<{ $isEdit: boolean }>(
+    color: '#ffff',
+  }),
+);
+
+const ProfileModalBottomNav = styled('nav')<{ $isEdit?: boolean }>(
   ({ $isEdit }) => ({
     width: '100%',
     height: '5rem',
@@ -305,10 +360,6 @@ const StyledCameraIcon = styled(MdPhotoCamera)(({ theme }) => ({
 }));
 
 const StyledPencilIcon = styled(BiSolidPencil)(({ theme }) => ({
-  position: 'absolute',
-  top: '7.2rem',
-  left: '4.7rem',
-
   fontSize: theme.typography.subtitle2.fontSize,
   color: theme.palette.grey[300],
 
@@ -353,3 +404,17 @@ const EditBox = styled('div')({
     fontSize: '1rem',
   },
 });
+
+const FriendNameBox = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+
+  width: '90%',
+});
+
+const StatusMessage = styled('p')(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  color: '#ffff',
+
+  height: '2.4625rem',
+}));

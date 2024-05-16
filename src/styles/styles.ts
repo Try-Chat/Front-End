@@ -28,6 +28,15 @@ export const styles = {
       border: 'none',
       backgroundColor: '#ffff',
       padding: 0,
+      fontFamily: 'pretendard',
+    },
+
+    input: {
+      fontFamily: 'pretendard',
+    },
+
+    textarea: {
+      fontFamily: 'pretendard',
     },
   },
 };

@@ -1,12 +1,11 @@
 import { styled } from '@mui/material';
-import { Banner, ChatRoomListItem, Footer } from '../components';
+import { ChatRoomListItem, Footer } from '../components';
 import Header from '../components/common/Header';
 
 const ChatRoomList = () => {
   return (
     <ChatRoomListWrapper>
       <Header>채팅</Header>
-      <Banner />
       <ChatRoomListBox>
         <ChatRoomListItem
           chatRoomName="테오의 프론트엔드"
