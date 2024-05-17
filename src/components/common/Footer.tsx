@@ -51,7 +51,7 @@ const FooterIconBox = styled(Link)<{ $currentPage: boolean }>(
     gap: '0.4rem',
 
     backgroundColor: theme.palette.grey[50],
-    color: $currentPage ? '#000' : '#868e96',
+    color: $currentPage ? '#000' : theme.palette.grey[400],
 
     textDecoration: 'none',
 
