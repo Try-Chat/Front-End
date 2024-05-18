@@ -170,7 +170,7 @@ const Input = styled('input')(({ theme }) => ({
 
   fontSize: theme.typography.subtitle2.fontSize,
 
-  caretColor: '#eedb11',
+  caretColor: '#F9E000',
 }));
 
 const TextArea = styled('textarea')(({ theme }) => ({
@@ -186,7 +186,7 @@ const TextArea = styled('textarea')(({ theme }) => ({
   borderRadius: '0.3rem',
   outline: 'none',
   resize: 'none',
-  caretColor: '#eedb11',
+  caretColor: '#F9E000',
 
   '::placeholder': {
     fontSize: theme.typography.subtitle2.fontSize,

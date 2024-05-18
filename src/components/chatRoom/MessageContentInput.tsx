@@ -101,7 +101,7 @@ const SendButton = styled('button')({
   alignItems: 'center',
 
   borderRadius: '50%',
-  backgroundColor: '#eedb11',
+  backgroundColor: '#F9E000',
 
   width: '2.1rem',
 });

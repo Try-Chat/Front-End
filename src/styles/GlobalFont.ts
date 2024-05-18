@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
-import PretendardRegular from '../assets/fonts/Pretendard-Regular.woff2';
+import SpoqaHanSansNeo from '../assets/fonts/SpoqaHanSansNeo-Regular.ttf';
 
 const GlobalFont = createGlobalStyle`
      @font-face {
-        font-family: "pretendard";
-        src: local("Pretendard"), url(${PretendardRegular}) format('woff'); 
+        font-family: "spoqaHanSansNeo";
+        src: local("SpoqaHanSansNeo"), url(${SpoqaHanSansNeo}); 
     }
 `;
 

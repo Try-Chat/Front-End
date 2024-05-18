@@ -141,7 +141,7 @@ const EditInput = styled('input')(({ theme }) => ({
   backgroundColor: 'inherit',
   border: 'none',
 
-  caretColor: '#eedb11',
+  caretColor: '#F9E000',
   outline: 'none',
 
   color: '#ffff',

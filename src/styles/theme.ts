@@ -13,7 +13,7 @@ const theme = createTheme({
   },
   typography: {
     htmlFontSize: 16,
-    fontFamily: 'Pretendard',
+    fontFamily: 'spoqaHanSansNeo',
 
     h3: {
       fontSize: '1.4rem',

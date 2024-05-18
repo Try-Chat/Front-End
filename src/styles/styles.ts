@@ -9,7 +9,7 @@ export const styles = {
 
     width: '100%',
 
-    fontFamily: 'pretendard',
+    fontFamily: 'spoqaHanSansNeo',
 
     backgroundColor: '#f8fafc',
 
@@ -28,15 +28,15 @@ export const styles = {
       border: 'none',
       backgroundColor: '#ffff',
       padding: 0,
-      fontFamily: 'pretendard',
+      fontFamily: 'spoqaHanSansNeo',
     },
 
     input: {
-      fontFamily: 'pretendard',
+      fontFamily: 'spoqaHanSansNeo',
     },
 
     textarea: {
-      fontFamily: 'pretendard',
+      fontFamily: 'spoqaHanSansNeo',
     },
   },
 };
