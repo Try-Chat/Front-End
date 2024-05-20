@@ -22,7 +22,6 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
         content: message,
         time: getTime(),
       };
-      console.log(newMessage.time);
       setAllMessage((prev) => [...prev, newMessage]);
       setMessage('');
     }

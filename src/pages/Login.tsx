@@ -2,24 +2,49 @@ import { styled } from '@mui/material';
 import kakaoLogo from '../assets/images/kakao.webp';
 import { HiMiniEyeSlash } from 'react-icons/hi2';
 import { IoEyeSharp } from 'react-icons/io5';
-import { useState } from 'react';
-import { FaCircle } from 'react-icons/fa6';
-import { fontFamily } from '@mui/system';
+import { useRef, useState } from 'react';
+import instance from '../api/instance';
+import axios from 'axios';
 
 const Login = () => {
+  const ref = useRef(null);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState(false);
   const [isSecret, setIsSecret] = useState(false);
+  const isAbleButton = password.length > 3 && id.length > 0;
 
   const handlePasswordIconClick = () => {
     setIsSecret((prev) => !prev);
   };
 
+  const handleButtonClick = async () => {
+    try {
+      await instance.post('/users/signin', {
+        username: id,
+        password: password,
+      });
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          setAuthError(true);
+          setPassword('');
+          ref.current.focus();
+        }
+      }
+    }
+  };
+
+  if (authError && isAbleButton) {
+    setAuthError(false);
+  }
+
   return (
     <LoginWrapper>
       <LoginBox>
         <KakaoLogo src={kakaoLogo} alt="kakaoLogo" />
-        <InputWrapper>
+        <InputWrapper onSubmit={handleButtonClick} $authError={authError}>
           <InputBox>
             <input
               type="text"
@@ -34,6 +59,8 @@ const Login = () => {
               value={password}
               placeholder="비밀번호"
               minLength={4}
+              maxLength={255}
+              ref={ref}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button type="button" onClick={handlePasswordIconClick}>
@@ -47,7 +74,14 @@ const Login = () => {
             </button>
           </InputBox>
         </InputWrapper>
-        <LoginButton>로그인</LoginButton>
+        <LoginButton
+          disabled={!isAbleButton}
+          $isVaild={isAbleButton}
+          type="submit"
+          onClick={handleButtonClick}>
+          로그인
+        </LoginButton>
+        {authError && <p>카카오계정 또는 비밀번호를 다시 확인해 주세요.</p>}
       </LoginBox>
     </LoginWrapper>
   );
@@ -73,6 +107,11 @@ const LoginBox = styled('div')({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '0.6rem',
+
+  p: {
+    color: '#fa5252',
+    fontSize: '0.9rem',
+  },
 });
 
 const KakaoLogo = styled('img')({
@@ -93,51 +132,62 @@ const InputBox = styled('div')(({ theme }) => ({
   },
 }));
 
-const InputWrapper = styled('div')(({ theme }) => ({
-  width: '100%',
+const InputWrapper = styled('form')<{ $authError: boolean }>(
+  ({ theme, $authError }) => ({
+    width: '100%',
 
-  border: '1.2px solid #ffd43b',
+    border: $authError ? '1.2px solid #e03131' : '1.2px solid #ffd43b',
 
-  input: {
-    flex: 1,
+    input: {
+      flex: 1,
+      width: '100%',
+      height: '3.3rem',
+
+      padding: '0.5rem 0.8rem',
+
+      border: 'none',
+
+      outline: 'none',
+
+      fontSize: '1rem',
+      color: '#495057',
+
+      '::placeholder': {
+        color: theme.palette.grey[300],
+      },
+
+      '&[type="password"]': {
+        color: '#343a40',
+      },
+
+      ':first-of-type': {
+        borderBottom: '1px solid #e9ecef',
+      },
+    },
+  }),
+);
+
+const LoginButton = styled('button')<{ $isVaild: boolean }>(
+  ({ theme, $isVaild }) => ({
     width: '100%',
     height: '3.3rem',
 
-    padding: '0.5rem 0.8rem',
-
-    border: 'none',
-
-    outline: 'none',
-
     fontSize: '1rem',
-    color: '#495057',
+    color: theme.palette.grey[300],
 
-    '::placeholder': {
-      color: theme.palette.grey[300],
+    backgroundColor: $isVaild ? '#3B1C1C' : theme.palette.grey[100],
+
+    border: $isVaild ? 'none' : '1.2px solid #ffd43b',
+
+    cursor: $isVaild ? 'pointer' : 'default',
+
+    '&:hover': {
+      backgroundImage: $isVaild
+        ? 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.2))'
+        : 'none',
     },
-
-    '&[type="password"]': {
-      color: '#343a40',
-      // letterSpacing: '0.1em',
-    },
-
-    ':first-child': {
-      borderBottom: '1px solid #e9ecef',
-    },
-  },
-}));
-
-const LoginButton = styled('button')(({ theme }) => ({
-  width: '100%',
-  height: '3.3rem',
-
-  fontSize: '1rem',
-  color: theme.palette.grey[300],
-
-  backgroundColor: theme.palette.grey[100],
-
-  border: '1.2px solid #ffd43b',
-}));
+  }),
+);
 
 const StyledSecretIcon = styled(HiMiniEyeSlash)({
   transform: 'scaleX(-1)',
