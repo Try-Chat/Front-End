@@ -5,9 +5,11 @@ import { IoEyeSharp } from 'react-icons/io5';
 import { useRef, useState } from 'react';
 import instance from '../api/instance';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState(false);
@@ -18,19 +20,23 @@ const Login = () => {
     setIsSecret((prev) => !prev);
   };
 
-  const handleButtonClick = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      await instance.post('/users/signin', {
+      const res = await instance.post('/users/signin', {
         username: id,
         password: password,
       });
+      sessionStorage.setItem('isLogin', 'login');
+      navigate(`/friend/${res.data.id}`);
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
-          setAuthError(true);
-          setPassword('');
-          ref.current.focus();
+          if (ref.current) {
+            setAuthError(true);
+            setPassword('');
+            ref.current.focus();
+          }
         }
       }
     }
@@ -42,9 +48,9 @@ const Login = () => {
 
   return (
     <LoginWrapper>
-      <LoginBox>
+      <LoginBox onSubmit={handleSubmit} method="post">
         <KakaoLogo src={kakaoLogo} alt="kakaoLogo" />
-        <InputWrapper onSubmit={handleButtonClick} $authError={authError}>
+        <InputWrapper $authError={authError}>
           <InputBox>
             <input
               type="text"
@@ -77,8 +83,7 @@ const Login = () => {
         <LoginButton
           disabled={!isAbleButton}
           $isVaild={isAbleButton}
-          type="submit"
-          onClick={handleButtonClick}>
+          type="submit">
           로그인
         </LoginButton>
         {authError && <p>카카오계정 또는 비밀번호를 다시 확인해 주세요.</p>}
@@ -100,7 +105,7 @@ const LoginWrapper = styled('div')({
   justifyContent: 'center',
 });
 
-const LoginBox = styled('div')({
+const LoginBox = styled('form')({
   width: '70%',
 
   display: 'flex',
@@ -132,7 +137,7 @@ const InputBox = styled('div')(({ theme }) => ({
   },
 }));
 
-const InputWrapper = styled('form')<{ $authError: boolean }>(
+const InputWrapper = styled('div')<{ $authError: boolean }>(
   ({ theme, $authError }) => ({
     width: '100%',
 
