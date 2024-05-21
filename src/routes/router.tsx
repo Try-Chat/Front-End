@@ -10,11 +10,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Friend />,
+        element: <Login />,
       },
       {
-        path: PATH.LOGIN,
-        element: <Login />,
+        path: PATH.Friend,
+        element: <Friend />,
       },
       {
         path: PATH.CHAT_ROOM,
