@@ -1,25 +1,27 @@
 import { styled } from '@mui/material';
 import { FaUser } from 'react-icons/fa6';
 import { IoChatbubbleSharp } from 'react-icons/io5';
-import { Link, useLocation } from 'react-router-dom';
-
-const FOOTER_ICONS = [
-  { page: '/', icon: <FaUser />, title: '친구' },
-  { page: '/chatroomlist', icon: <IoChatbubbleSharp />, title: '채팅' },
-];
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const Footer = () => {
   const location = useLocation();
+  const { id } = useParams() as { id: string };
   const currentPage = location.pathname;
 
   return (
     <FooterWrapper>
-      {FOOTER_ICONS.map(({ page, title, icon }) => (
-        <FooterIconBox key={page} to={page} $currentPage={currentPage === page}>
-          {icon}
-          <p>{title}</p>
-        </FooterIconBox>
-      ))}
+      <FooterIconBox
+        to={`/friend/${id}`}
+        $currentPage={currentPage === `/friend/${id}`}>
+        <FaUser />
+        <p>친구</p>
+      </FooterIconBox>
+      <FooterIconBox
+        to={`/chatroomlist/${id}`}
+        $currentPage={currentPage === `/chatroomlist/${id}`}>
+        <IoChatbubbleSharp />
+        <p>채팅</p>
+      </FooterIconBox>
     </FooterWrapper>
   );
 };
