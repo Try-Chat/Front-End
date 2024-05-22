@@ -43,6 +43,27 @@ const theme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        modal: {
+          display: 'flex',
+          justifyContent: 'center',
+        },
+        paper: {
+          width: '500px',
+          padding: '0 1rem',
+          left: 'unset',
+          right: 'unset',
+        },
+      },
+    },
   },
 });
 
