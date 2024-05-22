@@ -1,21 +1,20 @@
 import { styled } from '@mui/material';
 import { IoMdClose } from 'react-icons/io';
-import { profileType } from '../../friend/Friends';
 import { useState } from 'react';
 
 interface FriendProfileEditModalProps {
   handleModalClose: VoidFunction;
-  profile: profileType;
+  profile: MyProfileData;
 }
 
 const FriendProfileEditModal = ({
   handleModalClose,
   profile,
 }: FriendProfileEditModalProps) => {
-  const [editFriendName, setEditFriendName] = useState(profile.name);
+  const [editFriendName, setEditFriendName] = useState(profile.nickname);
   const [editFriendMemo, setEditFriendMemo] = useState(profile.memo || '');
 
-  const isVaild = editFriendName !== profile.name || editFriendMemo !== '';
+  const isVaild = editFriendName !== profile.nickname || editFriendMemo !== '';
 
   return (
     <ModalBox>
@@ -39,7 +38,7 @@ const FriendProfileEditModal = ({
                 id="name"
                 type="text"
                 maxLength={20}
-                placeholder={editFriendName === '' ? profile.name : ''}
+                placeholder={editFriendName === '' ? profile.nickname : ''}
                 value={editFriendName}
                 onChange={(e) => setEditFriendName(e.target.value)}
               />
@@ -47,7 +46,7 @@ const FriendProfileEditModal = ({
             </InputBox>
           </div>
           <EditBoxItemBottom>
-            <p>친구가 설정한 이름 : {profile.name}</p>
+            <p>친구가 설정한 이름 : {profile.nickname}</p>
           </EditBoxItemBottom>
         </EditBoxItem>
         <EditBoxItem>

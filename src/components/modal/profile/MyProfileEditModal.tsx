@@ -1,10 +1,9 @@
 import { styled } from '@mui/material';
-import { profileType } from '../../friend/Friends';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 interface MyProfileEditModalProps {
-  profile: profileType;
+  profile: MyProfileData;
   editTarget: string;
   handleModalClose: VoidFunction;
 }
@@ -18,12 +17,12 @@ const MyProfileEditModal = ({
     name: {
       label: '이름',
       maxLength: 20,
-      value: profile.name,
+      value: profile.nickname,
     },
     statusMessage: {
       label: '상태메시지',
       maxLength: 60,
-      value: profile.statusMessage || '',
+      value: profile.greetings || '',
     },
   };
 

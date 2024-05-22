@@ -4,27 +4,33 @@ import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
 import useModal from '../../hooks/useModal';
 import ModalLayout from '../modal/ModalLayout';
-import background from '../../assets/images/background.jpg';
-
-const myProfile = {
-  name: '어준혁',
-  profileImage: '',
-  statusMessage: '빨리 끝내자!',
-  backgroundImage: background,
-};
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { getMyProfile } from '../../api/friend/profile';
 
 const Mine = () => {
+  const { id } = useParams() as { id: string };
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
+  const { data: myProfile } = useQuery<
+    MyProfileData,
+    Error,
+    MyProfileData,
+    [string, string]
+  >({
+    queryKey: ['myProfile', id],
+    queryFn: () => getMyProfile(id),
+  });
+
   return (
     <MineWrapper>
       <MineBox onClick={handleModalOpen}>
         <ProfileImageBox imageUrl={defaultImg} size="3.2rem" />
         <TextBox>
-          <MyName>{myProfile.name}</MyName>
-          <MyStatusMessage>{myProfile.statusMessage}</MyStatusMessage>
+          <MyName>{myProfile?.nickname}</MyName>
+          <MyStatusMessage>{myProfile?.greetings}</MyStatusMessage>
         </TextBox>
       </MineBox>
-      {isModal && (
+      {isModal && myProfile && (
         <ModalLayout
           isClosing={isClosing}
           isModal={isModal}

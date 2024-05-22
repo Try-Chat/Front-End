@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import { profileType } from '../friend/Friends';
 import { TfiClose } from 'react-icons/tfi';
 import { MdPhotoCamera } from 'react-icons/md';
 import { BsFillChatFill } from 'react-icons/bs';
@@ -14,7 +13,7 @@ import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
-  profile: profileType;
+  profile: MyProfileData;
   isMine?: boolean;
 }
 
@@ -24,7 +23,7 @@ const ProfileModal = ({
   isMine,
 }: ProfileModalProps) => {
   return (
-    <ProfileModalBox background={profile.backgroundImage}>
+    <ProfileModalBox background={profile.backgroundImg}>
       <ProfileModalContent>
         {isMine ? (
           <MyProfileLayout
@@ -76,11 +75,11 @@ const MyProfileLayout = ({
           </ProfileModalHeader>
           <ProfileModalBottomBox>
             <ProfileImageNameBox>
-              <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+              <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
               <FriendNameBox>
-                <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
+                <ProfileName $isMine={isMine}>{profile.nickname}</ProfileName>
               </FriendNameBox>
-              <StatusMessage>{profile.statusMessage}</StatusMessage>
+              <StatusMessage>{profile.greetings}</StatusMessage>
             </ProfileImageNameBox>
             <ProfileModalBottomNav $isEdit={isEdit}>
               <NavIconBox>
@@ -120,12 +119,12 @@ const FriendProfileLayout = ({
       </ProfileModalHeader>
       <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+          <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
           <FriendNameBox>
-            <ProfileName $isMine={isMine}>{profile.name}</ProfileName>
+            <ProfileName $isMine={isMine}>{profile.nickname}</ProfileName>
             <StyledPencilIcon onClick={handleModalOpen} />
           </FriendNameBox>
-          <StatusMessage>{profile.statusMessage}</StatusMessage>
+          <StatusMessage>{profile.greetings}</StatusMessage>
         </ProfileImageNameBox>
         <ProfileModalBottomNav>
           <NavIconBox>
@@ -152,7 +151,7 @@ const EditMyProfileLayout = ({
   handleCancelEdit,
   isEdit,
 }: {
-  profile: profileType;
+  profile: MyProfileData;
   handleCancelEdit: VoidFunction;
   isEdit: boolean;
 }) => {
@@ -175,19 +174,19 @@ const EditMyProfileLayout = ({
       </ProfileModalHeader>
       <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={profile.profileImage} size="6rem" />
+          <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
           <CameraIconButton>
             <StyledCameraIcon />
           </CameraIconButton>
         </ProfileImageNameBox>
         <EditBox>
-          <span>{profile.name}</span>
+          <span>{profile.nickname}</span>
           <button type="button" onClick={() => handleEditClick('name')}>
             <BiSolidPencil />
           </button>
         </EditBox>
         <EditBox>
-          <p>{profile.statusMessage || '상태메시지를 입력해 주세요.'}</p>
+          <p>{profile.greetings || '상태메시지를 입력해 주세요.'}</p>
           <button
             type="button"
             onClick={() => handleEditClick('statusMessage')}>

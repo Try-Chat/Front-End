@@ -27,7 +27,6 @@ const Login = () => {
         username: id,
         password: password,
       });
-      sessionStorage.setItem('isLogin', 'login');
       navigate(`/friend/${res.data.id}`);
     } catch (error) {
       if (axios.isAxiosError(error)) {
