@@ -1,27 +1,25 @@
 import { styled } from '@mui/material';
 import { FaUser } from 'react-icons/fa6';
 import { IoChatbubbleSharp } from 'react-icons/io5';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+const FOOTER_ICONS = [
+  { page: '/friend', icon: <FaUser />, title: '친구' },
+  { page: '/chatroomlist', icon: <IoChatbubbleSharp />, title: '채팅' },
+];
 
 const Footer = () => {
   const location = useLocation();
-  const { id } = useParams() as { id: string };
   const currentPage = location.pathname;
 
   return (
     <FooterWrapper>
-      <FooterIconBox
-        to={`/friend/${id}`}
-        $currentPage={currentPage === `/friend/${id}`}>
-        <FaUser />
-        <p>친구</p>
-      </FooterIconBox>
-      <FooterIconBox
-        to={`/chatroomlist/${id}`}
-        $currentPage={currentPage === `/chatroomlist/${id}`}>
-        <IoChatbubbleSharp />
-        <p>채팅</p>
-      </FooterIconBox>
+      {FOOTER_ICONS.map(({ page, title, icon }) => (
+        <FooterIconBox key={page} to={page} $currentPage={currentPage === page}>
+          {icon}
+          <p>{title}</p>
+        </FooterIconBox>
+      ))}
     </FooterWrapper>
   );
 };
@@ -53,7 +51,7 @@ const FooterIconBox = styled(Link)<{ $currentPage: boolean }>(
     gap: '0.4rem',
 
     backgroundColor: theme.palette.grey[50],
-    color: $currentPage ? '#000' : theme.palette.grey[400],
+    color: $currentPage ? '#000' : '#868e96',
 
     textDecoration: 'none',
 

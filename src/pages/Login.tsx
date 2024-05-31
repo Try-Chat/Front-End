@@ -6,8 +6,10 @@ import { useRef, useState } from 'react';
 import instance from '../api/instance';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '../store/useUserStore';
 
 const Login = () => {
+  const { setUserId } = useUserStore();
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [id, setId] = useState('');
@@ -27,7 +29,8 @@ const Login = () => {
         username: id,
         password: password,
       });
-      navigate(`/friend/${res.data.id}`);
+      setUserId(res.data.id);
+      navigate('/friend');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {

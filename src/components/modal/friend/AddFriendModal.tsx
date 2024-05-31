@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { TfiClose } from 'react-icons/tfi';
 import ModalLayout from '../ModalLayout';
 import ProfileImageBox from '../../common/ProfileImageBox';
-import { borderRadius, height, width } from '@mui/system';
+import instance from '../../../api/instance';
 
 interface AddFriendModalProps {
   handleModalClose: VoidFunction;
@@ -20,9 +20,23 @@ const AddFriendModal = ({
   const [friendKakaoId, setFriendKakaoId] = useState('');
   const [isSearched, setIsSearched] = useState(false);
 
+  const handleSearchFriend = async () => {
+    try {
+      const res = await instance.get(
+        `/users/profile/?uniqueName=${friendKakaoId}`,
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ') e.preventDefault();
-    if (e.key === 'Enter') setIsSearched(true);
+    if (e.key === 'Enter') {
+      setIsSearched(true);
+      handleSearchFriend();
+    }
   };
   return (
     <ModalLayout

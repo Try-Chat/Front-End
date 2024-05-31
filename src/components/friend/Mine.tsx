@@ -1,15 +1,17 @@
-import defaultImg from '../../assets/images/defaultImg.jpg';
 import ProfileImageBox from '../common/ProfileImageBox';
 import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
 import useModal from '../../hooks/useModal';
 import ModalLayout from '../modal/ModalLayout';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 import { getMyProfile } from '../../api/friend/profile';
+import useUserStore from '../../store/useUserStore';
 
 const Mine = () => {
-  const { id } = useParams() as { id: string };
+  const { userId } = useUserStore();
+  console.log(userId);
+  if (!userId) return null;
+
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
   const { data: myProfile } = useQuery<
     MyProfileData,
@@ -17,14 +19,14 @@ const Mine = () => {
     MyProfileData,
     [string, string]
   >({
-    queryKey: ['myProfile', id],
-    queryFn: () => getMyProfile(id),
+    queryKey: ['myProfile', userId],
+    queryFn: () => getMyProfile(userId),
   });
 
   return (
     <MineWrapper>
       <MineBox onClick={handleModalOpen}>
-        <ProfileImageBox imageUrl={defaultImg} size="3.2rem" />
+        <ProfileImageBox imageUrl={myProfile?.profileImgPath} size="3.2rem" />
         <TextBox>
           <MyName>{myProfile?.nickname}</MyName>
           <MyStatusMessage>{myProfile?.greetings}</MyStatusMessage>
