@@ -13,7 +13,7 @@ import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
-  profile: MyProfileData;
+  profile: ProfileDataType;
   isMine?: boolean;
 }
 
@@ -23,7 +23,8 @@ const ProfileModal = ({
   isMine,
 }: ProfileModalProps) => {
   return (
-    <ProfileModalBox background={profile.backgroundImg}>
+    <ProfileModalBox
+      background={profile.profileImgPath + profile.backgroundImg}>
       <ProfileModalContent>
         {isMine ? (
           <MyProfileLayout
@@ -75,7 +76,10 @@ const MyProfileLayout = ({
           </ProfileModalHeader>
           <ProfileModalBottomBox>
             <ProfileImageNameBox>
-              <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
+              <ProfileImageBox
+                imageUrl={profile.profileImgPath + profile.profileImg}
+                size="6rem"
+              />
               <FriendNameBox>
                 <ProfileName $isMine={isMine}>{profile.nickname}</ProfileName>
               </FriendNameBox>
@@ -119,7 +123,10 @@ const FriendProfileLayout = ({
       </ProfileModalHeader>
       <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
+          <ProfileImageBox
+            imageUrl={profile.profileImgPath + profile.profileImg}
+            size="6rem"
+          />
           <FriendNameBox>
             <ProfileName $isMine={isMine}>{profile.nickname}</ProfileName>
             <StyledPencilIcon onClick={handleModalOpen} />
@@ -151,7 +158,7 @@ const EditMyProfileLayout = ({
   handleCancelEdit,
   isEdit,
 }: {
-  profile: MyProfileData;
+  profile: ProfileDataType;
   handleCancelEdit: VoidFunction;
   isEdit: boolean;
 }) => {
@@ -174,7 +181,10 @@ const EditMyProfileLayout = ({
       </ProfileModalHeader>
       <ProfileModalBottomBox>
         <ProfileImageNameBox>
-          <ProfileImageBox imageUrl={profile.profileImg} size="6rem" />
+          <ProfileImageBox
+            imageUrl={profile.profileImgPath + profile.profileImg}
+            size="6rem"
+          />
           <CameraIconButton>
             <StyledCameraIcon />
           </CameraIconButton>

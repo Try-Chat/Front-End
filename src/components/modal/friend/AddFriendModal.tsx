@@ -4,6 +4,9 @@ import { TfiClose } from 'react-icons/tfi';
 import ModalLayout from '../ModalLayout';
 import ProfileImageBox from '../../common/ProfileImageBox';
 import instance from '../../../api/instance';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getSearchFriend } from '../../../api/friend/profile';
+import { AxiosError } from 'axios';
 
 interface AddFriendModalProps {
   handleModalClose: VoidFunction;
@@ -20,22 +23,35 @@ const AddFriendModal = ({
   const [friendKakaoId, setFriendKakaoId] = useState('');
   const [isSearched, setIsSearched] = useState(false);
 
-  const handleSearchFriend = async () => {
-    try {
-      const res = await instance.get(
-        `/users/profile/?uniqueName=${friendKakaoId}`,
-      );
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const { data: searchFriend } = useQuery<
+  //   ProfileDataType,
+  //   Error,
+  //   ProfileDataType,
+  //   [string, string]
+  // >({
+  //   queryKey: ['searchFriend', friendKakaoId],
+  //   queryFn: () => getSearchFriend(friendKakaoId),
+
+  //   enabled: !!friendKakaoId,
+  // });
+
+  const { mutate: searchFriend, data: searchResult } = useMutation<
+    ProfileDataType,
+    Error,
+    string
+  >(getSearchFriend, {
+    onSuccess: () => {
+      setIsSearched(true);
+    },
+    onError: () => {
+      setIsSearched(false);
+    },
+  });
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ') e.preventDefault();
     if (e.key === 'Enter') {
-      setIsSearched(true);
-      handleSearchFriend();
+      searchFriend(friendKakaoId);
     }
   };
   return (

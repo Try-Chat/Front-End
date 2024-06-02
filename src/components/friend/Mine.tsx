@@ -9,24 +9,29 @@ import useUserStore from '../../store/useUserStore';
 
 const Mine = () => {
   const { userId } = useUserStore();
-  console.log(userId);
+
   if (!userId) return null;
 
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
   const { data: myProfile } = useQuery<
-    MyProfileData,
+    ProfileDataType,
     Error,
-    MyProfileData,
-    [string, string]
+    ProfileDataType,
+    [string]
   >({
-    queryKey: ['myProfile', userId],
+    queryKey: ['myProfile'],
     queryFn: () => getMyProfile(userId),
   });
+
+  if (!myProfile) return null;
 
   return (
     <MineWrapper>
       <MineBox onClick={handleModalOpen}>
-        <ProfileImageBox imageUrl={myProfile?.profileImgPath} size="3.2rem" />
+        <ProfileImageBox
+          imageUrl={myProfile?.profileImgPath + myProfile?.profileImg}
+          size="3.2rem"
+        />
         <TextBox>
           <MyName>{myProfile?.nickname}</MyName>
           <MyStatusMessage>{myProfile?.greetings}</MyStatusMessage>

@@ -1,69 +1,42 @@
 import Toggle from '../common/Toggle';
 import ProfileImageBox from '../common/ProfileImageBox';
-import jung from '../../assets/images/jung.jpg';
-import background from '../../assets/images/background.jpg';
-import { useState } from 'react';
 import ProfileModal from '../modal/ProfileModal';
 import { styled } from '@mui/material';
 import useModal from '../../hooks/useModal';
 import ModalLayout from '../modal/ModalLayout';
-
-const FRIEND_INFORMATIONS = [
-  {
-    name: '정충일',
-    setName: '정충일',
-    profileImage: jung,
-    backgroundImage: background,
-  },
-  { name: '고미선', setName: '고미선', profileImage: '', backgroundImage: '' },
-  { name: '김혜미', setName: '김혜미', profileImage: '', backgroundImage: '' },
-  { name: '김해찬', setName: '김해찬', profileImage: '', backgroundImage: '' },
-  { name: '문희조', setName: '문희조', profileImage: '', backgroundImage: '' },
-  { name: '곽민혁', setName: '곽민혁', profileImage: '', backgroundImage: '' },
-  { name: '문병훈', setName: '문병훈', profileImage: '', backgroundImage: '' },
-  { name: '서지수', setName: '서지수', profileImage: '', backgroundImage: '' },
-  { name: '김태훈', setName: '김태훈', profileImage: '', backgroundImage: '' },
-  { name: '이준엽', setName: '이준엽', profileImage: '', backgroundImage: '' },
-];
-
-export interface profileType {
-  name: string;
-  setName?: string;
-  profileImage?: string;
-  backgroundImage?: string;
-  memo?: string;
-  statusMessage?: string;
-}
+import useUserStore from '../../store/useUserStore';
+import { useQuery } from '@tanstack/react-query';
+import { getFriends } from '../../api/friend/profile';
 
 const Friends = () => {
+  const { userId } = useUserStore();
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
-  const [profile, setprofile] = useState<profileType>({
-    name: '',
-    setName: '',
-    profileImage: '',
-    backgroundImage: '',
+
+  if (!userId) return null;
+
+  const { data: friends } = useQuery<
+    ProfileDataType[],
+    Error,
+    ProfileDataType[],
+    [string]
+  >({
+    queryKey: ['friends'],
+    queryFn: () => getFriends(userId),
   });
 
-  const handleFriendClick = (
-    name: string,
-    setName: string,
-    profileImage: string,
-    backgroundImage: string,
-  ): void => {
-    handleModalOpen();
-    setprofile({
-      name,
-      profileImage,
-      backgroundImage,
-      setName,
-    });
-  };
+  if (!friends) return null;
+
+  console.log(friends);
+
+  // const handleFriendClick = (): void => {
+  //   handleModalOpen();
+  // };
 
   return (
     <FriendsWrapper>
-      <Toggle title="친구 10">
+      <Toggle title={`친구 ${friends?.length}`}>
         <FriendsBox>
-          {FRIEND_INFORMATIONS.map((friend) => (
+          {/* {friends.map((friend) => (
             <li
               key={friend.name}
               onClick={() =>
@@ -76,7 +49,7 @@ const Friends = () => {
               }>
               <FriendItem name={friend.name} imageUrl={friend.profileImage} />
             </li>
-          ))}
+          ))} */}
         </FriendsBox>
       </Toggle>
       {isModal && (

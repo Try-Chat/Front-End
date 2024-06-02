@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 interface MyProfileEditModalProps {
-  profile: MyProfileData;
+  profile: ProfileDataType;
   editTarget: string;
   handleModalClose: VoidFunction;
 }

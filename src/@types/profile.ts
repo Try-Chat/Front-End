@@ -1,4 +1,4 @@
-interface MyProfileData {
+interface ProfileDataType {
   id: number;
   nickname: string;
   uniqueName: string;
