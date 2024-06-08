@@ -1,12 +1,13 @@
-import { styled } from '@mui/material';
+import { CircularProgress, styled } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { TfiClose } from 'react-icons/tfi';
-import ModalLayout from '../ModalLayout';
-import ProfileImageBox from '../../common/ProfileImageBox';
-import instance from '../../../api/instance';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { getSearchFriend } from '../../../api/friend/profile';
-import { AxiosError } from 'axios';
+import ProfileImageBox from '../../common/ProfileImageBox';
+import ModalLayout from '../ModalLayout';
+import { addFriend } from '../../../api/friend/utils';
+import { IoMdCheckmark } from 'react-icons/io';
+import useUserStore from '../../../store/useUserStore';
 
 interface AddFriendModalProps {
   handleModalClose: VoidFunction;
@@ -21,45 +22,39 @@ const AddFriendModal = ({
   isModal,
 }: AddFriendModalProps) => {
   const [friendKakaoId, setFriendKakaoId] = useState('');
-  const [isSearched, setIsSearched] = useState(false);
-
-  // const { data: searchFriend } = useQuery<
-  //   ProfileDataType,
-  //   Error,
-  //   ProfileDataType,
-  //   [string, string]
-  // >({
-  //   queryKey: ['searchFriend', friendKakaoId],
-  //   queryFn: () => getSearchFriend(friendKakaoId),
-
-  //   enabled: !!friendKakaoId,
-  // });
-
-  const { mutate: searchFriend, data: searchResult } = useMutation<
-    ProfileDataType,
-    Error,
-    string
-  >(getSearchFriend, {
-    onSuccess: () => {
-      setIsSearched(true);
-    },
-    onError: () => {
-      setIsSearched(false);
-    },
+  const { userId } = useUserStore();
+  const {
+    data: searchResult,
+    mutate: searchFriend,
+    isSuccess: searchSuccess,
+    isPending: searchPending,
+  } = useMutation<MyProfileDataType, Error, string>({
+    mutationFn: getSearchFriend,
   });
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  console.log(searchResult);
+
+  const { mutate: addMyFriend, isSuccess } = useMutation<
+    FriendProfileDataType[],
+    Error,
+    string
+  >({
+    mutationFn: addFriend,
+  });
+
+  const handleSearchInputKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ') e.preventDefault();
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && friendKakaoId) {
       searchFriend(friendKakaoId);
     }
   };
+
   return (
     <ModalLayout
       isModal={isModal}
       onClose={handleModalClose}
       isClosing={isClosing}>
-      <ModalBox>
+      <ModalBox $searchPending={searchPending}>
         <ModalTopBox>
           <button type="button" onClick={handleModalClose}>
             <TfiClose />
@@ -72,7 +67,7 @@ const AddFriendModal = ({
             maxLength={20}
             placeholder="친구 카카오톡 ID"
             value={friendKakaoId}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handleSearchInputKeyDown}
             onChange={(e) => setFriendKakaoId(e.target.value)}
           />
           {friendKakaoId && (
@@ -82,23 +77,52 @@ const AddFriendModal = ({
           )}
           <p>{friendKakaoId.length}/20</p>
         </InputBox>
-        <ModalBottomBox>
-          {isSearched ? (
-            <SearchedFriendBox>
-              <ProfileImageBox size="4.5rem" />
-              <p>어준혁</p>
-              <ButtonBox>
-                <button type="button">차단</button>
-                <button type="button">친구 추가</button>
-              </ButtonBox>
-            </SearchedFriendBox>
-          ) : (
-            <MyKakaoIdBox>
-              <p>내 아이디</p>
-              <p>anftlcb</p>
-            </MyKakaoIdBox>
-          )}
-        </ModalBottomBox>
+        {searchPending && (
+          <ProgressBox>
+            <DeterminateCircularProgress variant="determinate" value={100} />
+            <InDeterminateCircularProgress
+              variant="indeterminate"
+              disableShrink
+            />
+          </ProgressBox>
+        )}
+        {isSuccess && (
+          <ProgressBox>
+            <CheckMark />
+          </ProgressBox>
+        )}
+        {searchResult && (
+          <ModalBottomBox>
+            {searchSuccess && (
+              <SearchedFriendBox>
+                <ProfileImageBox
+                  imageUrl={
+                    searchResult.profileImgPath + searchResult.profileImg
+                  }
+                  size="4.5rem"
+                />
+                <p>{searchResult.nickname}</p>
+                {isSuccess && <p>친구 등록이 완료되었습니다.</p>}
+                <ButtonBox>
+                  <button type="button">
+                    {isSuccess ? '프로필 지정' : '차단'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => addMyFriend(friendKakaoId)}>
+                    {isSuccess ? '1:1 채팅' : '친구 추가'}
+                  </button>
+                </ButtonBox>
+              </SearchedFriendBox>
+            )}
+            {!searchSuccess && (
+              <MyKakaoIdBox>
+                <p>내 아이디</p>
+                <p>{userId}</p>
+              </MyKakaoIdBox>
+            )}
+          </ModalBottomBox>
+        )}
       </ModalBox>
     </ModalLayout>
   );
@@ -106,11 +130,28 @@ const AddFriendModal = ({
 
 export default AddFriendModal;
 
-const ModalBox = styled('div')({
+const ModalBox = styled('div')<{
+  $searchPending: boolean;
+}>(({ $searchPending }) => ({
   width: '500px',
+
   padding: '0 1rem',
+
+  position: 'relative',
+
   backgroundColor: '#ffff',
-});
+
+  '&::before': {
+    content: $searchPending ? '""' : 'none',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.3 )',
+    zIndex: 1,
+  },
+}));
 
 const ModalTopBox = styled('div')({
   display: 'flex',
@@ -215,7 +256,7 @@ const MyKakaoIdBox = styled('div')(({ theme }) => ({
   color: theme.palette.grey[400],
 }));
 
-const SearchedFriendBox = styled('div')({
+const SearchedFriendBox = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -223,7 +264,12 @@ const SearchedFriendBox = styled('div')({
   gap: '0.6rem',
 
   padding: '1.5rem 4rem',
-});
+
+  '& p:nth-of-type(2)': {
+    fontSize: '0.9rem',
+    color: theme.palette.grey[400],
+  },
+}));
 
 const ButtonBox = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -248,3 +294,37 @@ const ButtonBox = styled('div')(({ theme }) => ({
     },
   },
 }));
+
+const ProgressBox = styled('div')({
+  width: '4.1rem',
+  height: '4.1rem',
+
+  position: 'absolute',
+  top: '18rem',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 1,
+
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  borderRadius: '50%',
+
+  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+});
+
+const DeterminateCircularProgress = styled(CircularProgress)({
+  color: 'rgba(0, 0, 0, 0.2)',
+});
+
+const InDeterminateCircularProgress = styled(CircularProgress)({
+  color: '#ffff',
+  animationDuration: '550ms',
+  position: 'absolute',
+});
+
+const CheckMark = styled(IoMdCheckmark)({
+  color: '#ffff',
+  fontSize: '2rem',
+});

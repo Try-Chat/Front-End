@@ -9,15 +9,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getFriends } from '../../api/friend/profile';
 
 const Friends = () => {
-  const { userId } = useUserStore();
+  const { id: userId } = useUserStore();
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
 
   if (!userId) return null;
 
   const { data: friends } = useQuery<
-    ProfileDataType[],
+    FriendProfileDataType[],
     Error,
-    ProfileDataType[],
+    FriendProfileDataType[],
     [string]
   >({
     queryKey: ['friends'],
@@ -26,30 +26,18 @@ const Friends = () => {
 
   if (!friends) return null;
 
-  console.log(friends);
-
-  // const handleFriendClick = (): void => {
-  //   handleModalOpen();
-  // };
-
   return (
     <FriendsWrapper>
       <Toggle title={`친구 ${friends?.length}`}>
         <FriendsBox>
-          {/* {friends.map((friend) => (
-            <li
-              key={friend.name}
-              onClick={() =>
-                handleFriendClick(
-                  friend.name,
-                  friend.setName,
-                  friend.profileImage,
-                  friend.backgroundImage,
-                )
-              }>
-              <FriendItem name={friend.name} imageUrl={friend.profileImage} />
+          {friends.map((friend) => (
+            <li key={friend.friendId} onClick={handleModalOpen}>
+              <FriendItem
+                name={friend.friendNickname}
+                imageUrl={friend.friendProfileImgPath + friend.friendProfileImg}
+              />
             </li>
-          ))} */}
+          ))}
         </FriendsBox>
       </Toggle>
       {isModal && (

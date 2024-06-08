@@ -8,15 +8,15 @@ import { getMyProfile } from '../../api/friend/profile';
 import useUserStore from '../../store/useUserStore';
 
 const Mine = () => {
-  const { userId } = useUserStore();
+  const { id: userId } = useUserStore();
 
   if (!userId) return null;
 
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
   const { data: myProfile } = useQuery<
-    ProfileDataType,
+    MyProfileDataType,
     Error,
-    ProfileDataType,
+    MyProfileDataType,
     [string]
   >({
     queryKey: ['myProfile'],

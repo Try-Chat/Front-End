@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface FriendProfileEditModalProps {
   handleModalClose: VoidFunction;
-  profile: ProfileDataType;
+  profile: MyProfileDataType;
 }
 
 const FriendProfileEditModal = ({

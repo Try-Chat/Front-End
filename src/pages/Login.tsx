@@ -1,22 +1,48 @@
-import { styled } from '@mui/material';
+import { CircularProgress, styled } from '@mui/material';
 import kakaoLogo from '../assets/images/kakao.webp';
 import { HiMiniEyeSlash } from 'react-icons/hi2';
 import { IoEyeSharp } from 'react-icons/io5';
 import { useRef, useState } from 'react';
 import instance from '../api/instance';
-import axios from 'axios';
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
+import { useMutation } from '@tanstack/react-query';
 
 const Login = () => {
   const { setUserId } = useUserStore();
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState(false);
   const [isSecret, setIsSecret] = useState(false);
-  const isAbleButton = password.length > 3 && id.length > 0;
+  const isAbleButton = password.length > 3 && email.length > 0;
+
+  const login = async () => {
+    const { data } = await instance.post<MyProfileDataType>('/users/signin', {
+      email: email,
+      password: password,
+    });
+
+    return data;
+  };
+
+  const { mutate, isPending } = useMutation<MyProfileDataType, AxiosError>({
+    mutationFn: () => login(),
+    onSuccess: (data) => {
+      setUserId({ id: data.id, userId: data.uniqueName });
+      navigate('/friend');
+    },
+    onError: (error) => {
+      if (error.status === 400) {
+        if (ref.current) {
+          setPassword('');
+          ref.current.focus();
+        }
+      }
+    },
+  });
 
   const handlePasswordIconClick = () => {
     setIsSecret((prev) => !prev);
@@ -24,24 +50,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await instance.post('/users/signin', {
-        username: id,
-        password: password,
-      });
-      setUserId(res.data.id);
-      navigate('/friend');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 400) {
-          if (ref.current) {
-            setAuthError(true);
-            setPassword('');
-            ref.current.focus();
-          }
-        }
-      }
-    }
+    mutate();
   };
 
   if (authError && isAbleButton) {
@@ -56,9 +65,9 @@ const Login = () => {
           <InputBox>
             <input
               type="text"
-              value={id}
+              value={email}
               placeholder="카카오계정 (이메일 또는 전화번호)"
-              onChange={(e) => setId(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </InputBox>
           <InputBox>
@@ -82,12 +91,30 @@ const Login = () => {
             </button>
           </InputBox>
         </InputWrapper>
-        <LoginButton
-          disabled={!isAbleButton}
-          $isVaild={isAbleButton}
-          type="submit">
-          로그인
-        </LoginButton>
+        <LoginButtonBox>
+          <LoginButton
+            disabled={!isAbleButton}
+            $isVaild={isAbleButton}
+            $isPending={isPending}
+            type="submit">
+            <></>
+            <span>로그인</span>
+          </LoginButton>
+          {isPending && (
+            <ProgressBox>
+              <DeterminateCircularProgress
+                variant="determinate"
+                value={100}
+                size={20}
+              />
+              <InDeterminateCircularProgress
+                variant="indeterminate"
+                disableShrink
+                size={20}
+              />
+            </ProgressBox>
+          )}
+        </LoginButtonBox>
         {authError && <p>카카오계정 또는 비밀번호를 다시 확인해 주세요.</p>}
       </LoginBox>
     </LoginWrapper>
@@ -174,28 +201,59 @@ const InputWrapper = styled('div')<{ $authError: boolean }>(
   }),
 );
 
-const LoginButton = styled('button')<{ $isVaild: boolean }>(
-  ({ theme, $isVaild }) => ({
-    width: '100%',
-    height: '3.3rem',
+const LoginButton = styled('button')<{
+  $isVaild: boolean;
+  $isPending: boolean;
+}>(({ theme, $isVaild, $isPending }) => ({
+  width: '100%',
+  height: '3.3rem',
 
-    fontSize: '1rem',
-    color: theme.palette.grey[300],
+  fontSize: '1rem',
+  color: theme.palette.grey[300],
 
-    backgroundColor: $isVaild ? '#3B1C1C' : theme.palette.grey[100],
+  backgroundColor: $isPending
+    ? theme.palette.grey[100]
+    : $isVaild
+      ? '#3B1C1C'
+      : theme.palette.grey[100],
 
-    border: $isVaild ? 'none' : '1.2px solid #ffd43b',
+  border: $isVaild ? 'none' : '1.2px solid #ffd43b',
 
-    cursor: $isVaild ? 'pointer' : 'default',
+  cursor: $isVaild ? 'pointer' : 'default',
 
-    '&:hover': {
-      backgroundImage: $isVaild
-        ? 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.2))'
-        : 'none',
-    },
-  }),
-);
+  '&:hover': {
+    backgroundImage: $isVaild
+      ? 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.2))'
+      : 'none',
+  },
+}));
 
 const StyledSecretIcon = styled(HiMiniEyeSlash)({
   transform: 'scaleX(-1)',
 });
+
+const LoginButtonBox = styled('div')({
+  width: '100%',
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const ProgressBox = styled('div')({
+  position: 'absolute',
+  left: '123px',
+
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const DeterminateCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  color: theme.palette.grey[400],
+}));
+
+const InDeterminateCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  color: theme.palette.grey[300],
+  animationDuration: '900ms',
+  position: 'absolute',
+}));

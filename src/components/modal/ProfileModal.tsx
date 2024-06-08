@@ -13,7 +13,7 @@ import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
-  profile: ProfileDataType;
+  profile: MyProfileDataType;
   isMine?: boolean;
 }
 
@@ -158,7 +158,7 @@ const EditMyProfileLayout = ({
   handleCancelEdit,
   isEdit,
 }: {
-  profile: ProfileDataType;
+  profile: MyProfileDataType;
   handleCancelEdit: VoidFunction;
   isEdit: boolean;
 }) => {
