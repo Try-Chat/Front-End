@@ -1,7 +1,7 @@
 interface MyProfileDataType {
   id: number;
   nickname: string;
-  uniqueName: string;
+  role: string;
   greetings: string;
   profileImg: string;
   backgroundImg: string;

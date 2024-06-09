@@ -1,7 +1,4 @@
-import { CircularProgress, styled } from '@mui/material';
-import kakaoLogo from '../assets/images/kakao.webp';
-import { HiMiniEyeSlash } from 'react-icons/hi2';
-import { IoEyeSharp } from 'react-icons/io5';
+import { styled } from '@mui/material';
 import { useRef, useState } from 'react';
 import instance from '../api/instance';
 import { AxiosError } from 'axios';
@@ -15,23 +12,21 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [authError, setAuthError] = useState(false);
-  const [isSecret, setIsSecret] = useState(false);
   const isAbleButton = password.length > 3 && email.length > 0;
 
   const login = async () => {
     const { data } = await instance.post<MyProfileDataType>('/users/signin', {
-      email: email,
-      password: password,
+      email,
+      password,
     });
 
     return data;
   };
 
-  const { mutate, isPending } = useMutation<MyProfileDataType, AxiosError>({
-    mutationFn: () => login(),
+  const { mutate } = useMutation<MyProfileDataType, AxiosError>({
+    mutationFn: login,
     onSuccess: (data) => {
-      setUserId({ id: data.id, userId: data.uniqueName });
+      setUserId({ id: data.id, userId: data.nickname });
       navigate('/friend');
     },
     onError: (error) => {
@@ -44,35 +39,30 @@ const Login = () => {
     },
   });
 
-  const handlePasswordIconClick = () => {
-    setIsSecret((prev) => !prev);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     mutate();
   };
 
-  if (authError && isAbleButton) {
-    setAuthError(false);
-  }
-
   return (
     <LoginWrapper>
-      <LoginBox onSubmit={handleSubmit} method="post">
-        <KakaoLogo src={kakaoLogo} alt="kakaoLogo" />
-        <InputWrapper $authError={authError}>
+      <LoginBox onSubmit={handleSubmit}>
+        <h2>카카오톡을 시작합니다.</h2>
+        <p>
+          새로운 카카오계정이 있다면 <br />
+          이메일 또는 전화번호로 로그인 해주세요.
+        </p>
+        <InputWrapper>
           <InputBox>
             <input
               type="text"
               value={email}
-              placeholder="카카오계정 (이메일 또는 전화번호)"
+              placeholder="이메일 또는 전화번호"
               onChange={(e) => setEmail(e.target.value)}
             />
           </InputBox>
           <InputBox>
             <input
-              type={isSecret ? 'text' : 'password'}
               value={password}
               placeholder="비밀번호"
               minLength={4}
@@ -80,42 +70,17 @@ const Login = () => {
               ref={ref}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="button" onClick={handlePasswordIconClick}>
-              {password.length > 0 ? (
-                isSecret ? (
-                  <StyledSecretIcon />
-                ) : (
-                  <IoEyeSharp />
-                )
-              ) : null}
-            </button>
           </InputBox>
         </InputWrapper>
         <LoginButtonBox>
           <LoginButton
             disabled={!isAbleButton}
             $isVaild={isAbleButton}
-            $isPending={isPending}
             type="submit">
-            <></>
-            <span>로그인</span>
+            로그인
           </LoginButton>
-          {isPending && (
-            <ProgressBox>
-              <DeterminateCircularProgress
-                variant="determinate"
-                value={100}
-                size={20}
-              />
-              <InDeterminateCircularProgress
-                variant="indeterminate"
-                disableShrink
-                size={20}
-              />
-            </ProgressBox>
-          )}
+          <SignInButton type="button">새로운 카카오 계정 만들기</SignInButton>
         </LoginButtonBox>
-        {authError && <p>카카오계정 또는 비밀번호를 다시 확인해 주세요.</p>}
       </LoginBox>
     </LoginWrapper>
   );
@@ -126,7 +91,7 @@ export default Login;
 const LoginWrapper = styled('div')({
   width: '500px',
   minHeight: '100vh',
-  backgroundColor: '#F9E000',
+  backgroundColor: '#ffff',
 
   padding: '2rem 0',
 
@@ -143,13 +108,11 @@ const LoginBox = styled('form')({
   gap: '0.6rem',
 
   p: {
-    color: '#fa5252',
-    fontSize: '0.9rem',
+    textAlign: 'center',
+    color: '#8E8E8E',
+    lineHeight: '18px',
+    marginBottom: '0.5rem',
   },
-});
-
-const KakaoLogo = styled('img')({
-  width: '12rem',
 });
 
 const InputBox = styled('div')(({ theme }) => ({
@@ -166,94 +129,69 @@ const InputBox = styled('div')(({ theme }) => ({
   },
 }));
 
-const InputWrapper = styled('div')<{ $authError: boolean }>(
-  ({ theme, $authError }) => ({
+const InputWrapper = styled('div')(({ theme }) => ({
+  width: '100%',
+  margin: '1rem 0',
+
+  input: {
+    flex: 1,
     width: '100%',
+    height: '3.3rem',
 
-    border: $authError ? '1.2px solid #e03131' : '1.2px solid #ffd43b',
+    padding: '0.5rem 0',
 
-    input: {
-      flex: 1,
-      width: '100%',
-      height: '3.3rem',
+    border: 'none',
 
-      padding: '0.5rem 0.8rem',
+    outline: 'none',
 
-      border: 'none',
+    fontSize: '1rem',
+    color: '#495057',
 
-      outline: 'none',
-
-      fontSize: '1rem',
-      color: '#495057',
-
-      '::placeholder': {
-        color: theme.palette.grey[300],
-      },
-
-      '&[type="password"]': {
-        color: '#343a40',
-      },
-
-      ':first-of-type': {
-        borderBottom: '1px solid #e9ecef',
-      },
+    '::placeholder': {
+      color: theme.palette.grey[400],
     },
-  }),
-);
+
+    ':first-of-type': {
+      borderBottom: `1.3px solid ${theme.palette.grey[400]}`,
+    },
+  },
+}));
+
+const LoginButtonBox = styled('div')({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.8rem',
+  alignItems: 'center',
+
+  button: {
+    borderRadius: '5px',
+  },
+});
 
 const LoginButton = styled('button')<{
   $isVaild: boolean;
-  $isPending: boolean;
-}>(({ theme, $isVaild, $isPending }) => ({
+}>(({ theme, $isVaild }) => ({
+  width: '100%',
+  height: '3.3rem',
+  fontWeight: 'bold',
+
+  fontSize: '1rem',
+  color: $isVaild ? '  #553830' : theme.palette.grey[300],
+
+  backgroundColor: $isVaild ? '#ffd43b' : theme.palette.grey[50],
+
+  cursor: 'pointer',
+}));
+
+const SignInButton = styled('button')(({ theme }) => ({
   width: '100%',
   height: '3.3rem',
 
   fontSize: '1rem',
-  color: theme.palette.grey[300],
+  fontWeight: 'bold',
 
-  backgroundColor: $isPending
-    ? theme.palette.grey[100]
-    : $isVaild
-      ? '#3B1C1C'
-      : theme.palette.grey[100],
+  backgroundColor: theme.palette.grey[100],
 
-  border: $isVaild ? 'none' : '1.2px solid #ffd43b',
-
-  cursor: $isVaild ? 'pointer' : 'default',
-
-  '&:hover': {
-    backgroundImage: $isVaild
-      ? 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.2))'
-      : 'none',
-  },
-}));
-
-const StyledSecretIcon = styled(HiMiniEyeSlash)({
-  transform: 'scaleX(-1)',
-});
-
-const LoginButtonBox = styled('div')({
-  width: '100%',
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-});
-
-const ProgressBox = styled('div')({
-  position: 'absolute',
-  left: '123px',
-
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-const DeterminateCircularProgress = styled(CircularProgress)(({ theme }) => ({
-  color: theme.palette.grey[400],
-}));
-
-const InDeterminateCircularProgress = styled(CircularProgress)(({ theme }) => ({
-  color: theme.palette.grey[300],
-  animationDuration: '900ms',
-  position: 'absolute',
+  cursor: 'pointer',
 }));
