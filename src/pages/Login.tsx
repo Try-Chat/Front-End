@@ -54,9 +54,8 @@ const Login = () => {
           <InputBox>
             <input
               value={password}
+              type="password"
               placeholder="비밀번호"
-              minLength={4}
-              maxLength={255}
               onChange={(e) => setPassword(e.target.value)}
             />
           </InputBox>
@@ -68,7 +67,9 @@ const Login = () => {
             type="submit">
             로그인
           </LoginButton>
-          <SignInButton type="button">새로운 카카오 계정 만들기</SignInButton>
+          <SignInButton type="button" onClick={() => navigate('signup')}>
+            새로운 카카오 계정 만들기
+          </SignInButton>
         </LoginButtonBox>
       </LoginBox>
     </LoginWrapper>
@@ -82,14 +83,16 @@ const LoginWrapper = styled('div')({
   minHeight: '100vh',
   backgroundColor: '#ffff',
 
-  padding: '2rem 0',
+  paddingTop: '2rem',
 
   display: 'flex',
   justifyContent: 'center',
 });
 
 const LoginBox = styled('form')({
-  width: '70%',
+  width: '100%',
+
+  padding: '0 2.5rem',
 
   display: 'flex',
   flexDirection: 'column',
@@ -142,6 +145,10 @@ const InputWrapper = styled('div')(({ theme }) => ({
 
     ':first-of-type': {
       borderBottom: `1.3px solid ${theme.palette.grey[400]}`,
+    },
+
+    ':focus': {
+      borderBottom: `1.4px solid ${theme.palette.grey[500]}`,
     },
   },
 }));

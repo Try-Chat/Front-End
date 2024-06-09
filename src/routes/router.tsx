@@ -1,7 +1,7 @@
 import { createBrowserRouter, redirect } from 'react-router-dom';
 import { PATH } from './constants';
 import App from '../App';
-import { ChatRoom, ChatRoomList, Friend, Login } from '../pages';
+import { ChatRoom, ChatRoomList, Friend, Login, SignUp } from '../pages';
 
 const router = createBrowserRouter([
   {
@@ -13,8 +13,12 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: PATH.Friend,
+        path: PATH.FRIEND,
         element: <Friend />,
+      },
+      {
+        path: PATH.SIGN_UP,
+        element: <SignUp />,
       },
       {
         path: PATH.CHAT_ROOM,

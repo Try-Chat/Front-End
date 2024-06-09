@@ -1,6 +1,7 @@
 export const PATH = {
   MAIN: '/',
-  Friend: '/friend',
+  FRIEND: '/friend',
+  SIGN_UP: '/signup',
   CHAT_ROOM: '/chatroom',
   CHAT_ROOM_LIST: '/chatroomlist',
 };
