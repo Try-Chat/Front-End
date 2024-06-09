@@ -1,14 +1,12 @@
 import { styled } from '@mui/material';
-import { useRef, useState } from 'react';
-import instance from '../api/instance';
-import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
-import useUserStore from '../store/useUserStore';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import instance from '../api/instance';
+import useUserStore from '../store/useUserStore';
 
 const Login = () => {
   const { setUserId } = useUserStore();
-  const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,19 +21,11 @@ const Login = () => {
     return data;
   };
 
-  const { mutate } = useMutation<MyProfileDataType, AxiosError>({
+  const { mutate } = useMutation<MyProfileDataType>({
     mutationFn: login,
     onSuccess: (data) => {
       setUserId({ id: data.id, userId: data.nickname });
       navigate('/friend');
-    },
-    onError: (error) => {
-      if (error.status === 400) {
-        if (ref.current) {
-          setPassword('');
-          ref.current.focus();
-        }
-      }
     },
   });
 
@@ -67,7 +57,6 @@ const Login = () => {
               placeholder="비밀번호"
               minLength={4}
               maxLength={255}
-              ref={ref}
               onChange={(e) => setPassword(e.target.value)}
             />
           </InputBox>
