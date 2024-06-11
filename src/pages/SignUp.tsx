@@ -1,68 +1,120 @@
 import { styled } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import instance from '../api/instance';
+import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    },
+  });
 
-  const signUP = async () => {
-    const { data } = await instance.post('/users/signup', {
-      email,
-      password,
+  const signUp = async () => {
+    const { data } = await instance.post<string>('/users/signup', {
+      email: getValues('email'),
+      password: getValues('password'),
     });
-
-    console.log(data);
 
     return data;
   };
 
-  const { mutate } = useMutation({
-    mutationFn: signUP,
-    onSuccess: () => navigate('friend'),
+  const { mutate, isPending } = useMutation<string, AxiosError>({
+    mutationFn: signUp,
+    onSuccess: (data) => {
+      alert({ data });
+      navigate('/');
+    },
   });
 
-  const handleButtonClick = () => {
+  const onSubmit = () => {
     mutate();
   };
 
   return (
     <Wrapper>
       <h2>새로운 카카오계정을 생성합니다.</h2>
-      <InputWrapper>
+      <InputWrapper onSubmit={handleSubmit(onSubmit)}>
         <InputBox>
           <input
-            type="text"
-            value={email}
-            placeholder="이메일 또는 전화번호"
-            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="이메일"
+            {...register('email', {
+              required: '이메일은 필수 입력 항목입니다.',
+              pattern: {
+                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                message: '유효한 이메일을 입력하세요',
+              },
+            })}
           />
         </InputBox>
+        {errors.email && <p>{errors.email.message}</p>}
         <InputBox>
           <input
-            type="text"
-            value={password}
-            placeholder="비밀번호 (8~32자)"
-            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="비밀번호 (대문자, 특수문자, 숫자 포함 8~64자)"
+            {...register('password', {
+              required: '비밀번호는 필수 입력 항목입니다.',
+              pattern: {
+                value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,64}$/,
+                message:
+                  '비밀번호는 대문자, 특수문자, 숫자를 포함하고 8자 이상 64자 이하여야 합니다.',
+              },
+              minLength: {
+                value: 8,
+                message: '비밀번호는 최소 8자여야 합니다.',
+              },
+              maxLength: {
+                value: 64,
+                message: '비밀번호는 최대 64자여야 합니다.',
+              },
+            })}
           />
         </InputBox>
+        {errors.password && <p>{errors.password.message}</p>}
         <InputBox>
           <input
-            type="text"
-            value={passwordConfirm}
-            placeholder="비밀번호 확인 (8~32자)"
-            onChange={(e) => setPasswordConfirm(e.target.value)}
+            type="password"
+            placeholder="비밀번호 확인 (대문자, 특수문자, 숫자 포함 8~64자)"
+            {...register('passwordConfirm', {
+              required: '비밀번호 확인은 필수 입력 항목입니다.',
+              validate: (value) =>
+                value === getValues('password') ||
+                '비밀번호가 일치하지 않습니다.',
+              minLength: {
+                value: 8,
+                message: '비밀번호 확인은 최소 8자여야 합니다.',
+              },
+              maxLength: {
+                value: 64,
+                message: '비밀번호 확인은 최대 64자여야 합니다.',
+              },
+            })}
           />
         </InputBox>
+        {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
         <ButtonBox>
-          <Button $isGray type="button" onClick={handleButtonClick}>
+          <Button
+            type="submit"
+            $isGray
+            $isValid={isValid}
+            disabled={isPending || !isValid}>
             확인
           </Button>
-          <Button $isGray={false} type="button" onClick={() => navigate('/')}>
+          <Button
+            type="button"
+            disabled={isPending || !isValid}
+            onClick={() => navigate('/')}>
             기존 계정으로 로그인
           </Button>
         </ButtonBox>
@@ -73,7 +125,7 @@ const SignUp = () => {
 
 export default SignUp;
 
-const Wrapper = styled('form')({
+const Wrapper = styled('div')({
   width: '500px',
 
   display: 'flex',
@@ -89,7 +141,7 @@ const Wrapper = styled('form')({
   },
 });
 
-const InputWrapper = styled('div')(({ theme }) => ({
+const InputWrapper = styled('form')(({ theme }) => ({
   width: '100%',
   marginTop: '2rem',
 
@@ -119,6 +171,11 @@ const InputWrapper = styled('div')(({ theme }) => ({
       borderBottom: `1.4px solid ${theme.palette.grey[500]}`,
     },
   },
+
+  p: {
+    fontSize: '0.7rem',
+    margin: '0.5rem 0',
+  },
 }));
 
 const InputBox = styled('div')(({ theme }) => ({
@@ -144,18 +201,24 @@ const ButtonBox = styled('div')({
   marginTop: '2rem',
 });
 
-const Button = styled('button')<{ $isGray: boolean }>(({ $isGray, theme }) => ({
-  width: '100%',
-  height: '3.3rem',
+const Button = styled('button')<{ $isGray?: boolean; $isValid?: boolean }>(
+  ({ $isGray, $isValid, theme }) => ({
+    width: '100%',
+    height: '3.3rem',
 
-  fontWeight: 'bold',
-  fontSize: '1rem',
+    fontWeight: 'bold',
+    fontSize: '1rem',
 
-  color: $isGray ? theme.palette.grey[300] : theme.palette.grey[500],
-  backgroundColor: theme.palette.grey[100],
+    color: $isGray
+      ? $isValid
+        ? '  #553830'
+        : theme.palette.grey[300]
+      : theme.palette.grey[500],
+    backgroundColor: $isValid ? '#ffd43b' : theme.palette.grey[100],
 
-  borderRadius: '5px',
+    borderRadius: '5px',
 
-  marginTop: '1rem',
-  cursor: 'pointer',
-}));
+    marginTop: '1rem',
+    cursor: 'pointer',
+  }),
+);

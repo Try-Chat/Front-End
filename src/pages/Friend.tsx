@@ -8,7 +8,6 @@ const Friend = () => {
       <Header>친구</Header>
       <FriendMainBox>
         <Mine />
-        {/* <UpdatedProfile /> */}
         <Friends />
       </FriendMainBox>
       <Footer />

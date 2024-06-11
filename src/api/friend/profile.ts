@@ -10,7 +10,7 @@ export const getMyProfile = async (userId: string | number) => {
 
 export const getSearchFriend = async (friendKakaoId: string) => {
   const { data } = await instance.get<MyProfileDataType>(
-    `/users/profile?uniqueName=${friendKakaoId}`,
+    `/users/profile?username=${friendKakaoId}`,
   );
 
   return data;

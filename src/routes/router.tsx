@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { PATH } from './constants';
 import App from '../App';
 import { ChatRoom, ChatRoomList, Friend, Login, SignUp } from '../pages';

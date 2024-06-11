@@ -173,7 +173,7 @@ const LoginButton = styled('button')<{
   fontWeight: 'bold',
 
   fontSize: '1rem',
-  color: $isVaild ? '  #553830' : theme.palette.grey[300],
+  color: $isVaild ? '#553830' : theme.palette.grey[300],
 
   backgroundColor: $isVaild ? '#ffd43b' : theme.palette.grey[50],
 
