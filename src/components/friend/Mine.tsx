@@ -14,9 +14,9 @@ const Mine = () => {
 
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
   const { data: myProfile } = useQuery<
-    MyProfileDataType,
+    ProfileDataType,
     Error,
-    MyProfileDataType,
+    ProfileDataType,
     [string]
   >({
     queryKey: ['myProfile'],

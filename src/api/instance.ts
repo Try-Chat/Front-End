@@ -7,7 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const userId = useUserStore.getState().userId;
+    const userId = useUserStore.getState().id;
     if (userId) {
       config.headers['userId'] = userId;
     }

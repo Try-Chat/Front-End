@@ -13,7 +13,7 @@ import FriendProfileEditModal from './profile/FriendProfileEditModal';
 
 interface ProfileModalProps {
   handleModalClose: VoidFunction;
-  profile: MyProfileDataType;
+  profile: ProfileDataType;
   isMine?: boolean;
 }
 
@@ -158,7 +158,7 @@ const EditMyProfileLayout = ({
   handleCancelEdit,
   isEdit,
 }: {
-  profile: MyProfileDataType;
+  profile: ProfileDataType;
   handleCancelEdit: VoidFunction;
   isEdit: boolean;
 }) => {
@@ -168,6 +168,7 @@ const EditMyProfileLayout = ({
     setEditTarget(field);
     handleModalOpen();
   };
+
   return (
     <>
       <ProfileModalHeader>
@@ -370,7 +371,7 @@ const StyledCameraIcon = styled(MdPhotoCamera)(({ theme }) => ({
 
 const StyledPencilIcon = styled(BiSolidPencil)(({ theme }) => ({
   fontSize: theme.typography.subtitle2.fontSize,
-  color: theme.palette.grey[300],
+  color: theme.palette.grey[200],
 
   cursor: 'pointer',
 }));
@@ -418,7 +419,7 @@ const FriendNameBox = styled('div')({
   display: 'flex',
   alignItems: 'center',
 
-  width: '90%',
+  width: '100%',
 });
 
 const StatusMessage = styled('p')(({ theme }) => ({

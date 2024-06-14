@@ -1,27 +1,36 @@
 import { styled } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import instance from '../api/instance';
 import useUserStore from '../store/useUserStore';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
-  const { setUserId } = useUserStore();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const isAbleButton = password.length > 3 && email.length > 0;
+  const { setUserId } = useUserStore();
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { isValid, errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const login = async () => {
-    const { data } = await instance.post<MyProfileDataType>('/users/signin', {
-      email,
-      password,
+    const { data } = await instance.post<ProfileDataType>('/users/signin', {
+      email: getValues('email'),
+      password: getValues('password'),
     });
 
     return data;
   };
 
-  const { mutate } = useMutation<MyProfileDataType>({
+  const { mutate, isPending } = useMutation<ProfileDataType>({
     mutationFn: login,
     onSuccess: (data) => {
       setUserId({ id: data.id, userId: data.nickname });
@@ -29,48 +38,62 @@ const Login = () => {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = () => {
     mutate();
   };
 
   return (
     <LoginWrapper>
-      <LoginBox onSubmit={handleSubmit}>
+      <LoginBox>
         <h2>카카오톡을 시작합니다.</h2>
         <p>
           새로운 카카오계정이 있다면 <br />
           이메일 또는 전화번호로 로그인 해주세요.
         </p>
-        <InputWrapper>
+        <InputWrapper onSubmit={handleSubmit(onSubmit)}>
           <InputBox>
             <input
-              type="text"
-              value={email}
-              placeholder="이메일 또는 전화번호"
-              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="이메일"
+              {...register('email', {
+                required: '이메일은 필수 입력 항목입니다.',
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                  message: '유효한 이메일을 입력하세요',
+                },
+              })}
             />
           </InputBox>
+          {errors.email && <p>{errors.email.message}</p>}
           <InputBox>
             <input
-              value={password}
               type="password"
-              placeholder="비밀번호"
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호 (대문자, 특수문자, 숫자 포함 8~64자)"
+              {...register('password', {
+                required: '비밀번호는 필수 입력 항목입니다.',
+                pattern: {
+                  value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,64}$/,
+                  message:
+                    '비밀번호는 대문자, 특수문자, 숫자를 포함하고 8자 이상 64자 이하여야 합니다.',
+                },
+                minLength: 8,
+                maxLength: 64,
+              })}
             />
           </InputBox>
+          {errors.password && <p>{errors.password.message}</p>}
+          <LoginButtonBox>
+            <LoginButton
+              disabled={isPending || !isValid}
+              $isVaild={isValid}
+              type="submit">
+              로그인
+            </LoginButton>
+            <SignInButton type="button" onClick={() => navigate('signup')}>
+              새로운 카카오 계정 만들기
+            </SignInButton>
+          </LoginButtonBox>
         </InputWrapper>
-        <LoginButtonBox>
-          <LoginButton
-            disabled={!isAbleButton}
-            $isVaild={isAbleButton}
-            type="submit">
-            로그인
-          </LoginButton>
-          <SignInButton type="button" onClick={() => navigate('signup')}>
-            새로운 카카오 계정 만들기
-          </SignInButton>
-        </LoginButtonBox>
       </LoginBox>
     </LoginWrapper>
   );
@@ -89,7 +112,7 @@ const LoginWrapper = styled('div')({
   justifyContent: 'center',
 });
 
-const LoginBox = styled('form')({
+const LoginBox = styled('div')({
   width: '100%',
 
   padding: '0 2.5rem',
@@ -121,7 +144,7 @@ const InputBox = styled('div')(({ theme }) => ({
   },
 }));
 
-const InputWrapper = styled('div')(({ theme }) => ({
+const InputWrapper = styled('form')(({ theme }) => ({
   width: '100%',
   margin: '1rem 0',
 
@@ -151,6 +174,14 @@ const InputWrapper = styled('div')(({ theme }) => ({
       borderBottom: `1.4px solid ${theme.palette.grey[500]}`,
     },
   },
+
+  p: {
+    fontSize: '0.7rem',
+    margin: '0.5rem 0',
+
+    textAlign: 'start',
+    color: '#000',
+  },
 }));
 
 const LoginButtonBox = styled('div')({
@@ -159,6 +190,8 @@ const LoginButtonBox = styled('div')({
   flexDirection: 'column',
   gap: '0.8rem',
   alignItems: 'center',
+
+  marginTop: '2rem',
 
   button: {
     borderRadius: '5px',
@@ -176,8 +209,6 @@ const LoginButton = styled('button')<{
   color: $isVaild ? '#553830' : theme.palette.grey[300],
 
   backgroundColor: $isVaild ? '#ffd43b' : theme.palette.grey[50],
-
-  cursor: 'pointer',
 }));
 
 const SignInButton = styled('button')(({ theme }) => ({
@@ -188,6 +219,4 @@ const SignInButton = styled('button')(({ theme }) => ({
   fontWeight: 'bold',
 
   backgroundColor: theme.palette.grey[100],
-
-  cursor: 'pointer',
 }));

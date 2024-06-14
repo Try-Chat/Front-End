@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface FriendProfileEditModalProps {
   handleModalClose: VoidFunction;
-  profile: MyProfileDataType;
+  profile: ProfileDataType;
 }
 
 const FriendProfileEditModal = ({
@@ -12,9 +12,10 @@ const FriendProfileEditModal = ({
   profile,
 }: FriendProfileEditModalProps) => {
   const [editFriendName, setEditFriendName] = useState(profile.nickname);
-  const [editFriendMemo, setEditFriendMemo] = useState(profile.memo || '');
+  // const [editFriendMemo, setEditFriendMemo] = useState(profile.memo || '');
 
-  const isVaild = editFriendName !== profile.nickname || editFriendMemo !== '';
+  // const isVaild = editFriendName !== profile.nickname || editFriendMemo !== '';
+  const isVaild = editFriendName !== profile.nickname;
 
   return (
     <ModalBox>
@@ -52,9 +53,9 @@ const FriendProfileEditModal = ({
         <EditBoxItem>
           <EditBoxItemTop>
             <InputLabel htmlFor="memo">메모</InputLabel>
-            <p>{editFriendMemo?.length || 0}/200</p>
+            {/* <p>{editFriendMemo?.length || 0}/200</p> */}
           </EditBoxItemTop>
-          <div>
+          {/* <div>
             <TextArea
               id="memo"
               maxLength={200}
@@ -62,7 +63,7 @@ const FriendProfileEditModal = ({
               placeholder="메모 입력"
               onChange={(e) => setEditFriendMemo(e.target.value)}
             />
-          </div>
+          </div> */}
           <EditBoxItemBottom>
             <p>입력된 메모는 나에게만 보입니다.</p>
           </EditBoxItemBottom>
@@ -172,26 +173,26 @@ const Input = styled('input')(({ theme }) => ({
   caretColor: '#F9E000',
 }));
 
-const TextArea = styled('textarea')(({ theme }) => ({
-  width: '100%',
-  minHeight: '5.5rem',
+// const TextArea = styled('textarea')(({ theme }) => ({
+//   width: '100%',
+//   minHeight: '5.5rem',
 
-  padding: '0.8rem 1rem',
+//   padding: '0.8rem 1rem',
 
-  fontSize: theme.typography.subtitle2.fontSize,
-  backgroundColor: '#f8f9fa',
+//   fontSize: theme.typography.subtitle2.fontSize,
+//   backgroundColor: '#f8f9fa',
 
-  border: 'none',
-  borderRadius: '0.3rem',
-  outline: 'none',
-  resize: 'none',
-  caretColor: '#F9E000',
+//   border: 'none',
+//   borderRadius: '0.3rem',
+//   outline: 'none',
+//   resize: 'none',
+//   caretColor: '#F9E000',
 
-  '::placeholder': {
-    fontSize: theme.typography.subtitle2.fontSize,
-    color: theme.palette.grey[300],
-  },
-}));
+//   '::placeholder': {
+//     fontSize: theme.typography.subtitle2.fontSize,
+//     color: theme.palette.grey[300],
+//   },
+// }));
 
 const EditBoxItemBottom = styled('div')(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,

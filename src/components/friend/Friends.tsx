@@ -7,17 +7,21 @@ import ModalLayout from '../modal/ModalLayout';
 import useUserStore from '../../store/useUserStore';
 import { useQuery } from '@tanstack/react-query';
 import { getFriends } from '../../api/friend/profile';
+import { useState } from 'react';
 
 const Friends = () => {
   const { id: userId } = useUserStore();
   const { isModal, handleModalClose, handleModalOpen, isClosing } = useModal();
+  const [friendProfile, setFriendProfile] = useState<null | ProfileDataType>(
+    null,
+  );
 
   if (!userId) return null;
 
   const { data: friends } = useQuery<
-    FriendProfileDataType[],
+    ProfileDataType[],
     Error,
-    FriendProfileDataType[],
+    ProfileDataType[],
     [string]
   >({
     queryKey: ['friends'],
@@ -26,26 +30,58 @@ const Friends = () => {
 
   if (!friends) return null;
 
+  const handleFriendClick = (
+    id: number,
+    nickname: string,
+    greetings: string,
+    profileImg: string,
+    profileImgPath: string,
+    backgroundImg: string,
+  ) => {
+    setFriendProfile({
+      id,
+      nickname,
+      greetings,
+      profileImg,
+      profileImgPath,
+      backgroundImg,
+    });
+    handleModalOpen();
+  };
   return (
     <FriendsWrapper>
       <Toggle title={`친구 ${friends?.length}`}>
         <FriendsBox>
           {friends.map((friend) => (
-            <li key={friend.friendId} onClick={handleModalOpen}>
+            <li
+              key={friend.id}
+              onClick={() =>
+                handleFriendClick(
+                  friend.id,
+                  friend.nickname,
+                  friend.greetings,
+                  friend.profileImg,
+                  friend.profileImgPath,
+                  friend.backgroundImg,
+                )
+              }>
               <FriendItem
-                name={friend.friendNickname}
-                imageUrl={friend.friendProfileImgPath + friend.friendProfileImg}
+                name={friend.nickname}
+                imageUrl={friend.profileImgPath + friend.profileImg}
               />
             </li>
           ))}
         </FriendsBox>
       </Toggle>
-      {isModal && (
+      {isModal && friendProfile && (
         <ModalLayout
           isModal={isModal}
           isClosing={isClosing}
           onClose={handleModalClose}>
-          <ProfileModal handleModalClose={handleModalClose} profile={profile} />
+          <ProfileModal
+            handleModalClose={handleModalClose}
+            profile={friendProfile}
+          />
         </ModalLayout>
       )}
     </FriendsWrapper>

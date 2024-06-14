@@ -1,7 +1,7 @@
 import instance from '../instance';
 
 export const getMyProfile = async (userId: string | number) => {
-  const { data } = await instance.get<MyProfileDataType>(
+  const { data } = await instance.get<ProfileDataType>(
     `/users/${userId}/profile`,
   );
 
@@ -9,7 +9,7 @@ export const getMyProfile = async (userId: string | number) => {
 };
 
 export const getSearchFriend = async (friendKakaoId: string) => {
-  const { data } = await instance.get<MyProfileDataType>(
+  const { data } = await instance.get<ProfileDataType>(
     `/users/profile?username=${friendKakaoId}`,
   );
 
@@ -17,7 +17,7 @@ export const getSearchFriend = async (friendKakaoId: string) => {
 };
 
 export const getFriends = async (userId: string | number) => {
-  const { data } = await instance.get<FriendProfileDataType[]>(
+  const { data } = await instance.get<ProfileDataType[]>(
     `/users/${userId}/friends`,
   );
   return data;

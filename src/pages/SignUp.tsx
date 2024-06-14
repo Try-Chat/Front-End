@@ -13,6 +13,7 @@ const SignUp = () => {
     getValues,
     formState: { errors, isValid },
   } = useForm({
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
@@ -31,9 +32,13 @@ const SignUp = () => {
 
   const { mutate, isPending } = useMutation<string, AxiosError>({
     mutationFn: signUp,
-    onSuccess: (data) => {
-      alert({ data });
+    onSuccess: () => {
       navigate('/');
+    },
+    onError: (error) => {
+      if (error.response?.status === 409) {
+        alert('이미 가입된 회원입니다.');
+      }
     },
   });
 
@@ -113,7 +118,7 @@ const SignUp = () => {
           </Button>
           <Button
             type="button"
-            disabled={isPending || !isValid}
+            disabled={isPending}
             onClick={() => navigate('/')}>
             기존 계정으로 로그인
           </Button>
@@ -197,6 +202,8 @@ const ButtonBox = styled('div')({
 
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '1rem',
 
   marginTop: '2rem',
 });
@@ -218,7 +225,6 @@ const Button = styled('button')<{ $isGray?: boolean; $isValid?: boolean }>(
 
     borderRadius: '5px',
 
-    marginTop: '1rem',
     cursor: 'pointer',
   }),
 );

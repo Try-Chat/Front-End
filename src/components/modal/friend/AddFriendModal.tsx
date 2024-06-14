@@ -30,7 +30,7 @@ const AddFriendModal = ({
     mutate: searchFriend,
     isSuccess: searchSuccess,
     isPending: searchPending,
-  } = useMutation<MyProfileDataType, Error, string>({
+  } = useMutation<ProfileDataType, Error, string>({
     mutationFn: getSearchFriend,
     onSuccess: () => setHasSearched(true),
   });
@@ -39,7 +39,7 @@ const AddFriendModal = ({
     mutate: addMyFriend,
     isSuccess: addFriendSuccess,
     isPending: addPending,
-  } = useMutation<FriendProfileDataType[], Error, string>({
+  } = useMutation<ProfileDataType[], Error, string>({
     mutationFn: addFriend,
     onSuccess: () => setShowProgressBox(true),
   });
