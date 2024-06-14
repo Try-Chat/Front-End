@@ -13,7 +13,7 @@ const theme = createTheme({
   },
   typography: {
     htmlFontSize: 16,
-    fontFamily: 'Pretendard',
+    fontFamily: 'spoqaHanSansNeo',
 
     h3: {
       fontSize: '1.4rem',
@@ -40,6 +40,27 @@ const theme = createTheme({
         },
         content: {
           margin: '0 !important',
+        },
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        modal: {
+          display: 'flex',
+          justifyContent: 'center',
+        },
+        paper: {
+          width: '500px',
+          padding: '0 1rem',
+          left: 'unset',
+          right: 'unset',
         },
       },
     },

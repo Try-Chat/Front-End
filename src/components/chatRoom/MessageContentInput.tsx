@@ -22,7 +22,6 @@ const MessageContentInput = ({ setAllMessage }: MessageContentInputProps) => {
         content: message,
         time: getTime(),
       };
-      console.log(newMessage.time);
       setAllMessage((prev) => [...prev, newMessage]);
       setMessage('');
     }
@@ -101,7 +100,7 @@ const SendButton = styled('button')({
   alignItems: 'center',
 
   borderRadius: '50%',
-  backgroundColor: '#eedb11',
+  backgroundColor: '#F9E000',
 
   width: '2.1rem',
 });

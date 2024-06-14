@@ -4,7 +4,7 @@ import { IoChatbubbleSharp } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
 
 const FOOTER_ICONS = [
-  { page: '/', icon: <FaUser />, title: '친구' },
+  { page: '/friend', icon: <FaUser />, title: '친구' },
   { page: '/chatroomlist', icon: <IoChatbubbleSharp />, title: '채팅' },
 ];
 

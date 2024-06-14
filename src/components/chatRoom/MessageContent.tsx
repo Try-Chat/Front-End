@@ -73,7 +73,7 @@ const Content = styled('div')<{ messageType: boolean }>(
     fontSize: theme.typography.body1.fontSize,
 
     borderRadius: '1rem',
-    backgroundColor: messageType ? '#ffff' : '#EEDB11',
+    backgroundColor: messageType ? '#ffff' : '#F9E000',
   }),
 );
 

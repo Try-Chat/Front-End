@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import defaultImg from '../../assets/images/defaultImg.jpg';
 
 interface ProfileImageBoxProps {
   size: string;
@@ -8,11 +7,7 @@ interface ProfileImageBoxProps {
 
 const ProfileImageBox = (props: ProfileImageBoxProps) => {
   return (
-    <ProfileImage
-      src={props.imageUrl || defaultImg}
-      alt="profile image"
-      size={props.size}
-    />
+    <ProfileImage src={props.imageUrl} alt="profile image" size={props.size} />
   );
 };
 
